@@ -21,18 +21,18 @@ class DefenseUnit
     //e lo stato a vuoto 
     DefenseUnit(); 
     //contruttore con specifica parametri di costruzione
-    DefenseUnit(DefenseStatus, const Position&); 
+    DefenseUnit(DefenseStatus status, const Position& center_block_position); 
 
     //ottengo lo stato della cella 
     DefenseStatus status() const { return status_; }
     //imposto lo stato della cella a un valore indicato dal relativo enumeratore
-    void set_status(DefenseStatus);
+    void set_status(DefenseStatus status);
     //pulisco la cella: imposto lo stato a empty e metto il centro ad una posizione invalida
     void clear(); 
     //ottengo il centro del blocco di riferimento
     Position block_center() const { return center_block_position_; }
     //imposto il centro di riferimento ad un determinato valore
-    void set_block_center(const Position&);  
+    void set_block_center(const Position& position);  
     
     private: 
 

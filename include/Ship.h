@@ -19,7 +19,7 @@ class Ship
 
         //metodo virtuale che definisce l'azione che può eseguire la nave (attacco, spostamento e cura, spostamento e ispezione)
         //e' necessario implementarlo in maniera diversa in ognuna della classi nave derivate
-        virtual void action(const Map& map, const Position& target) = 0;
+        virtual void action(Map& map, const Position& target) = 0;
 
         //metodi getter
         int armor() const {return armor_;}

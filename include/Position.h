@@ -26,8 +26,8 @@ class Position
     bool is_absolute_invalid(); 
 
     private: 
-        int x_; 
-        int y_;
+    int x_; 
+    int y_;
 
     static constexpr int INVALID_X_POSITION = INT_MIN; 
     static constexpr int INVALID_Y_POSITION = INT_MIN; 
