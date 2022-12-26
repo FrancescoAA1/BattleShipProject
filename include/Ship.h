@@ -1,6 +1,8 @@
 #ifndef BATTLESHIPPROJECT_SHIP_H_
 #define BATTLESHIPPROJECT_SHIP_H_
 
+#include <vector>
+
 //enumeratore che definisce la direzione di una nave (orizzontale o verticale)
 enum Direction
 {
@@ -19,7 +21,12 @@ class Ship
 
         //metodo virtuale che definisce l'azione che può eseguire la nave (attacco, spostamento e cura, spostamento e ispezione)
         //e' necessario implementarlo in maniera diversa in ognuna della classi nave derivate
-        virtual void action(Map& map, const Position& target) = 0;
+        //il vector di AttackUnit è un insieme di unità d'attacco fornite dal giocatore in difesa al giocatore in attacco
+        //contiene unità di attacco aggiornate da sostituire nella mappa di attacco del giocatore attaccante
+        //nel caso dell'azione di cura il vettore sarà vuoto
+        //nel caso dell'azione di attacco il vettore conterrà solo una unità
+        //nel caso dell'azione di ispezione il vettore conterrà 25 unità
+        virtual void action(Map&, const Position&, std::vector<AttackUnit>&) = 0;
 
         //metodi getter
         int armor() const {return armor_;}
@@ -27,9 +34,10 @@ class Ship
         Direction orientation() const {return orientation_;}
         
         //la nave è stata colpita: riduce la corazza di 1
-        void hit();
-        //la nave è stata curata da una nave di supporto: ripristina la corazza al valore iniziale
-        void restore();
+        //restituisce true se la nave è appena stata affondata (serve per avvisare di rimuoverla dal dizionario)
+        bool hit();
+        //la nave è stata curata da una nave di supporto: ripristina la corazza al valore iniziale (che è size_)
+        void restore() {armor_ = size_};
 
 
     protected:
