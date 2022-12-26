@@ -34,8 +34,8 @@ class Ship
 
     protected:
 
-        //costruttore di default
-        Ship();
+        //costruttore, richiede la dimensione della nave e il suo orientamento
+        Ship(int, Direction);
     
 
     private:

@@ -5,7 +5,17 @@
 
 class SupportShip : public Ship
 {
+    public:
+        //costruttore
+        //crea una nave con corazza = 3, dimensione = 3 e orientamento fornito
+        SupportShip(Direction);
 
+        //ricordare l'override di action
+
+    private:
+
+        //costante che definisce la dimensione della nave di supporto
+        static constexpr int kSize = 3;
 }; 
 
 #endif
