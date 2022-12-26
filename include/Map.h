@@ -47,7 +47,8 @@ class Map
     bool fix_ship(const Position& target_origin); 
 
     // funzione che ritorna le posizioni occupate in un'area 5X5
-    // a partire dal centro specificato come target origin
+    // a partire dal centro specificato come target origin. Ritorna le AttackUnit della matrice 5x5 
+    // in un vettore che la rappresenta scritta per righe
     std::vector<Position>& discover_position(const Position& target_destination); 
 
     // Funzioni per l'ATTACCO: 
@@ -63,13 +64,13 @@ class Map
 
     // ritorno la nave presente nel target specificato se presente
     // altrimenti nullptr  
-    Ship* get_ship(const Position& target_origin); 
+    Ship* get_ship(const Position& center_position); 
 
     // funzione che permette di aggiungere una nave. 
-    // inserisce nel dizionario un acoppia posizione - nave dove il primo parametro è il target_origin e rappresenta
-    // il centro della nave. Il secondo parametro è un puntatore ad una generica nave. 
+    // inserisce nel dizionario un acoppia posizione - nave dove il primo parametro è la posizione della prua e il secondo
+    // la poppa della nave. Il secondo parametro è un puntatore ad una generica nave. 
     // rotona true se l'operazione è andata buon fine, false se era già presente poichè non ne vogliamo aggiornare il valore. 
-    bool add_ship(const Position& ship_center, Ship* ship); 
+    bool add_ship(const Position& bow_position, const Position& stern_position,Ship* ship); 
 
 
     // Overload dell'operatore << che scrive nell'output stream le matrici d'attacco e di difesa
@@ -89,15 +90,18 @@ class Map
     static constexpr char kSubmarineUnit = 'E';  
     static constexpr char kSupportShipUnitHit = 'c'; 
     static constexpr char kSupportShipUnit = 'C'; 
+    static constexpr int kInitiatlShipNumber = 8; 
 
     // rappresenta la mappa da usare per la difesa
     DefenseUnit defense_map_[kHeight][kWidth]; 
     // rappresenta la mappa da usare per l'attacco
-    AttackUnit attack_map[kHeight][kWidth]; 
+    AttackUnit attack_map_[kHeight][kWidth]; 
     // collezione associativa di navi con Key = posizione del centro e value = puntatore a generica nave
     std::unordered_map<Position, Ship*> ship_dictionary; 
     // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
     bool check_position(const Position& position) const; 
+    // scrivo una nave nella matrice
+    void place_ship(Position& init, Position& end, Position& center_block, Direction direction); 
     // l'unica memoria allocata dinamicamente dal programma sta nel dizionario che ha per valori delle coppie
     // le navi. Essendo un elemento della standard library, quando viene invocato il distruttore di default 
     // della classe map che eliminerà l'oggetto ship_dictionary si occuperà lui della deallocazione di ciascuna nave
