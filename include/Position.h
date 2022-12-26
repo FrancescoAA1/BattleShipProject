@@ -29,8 +29,8 @@ class Position
         int x_; 
         int y_;
 
-    static const int INVALID_X_POSITION = INT_MIN; 
-    static const int INVALID_Y_POSITION = INT_MIN; 
+    static constexpr int INVALID_X_POSITION = INT_MIN; 
+    static constexpr int INVALID_Y_POSITION = INT_MIN; 
 
 };
 //operatori di cui fare l'overload
