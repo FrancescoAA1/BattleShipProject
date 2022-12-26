@@ -1,0 +1,42 @@
+1- il controller chiede al P1 di scegliere la mossa
+
+2- il P1 sceglie la mossa:
+        - controlla se in XYORIGIN è presente una nave e ne deduce la mossa corrispondente (altrimenti scelta nuova mossa)
+        - se è CURA: controlla con la propria mappa che lo spostamento sia concesso 
+            - se ok, svolge lo spostamento (altrimenti scelta nuova mossa)
+                - aggiorna mappa di difesa e chiave dizionario
+        - se è SONAR: controlla con la propria mappa che lo spostamento sia concesso 
+            - se ok, svolge lo spostamento (altrimenti scelta nuova mossa)
+                - aggiorna mappa di difesa e chiave dizionario
+
+3- P1 salva la mossa scelta al suo interno e la ritorna anche al controller
+
+4- Ricevuta la mossa, il controller fa controlli:
+        - se è una mossa di ATTACCO/SONAR, il controller chiede a P2 informazioni inviando il target (coord):
+            - se ATTACCO, P2 guarda nella propria mappa di difesa se c'è una nave:
+                - se c'è, segna affondato nella cella (propria mappa di difesa)
+                - aggiorna la corazza della (eventuale) nave colpita nel proprio dizionario 
+                    - se la nave è completamente affondata, la rimuove;
+                - ritorna al controller:
+                    - coordinata invalida se non c'era una nave
+                    - coordinata valida se c'era una nave
+            - se SONAR: P2 ritorna una lista di coordinate che rappresentano le navi attorno al target (5x5) ottenute
+                esclusivamente guardando nella propria mappa di difesa (la lista è vuota se non ci sono avvistamenti)
+        - se è una mossa di CURA, il controller chiede a P1 quali navi vengono curate inviado il target (coord):
+            - P1 cerca nella mappa le navi intorno al target (3x3), le trova nel proprio dizionario e le cura
+                MA lascia NON aggiornata la mappa (vedi punti successivi).
+            - P1 ritorna al controller la lista delle coordinate delle celle delle navi da curare.
+
+5- avuta la risposta di P2 o se è una mossa che riguarda solo P1 (CURA), allora il controller chiama P1.esegui(lista di coords)
+
+6- P1 prende la mossa che aveva memorizzato e la esegue:
+        - se ATTACCO, P1 riceve come parametri una lista con una coordinata, P1 chiama
+          action(propria mappa di attacco, lista con coordinata ricevuta) della propria corazzata che:
+            - se coordinata invalida, segna O nella mappa di attacco;
+            - se coordinata valida, segna X nella mappa di attacco;    
+        - se SONAR, P1 riceve come parametri una lista con n coordinate (eventualmente 0), P1 chiama
+          action(propria mappa di attacco, lista con coordinate ricevute) del sottomarino che:
+            - per ogni coordinata, segna Y nella mappa di attacco;
+        - se CURA, P1 riceve come parametro una lista vuota, P1 chiama
+          action(propria mappa di difesa, lista con coordinate ricevute) del sottomarino che:
+            - per ogni coordinata della lista, ripristina la salute (solo graficamente) alla cella. 

@@ -27,7 +27,7 @@ void DefenseUnit::clear()
     center_block_position_.make_absolute_invalid(); 
 }
 
-void DefenseUnit::set_center_block(const Position& position)
+void DefenseUnit::set_block_center(const Position& position)
 {
     center_block_position_.set_x(position.X()); 
     center_block_position_.set_y(position.Y()); 

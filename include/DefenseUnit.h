@@ -2,7 +2,7 @@
 #define BATTLESHIPPROJECT_DEFENSEUNIT_H_
 
 #include "Position.h"
-//rappresenta lo stato di una cella della mappa
+// Rappresenta lo stato di una cella della mappa
 // se è empty => non c'è nessuna nave su di esso 
 // se è hit => la nave su di essa presente è stat colpita
 // se è taken => la posizione è occupata da una nave
@@ -32,12 +32,12 @@ class DefenseUnit
     //ottengo il centro del blocco di riferimento
     Position block_center() const { return center_block_position_; }
     //imposto il centro di riferimento ad un determinato valore
-    void set_center_block(const Position&);  
+    void set_block_center(const Position&);  
     
     private: 
 
     DefenseStatus status_; 
-    Position center_block_position_; 
+    Position center_block_position_;
 
 }; 
 //overload degli operatori di uguaglianza per la classe sopra definita

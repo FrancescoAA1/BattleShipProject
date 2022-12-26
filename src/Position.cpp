@@ -13,6 +13,7 @@ Position::Position(int x, int y)
     y_ = y; 
 }
 
+
 void Position::set_x(int value)
 {
     x_= value;
