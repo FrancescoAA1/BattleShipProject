@@ -6,15 +6,17 @@
 
 //enumeratore che indica il tipo di mossa effettuata dal giocatore
 enum MoveType{
+    addShip, //aggiunta di una nave
     attack, //attacco (corazzata)
     moveAndFix, //spostamento e cura (nave di supporto)
-    moveAndDiscover //spostamento ed ispezione (sottomarino)
+    moveAndDiscover, //spostamento ed ispezione (sottomarino)
+    showMap, //stampa delle mappe del giocatore (con posizione target e origine poste a null)
+    clearMap //pulizia della mappa
 };
 
 class Move
 {
     public:
-
     //costruttore valido sia per Human Player, sia per Robot Player
     Move(const Position&, const Position&, MoveType);
 
