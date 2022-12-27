@@ -5,7 +5,10 @@
 
 class HumanPlayer : Player
 {
-    
+    public:
+
+    HumanPlayer(const std::string& nickname_);
+    Move get_move(const std::string&) override;
 }; 
 
 #endif

@@ -10,6 +10,12 @@
 class Player
 {
     public:
+
+    // Eccezione che viene lanciata se la mossa creata non è valida
+    class InvalidMove : public std::exception {}; 
+
+    //costruttore dato il nome del giocatore
+    Player(const std::string&);
     
     //metodo che a partire da un comando ricava la mossa che verrà effettuata dalla nave
     //La stringa viene manipolata per ricavare posizione di origine e posizione target
@@ -21,7 +27,9 @@ class Player
     //La mossa verrà poi trasferita al controller e gestita in base al tipo di mossa
     //Ad eccezione della cura, il giocatore avversario ritornerà un vettore di Attack Unit
     //contenente le celle ispezionate (nel caso del sonar) oppure la cella da attaccare (corazzata)
-    virtual Move get_move(const std::string&);
+
+    //funzione virtuale pura di cui effettuare l'override nelle classi derivate Human Player e Robot Player
+    virtual Move get_move(const std::string&) = 0;
 
     //metodo che verifica se uno spostamento di un sottomarino o di una nave di supporto può
     //essere effettuato
@@ -32,19 +40,18 @@ class Player
     std::vector<AttackUnit> retrieve_unit(const Move&);
 
     //metodi getter
-    std::string nickname();
+    std::string nickname() {return nickname_;}
 
-    protected:
+    //non è necessario metodo getter che ritorni puntatore alla nave
+    //dato che il giocatore ottiene dalla mappa la nave interessata da un comanda
+    //e invoca il metodo azione di quest'ultima per compiere una mossa
 
-    //costruttore dato il nome del giocatore e la lista delle navi
-    //richiede che la classe Map preveda un costruttore che accetti come
-    //parametro il dizionario di navi
-    Player(const std::string&, std::unordered_map<Position, Ship*>);
 
     private:
     
     //nome del giocatore
     std::string nickname_;
+    //insieme della mappa di attacco e di difesa del giocatore con metodi di gestione
     Map sea_map_;
 
 
