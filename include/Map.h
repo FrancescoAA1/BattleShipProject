@@ -34,6 +34,7 @@ class Map
     // aggiorna automaticamente la posizione della nave nel dizionario se va a buon fine
     // la posizione target origin deve rappresentare il centro della nave da spostare
     // il secondo paramentro è il target destination
+    // Ritorna true se lo spostamento è andato a buon fine
     bool move_ship(const Position& target_origin, const Position& target_destination); 
 
     // sparo ad una nave della mia lista di difesa poichè è stata colpita
@@ -100,8 +101,16 @@ class Map
     std::unordered_map<Position, Ship*> ship_dictionary; 
     // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
     bool check_position(const Position& position) const; 
-    // scrivo una nave nella matrice
-    void place_ship(Position& init, Position& end, Position& center_block, Direction direction); 
+    // scrivo una nave nella matrice 
+    // true se l'operazione è correttamente eseguibile
+    bool place_ship(Position& init, Position& end, const Position& center_block, Direction direction); 
+    // verifico se la coordinata di centro specificata può essere una posizione plausibile per una nave di lunghezza 
+    // length specificata e orientamento orientation.
+    // ritorna true se la nave ricoprirebbe una regione non vuota o non rientra nella matrice
+    bool check_area_for_placing(const Position& target_destination, int length, Direction orientation) const; 
+    // funzione che pulisce tutte le caselle nella regione specificata: centro, lunghezza e direzione
+    // le coordinate che andrà a pulire devono essere già testate come corrette!
+    void clear_area(const Position& center_block, int length, Direction orientation); 
     // l'unica memoria allocata dinamicamente dal programma sta nel dizionario che ha per valori delle coppie
     // le navi. Essendo un elemento della standard library, quando viene invocato il distruttore di default 
     // della classe map che eliminerà l'oggetto ship_dictionary si occuperà lui della deallocazione di ciascuna nave
