@@ -21,7 +21,6 @@ class SupportShip : public Ship
         //l'area di cura è un quadrato e la lunghezza del lato è dispari per permettere alla nave di essere al centro dell'area
         static constexpr int kSide = 3;
 
-
 }; 
 
 #endif

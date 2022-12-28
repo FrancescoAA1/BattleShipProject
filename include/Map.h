@@ -17,12 +17,11 @@ class Map
 {
     public: 
 
-    // Eccezione che viene lanciata se la posizione non riesntra nelle matrici
+    // Eccezione che viene lanciata se la posizione non rientra nelle matrici
     class InvalidMapPosition : public std::exception {}; 
 
     // contruttore di default della classe 
-    // che inizializza tutte le matrici come vuote e crea un dizionario con dimensione 
-    // di base 8 navi
+    // che inizializza tutte le matrici come vuote
     Map(); 
 
     // Funzioni per la DIFESA:
@@ -31,20 +30,21 @@ class Map
     bool is_free_defense_position(const Position& target_destination) const; 
 
     // muove una nave dalla sua posizione attuale al target specificato 
-    // aggiorna automaticamente la posizione della nave nel dizionario se va a buon fine
+    // aggiorna automaticamente la posizione della nave nella collezione se va a buon fine
     // la posizione target origin deve rappresentare il centro della nave da spostare
     // il secondo paramentro è il target destination
     // Ritorna true se lo spostamento è andato a buon fine
     bool move_ship(const Position& target_origin, const Position& target_destination); 
 
-    // sparo ad una nave della mia lista di difesa poichè è stata colpita
+    // sparo ad una nave della mia collezione poichè è stata colpita
     // la funzione verifica se la corazza è arrivata a zero ed in tal caso 
-    // la rimuove dalla mappa di difesa e aggiorna il dizionario
-    // ritona true se l'operazione ha affondato definitivamnete una nave
+    // la rimuove dalla mappa di difesa e aggiorna la collezione
+    // Per tester se una nave è stta affondatat usare la funzione get_ship
     AttackUnit receive_shot(const Position& target_destination); 
 
     // funzione che cura tutte le navi in un'area 3x3 a partire del centro specificato come target
-    // aggiorna automaticamente la corazza delle neavi che si trovano nei dintorni della superficie 
+    // aggiorna automaticamente la corazza delle navi che si trovano nei dintorni della superficie 
+    // tenendo allineata con le modifiche la collezione 
     bool fix_ship(const Position& target_origin); 
 
     // funzione che ritorna le posizioni occupate in un'area 5X5
@@ -54,7 +54,7 @@ class Map
 
     // Funzioni per l'ATTACCO: 
 
-    // funzione che permette di impostare come spotted le posizioni specificate
+    // funzione che permette di impostare come spotted l'area della matrice rappresentata per righe
     // aggiornando la mappa d'attacco
     bool spot_positions(std::vector<AttackUnit>& positions, const Position& center_block); 
 
