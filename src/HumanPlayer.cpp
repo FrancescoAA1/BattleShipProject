@@ -12,16 +12,43 @@ Move HumanPlayer::get_move(const std::string& move)
     //se è cosi
     Position origin{};
     Position target{};
-    origin.make_absolute_invalid();
-    target.make_absolute_invalid();
-    return Move{origin, target, showMap};
+
+    if(move == "AA AA")
+    {
+        origin.make_absolute_invalid();
+        target.make_absolute_invalid();
+        return Move{origin, target, MoveType::showMap};
+    }
+    else if(move == "YY YY")
+    {
+        origin.make_absolute_invalid();
+        target.make_absolute_invalid();
+        return Move{origin, target, MoveType::clearMap};
+    }
+    else
+    {
+        char originX = move[0] - defaultCapitalAscii;
+        char originY = move[1] - 1;
+
+        char targetX = move[3] - defaultCapitalAscii;
+        char targetY = move[4] - 1;
+
+        if((originX >= 0 || originX <= 11) && (originX >= 0 || originX <= 11))
+        {
+            origin = {originX, originY};
+        }
+        else
+        {
+            throw InvalidMove{};
+        }
+
+        Ship* shipMove = sea_map_.get_ship(origin);
+        shipMove
+
+    }
 
     //altrimenti controllo che la stringa sia YY YY
-    Position origin{};
-    Position target{};
-    origin.make_absolute_invalid();
-    target.make_absolute_invalid();
-    return Move{origin, target, showMap};
+
 
     //altrimenti separo la stringa in due parti
     
