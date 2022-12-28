@@ -41,7 +41,7 @@ class Map
     // la funzione verifica se la corazza è arrivata a zero ed in tal caso 
     // la rimuove dalla mappa di difesa e aggiorna il dizionario
     // ritona true se l'operazione ha affondato definitivamnete una nave
-    bool shot_ship(const Position& target_destination); 
+    AttackUnit receive_shot(const Position& target_destination); 
 
     // funzione che cura tutte le navi in un'area 3x3 a partire del centro specificato come target
     // aggiorna automaticamente la corazza delle neavi che si trovano nei dintorni della superficie 
@@ -50,16 +50,16 @@ class Map
     // funzione che ritorna le posizioni occupate in un'area 5X5
     // a partire dal centro specificato come target origin. Ritorna le AttackUnit della matrice 5x5 
     // in un vettore che la rappresenta scritta per righe
-    std::vector<Position>& discover_position(const Position& target_destination); 
+    std::vector<AttackUnit>& discover_position(const Position& target_destination); 
 
     // Funzioni per l'ATTACCO: 
 
     // funzione che permette di impostare come spotted le posizioni specificate
     // aggiornando la mappa d'attacco
-    bool spot_positions(std::vector<Position>& positions); 
+    bool spot_positions(std::vector<AttackUnit>& positions, const Position& center_block); 
 
     // imposta a hit la cella della mappa d'attacco di target specificato
-    bool shot_position(const Position& target_destination, bool is_full); 
+    bool shot_position(const Position& target_destination, AttackUnit shot_status); 
 
     // altre funzioni UTILITARIE
 
@@ -71,7 +71,7 @@ class Map
     // inserisce nel dizionario un acoppia posizione - nave dove il primo parametro è la posizione della prua e il secondo
     // la poppa della nave. Il secondo parametro è un puntatore ad una generica nave. 
     // rotona true se l'operazione è andata buon fine, false se era già presente poichè non ne vogliamo aggiornare il valore. 
-    bool add_ship(const Position& bow_position, const Position& stern_position,Ship* ship); 
+    bool add_ship(const Position& bow_position, const Position& stern_position); 
 
 
     // Overload dell'operatore << che scrive nell'output stream le matrici d'attacco e di difesa
@@ -111,6 +111,7 @@ class Map
     // funzione che pulisce tutte le caselle nella regione specificata: centro, lunghezza e direzione
     // le coordinate che andrà a pulire devono essere già testate come corrette!
     void clear_area(const Position& center_block, int length, Direction orientation); 
+    
     // l'unica memoria allocata dinamicamente dal programma sta nel dizionario che ha per valori delle coppie
     // le navi. Essendo un elemento della standard library, quando viene invocato il distruttore di default 
     // della classe map che eliminerà l'oggetto ship_dictionary si occuperà lui della deallocazione di ciascuna nave
