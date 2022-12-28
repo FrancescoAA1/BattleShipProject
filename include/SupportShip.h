@@ -11,6 +11,7 @@ class SupportShip : public Ship
         SupportShip(Direction orientation) : Ship(kSize, orientation) {};
 
         //ricordare l'override di action
+        void action(Map& map, const Position& target, const std::vector<AttackUnit>& data) override;
 
     private:
 

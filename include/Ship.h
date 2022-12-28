@@ -2,6 +2,9 @@
 #define BATTLESHIPPROJECT_SHIP_H_
 
 #include <vector>
+#include "Position.h"
+#include "Map.h"
+#include "AttackUnit.h"
 
 //enumeratore che definisce la direzione di una nave (orizzontale o verticale)
 enum Direction
@@ -37,7 +40,7 @@ class Ship
         //restituisce true se la nave è appena stata affondata (serve per avvisare di rimuoverla dal dizionario)
         bool hit();
         //la nave è stata curata da una nave di supporto: ripristina la corazza al valore iniziale (che è size_)
-        void restore() {armor_ = size_};
+        void restore() {armor_ = size_;};
 
 
     protected:

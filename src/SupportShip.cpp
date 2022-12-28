@@ -8,7 +8,7 @@
 //viene comunque passato un array (vuoto) per conformare i metodi action di tutte le navi
 //
 //i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
-void SupportShip::action(Map& map, const Position& target, const std::vector<AttackUnit>& data)
+void SupportShip::action(Map& map, const Position& target, const std::vector<AttackUnit>& data) 
 {
     for(int i = -(kSide/2); i <= kSide/2; i++)
     {

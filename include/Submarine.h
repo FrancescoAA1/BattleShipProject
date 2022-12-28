@@ -13,6 +13,7 @@ class Submarine : public Ship
         Submarine() : Ship(kSize, kDefaultDirection) {}
 
         //ricordare l'override di action
+        void action(Map& map, const Position& target, const std::vector<AttackUnit>& data) override;
 
     private:
 
