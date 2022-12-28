@@ -263,7 +263,7 @@ bool Map::move_ship(const Position& target_origin, const Position& target_destin
             init = target_destination - Position(target_destination.X(), ship_in_origin->size()/2); 
             end = target_destination + Position(target_destination.X(), ship_in_origin->size()/2);  
         }
-        // (3) se riesce a posizionarmela allora canello la vecchi aa re a e aggiorno il dizionario
+        // (3) se riesce a posizionarmela allora canello la vecchia area e aggiorno il dizionario
         if(place_ship(init, end, target_destination, ship_in_origin->orientation()))
         {
             // (4) pulisco tutte le celle della vecchia occupazione
