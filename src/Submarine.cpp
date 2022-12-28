@@ -8,7 +8,7 @@
 //i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
 void Submarine::action(Map& map, const Position& target, const std::vector<AttackUnit>& data)
 {
-    map.move_ship(?, target); //? sta per "non so quel dato"
+    map.move_ship(this->centre(), target); 
     map.spot_positions(data);
 }
 

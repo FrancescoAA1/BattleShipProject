@@ -10,7 +10,7 @@
 //i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
 void SupportShip::action(Map& map, const Position& target, const std::vector<AttackUnit>& data) 
 {
-    map.move_ship(?, target);
+    map.move_ship(this->centre(), target);
     map.fix_ship(target);
 }
 

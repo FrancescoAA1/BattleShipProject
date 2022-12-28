@@ -34,6 +34,7 @@ class Ship
         //metodi getter
         int armor() const {return armor_;}
         int size() const {return size_;}
+        Position centre() const {return centre_;}
         Direction orientation() const {return orientation_;}
         
         //la nave è stata colpita: riduce la corazza di 1
@@ -41,6 +42,8 @@ class Ship
         bool hit();
         //la nave è stata curata da una nave di supporto: ripristina la corazza al valore iniziale (che è size_)
         void restore() {armor_ = size_;};
+        
+        void set_centre(const Position& new_centre) {centre_ = new_centre;}
 
 
     protected:
@@ -57,6 +60,8 @@ class Ship
         int armor_;
         //variabile che definisce la dimensione della nave
         int size_;
+        //variabile che indica il centro della nave
+        Position centre_;
 
 }; 
 
