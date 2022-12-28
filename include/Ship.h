@@ -26,7 +26,7 @@ class Ship
         //nel caso dell'azione di cura il vettore sarà vuoto
         //nel caso dell'azione di attacco il vettore conterrà solo una unità
         //nel caso dell'azione di ispezione il vettore conterrà 25 unità
-        virtual void action(Map&, const Position&, std::vector<AttackUnit>&) = 0;
+        virtual void action(Map&, const Position&, const std::vector<AttackUnit>&) = 0;
 
         //metodi getter
         int armor() const {return armor_;}
