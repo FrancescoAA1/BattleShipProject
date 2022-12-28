@@ -6,6 +6,7 @@ Player::Player(const std::string& nickname)
     sea_map_ = Map();
 }
 
+
 std::vector<AttackUnit> Player::retrieve_unit(const Move& move) 
 {
     int nCells;
