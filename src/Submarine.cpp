@@ -1,4 +1,4 @@
-#include "Submarine.h"
+#include "../include/Submarine.h"
 
 //Per eseguire la sua azione di spostamento e ispezione, il sottomarino ha bisogno dei seguenti dati:
 //La mappa di attacco del giocatore che ordina la mossa, la quale verrà modificata

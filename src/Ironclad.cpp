@@ -1,4 +1,4 @@
-#include "Ironclad.h"
+#include "../include/Ironclad.h"
 
 //Per eseguire la sua azione di attacco, la nave corazzata ha bisogno dei seguenti dati:
 //La mappa di attacco del giocatore che ordina la mossa, la quale verrà modificata

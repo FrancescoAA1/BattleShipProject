@@ -1,4 +1,4 @@
-#include "SupportShip.h"
+#include "../include/SupportShip.h"
 
 //Per eseguire la sua azione di spostamento e cura, la nave di supporto ha bisogno dei seguenti dati:
 //La mappa di difesa del giocatore che ordina la mossa, la quale verrà modificata
