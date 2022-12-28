@@ -10,10 +10,10 @@ class Submarine : public Ship
         //crea una nave con corazza = 1, dimensione = 1
         //non è necessario fornire l'orientamento in quanto la lunghezza è uno e sarebbe indifferente
         //l'orientamento verrà comunque impostato a un valore di default per completezza
-        Submarine() : Ship(kSize, kDefaultDirection) {}
+        Submarine(DefenseMap& defense_map, AttackMap& attack_map) : Ship(kSize, kDefaultDirection, defense_map, attack_map) {}
 
         //ricordare l'override di action
-        void action(Map& map, const Position& target, const std::vector<AttackUnit>& data) override;
+        void action(const Position& target, const std::vector<AttackUnit>& data) override;
 
     private:
 

@@ -8,7 +8,7 @@ class Ironclad : public Ship
     public:
         //costruttore
         //crea una nave con corazza = 5, dimensione = 5 e orientamento fornito
-        Ironclad(Direction orientation)  : Ship(kSize, orientation) {}
+        Ironclad(Direction orientation, DefenseMap& defense_map, AttackMap& attack_map)  : Ship(kSize, orientation, defense_map, attack_map) {}
 
         //ricordare l'override di action
 

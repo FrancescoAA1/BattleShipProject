@@ -33,12 +33,17 @@ class DefenseUnit
     Position block_center() const { return center_block_position_; }
     //imposto il centro di riferimento ad un determinato valore
     void set_block_center(const Position& position);  
+    //ottengo la dimensione del blocco di appartenenza
+    int full_block_dimension() const { return full_block_dimension_; } 
+    //imposto il valore della dimensione del blocco di appartenenza
+    void set_full_block_dimension(int full_block_dimension); 
     
     private: 
 
     DefenseStatus status_; 
     Position center_block_position_;
-
+    int full_block_dimension_; 
+    
 }; 
 //overload degli operatori di uguaglianza per la classe sopra definita
 bool operator==(const DefenseUnit&, const DefenseUnit&); 
@@ -49,7 +54,9 @@ Classe Defense Unit: rappresenta una unità del campo di gioco.
 Essa possiede uno stato che permette di verificare se quella determinata cella
 rappresenta una posizione occupata da una nave o una zona colpita di una nave.
 Ogni unità mantiene un riferimento al centro del blocco complessivo di cui fa 
-parte al fine di rendere le operazioni con la mappa più efficaci e ridurrne la 
-complessità di rappresentazione.
+parte al fine di rendere le operazioni con la mappa più efficaci e ridurne la 
+complessità di rappresentazione. 
+Inolte una DefenseUnit possiede un intero che specifica la dimensione del blocco 
+di cui fa parte, sempre nell'ottica di facilitare le operazioni di scrittura
 */
 #endif

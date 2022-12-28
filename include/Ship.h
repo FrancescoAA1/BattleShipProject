@@ -3,15 +3,11 @@
 
 #include <vector>
 #include "Position.h"
-#include "Map.h"
 #include "AttackUnit.h"
+#include "Direction.h"
+#include "AttackMap.h"
+#include "DefenseMap.h"
 
-//enumeratore che definisce la direzione di una nave (orizzontale o verticale)
-enum Direction
-{
-    horizontal,
-    vertical
-};
 
 class Ship
 {
@@ -29,7 +25,7 @@ class Ship
         //nel caso dell'azione di cura il vettore sarà vuoto
         //nel caso dell'azione di attacco il vettore conterrà solo una unità
         //nel caso dell'azione di ispezione il vettore conterrà 25 unità
-        virtual void action(Map&, const Position&, const std::vector<AttackUnit>&) = 0;
+        virtual void action(const Position& target, const std::vector<AttackUnit>&) = 0;
 
         //metodi getter
         int armor() const {return armor_;}
@@ -43,13 +39,13 @@ class Ship
         //la nave è stata curata da una nave di supporto: ripristina la corazza al valore iniziale (che è size_)
         void restore() {armor_ = size_;};
         
-        void set_centre(const Position& new_centre) {centre_ = new_centre;}
+        void set_center(const Position& new_centre) {centre_ = new_centre;}
 
 
     protected:
 
         //costruttore, richiede la dimensione della nave e il suo orientamento
-        Ship(int, Direction);
+        Ship(int, Direction, DefenseMap&, AttackMap&);
     
 
     private:
@@ -62,6 +58,11 @@ class Ship
         int size_;
         //variabile che indica il centro della nave
         Position centre_;
+        //campo che contine un firerimento alla mappa di attacco di cui fa parte
+        AttackMap& attack_map_; 
+        //campo che contine un rigferimento alla mappa di difesa di cui fa parte
+        DefenseMap& defense_map_; 
+
 
 }; 
 
