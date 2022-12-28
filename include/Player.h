@@ -13,9 +13,6 @@ class Player
 
     // Eccezione che viene lanciata se la mossa creata non è valida
     class InvalidMove : public std::exception {}; 
-
-    //costruttore dato il nome del giocatore
-    Player(const std::string&);
     
     //metodo che a partire da un comando ricava la mossa che verrà effettuata dalla nave
     //La stringa viene manipolata per ricavare posizione di origine e posizione target
@@ -46,9 +43,11 @@ class Player
     //dato che il giocatore ottiene dalla mappa la nave interessata da un comanda
     //e invoca il metodo azione di quest'ultima per compiere una mossa
 
+    protected:
 
-    private:
-    
+    //costruttore dato il nome del giocatore
+    Player(const std::string&);
+        
     //nome del giocatore
     std::string nickname_;
     //insieme della mappa di attacco e di difesa del giocatore con metodi di gestione

@@ -13,13 +13,17 @@ class Submarine : public Ship
         Submarine() : Ship(kSize, kDefaultDirection) {}
 
         //ricordare l'override di action
+        void action(Map& map, const Position& target, const std::vector<AttackUnit>& data) override;
 
     private:
 
         //costante che definisce la dimensione del sottomarino
         static constexpr int kSize = 1;
         //costante che definisce l'orientamento di default del sottomarino
-        static constexpr Direction kDefaultDirection = horizontal;
+        static constexpr Direction kDefaultDirection = Direction::horizontal;
+        //costante che definisce il lato dell'area di mappa ispezionata
+        //l'area ispezionata è un quadrato e la lunghezza del lato è dispari per permettere alla nave di essere al centro di essa
+        static constexpr int kSide = 5;
 }; 
 
 #endif

@@ -9,6 +9,10 @@ class HumanPlayer : Player
 
     HumanPlayer(const std::string& nickname_);
     Move get_move(const std::string&) override;
+
+    private:
+
+    static constexpr int defaultCapitalAscii = 65;
 }; 
 
 #endif
