@@ -9,6 +9,5 @@
 //i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
 void Ironclad::action(Map& map, const Position& target, const std::vector<AttackUnit>& data)
 {
-    //copia la attack unit ricevuta nella mappa di attacco alle coordinate ricevute
-    map.attack_map()[target.x()][target.y()] = data.at(0);
+    map.shot_position(target, data[0]);
 }

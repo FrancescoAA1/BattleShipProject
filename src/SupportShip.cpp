@@ -10,7 +10,11 @@
 //i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
 void SupportShip::action(Map& map, const Position& target, const std::vector<AttackUnit>& data) 
 {
-    for(int i = -(kSide/2); i <= kSide/2; i++)
+    map.move_ship(?, target);
+    map.fix_ship(target);
+}
+
+/*    for(int i = -(kSide/2); i <= kSide/2; i++)
     {
         for(int j = -(kSide/2); j <= kSide/2; j++)
         {
@@ -23,13 +27,13 @@ void SupportShip::action(Map& map, const Position& target, const std::vector<Att
         }
     }    
 
-}
+
 
 //@TOASK il metodo action delle navi semplicemente aggiorna le mappe a livello visivo?
 
 //metodo heal()
 //da aggiungere a DefenseUnit
-/*
+
 void heal()
 {
     if(status_ == DefenseStatus::hit) status_ = DefenseStatus::taken ;
