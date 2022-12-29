@@ -13,6 +13,9 @@
 class AttackMap
 {  
     public:
+    // le costanti delle dimesnioni possono essere pubbliche e accessibili dall'estreno 
+    static constexpr int kHeight = 12; 
+    static constexpr int kWidth = 12; 
 
     // costruttore di default che setta tutto a vuoto
     AttackMap();  
@@ -40,8 +43,6 @@ class AttackMap
 
     private:    
     // Regione delle costanti da utilizzare nella classe  
-    static constexpr int kHeight = 12; 
-    static constexpr int kWidth = 12; 
     static constexpr char kHitAndFullSymbol = 'X'; 
     static constexpr char kHitAndEmptySymbol = 'O';
     static constexpr char kSpottedSymbol = 'Y';
