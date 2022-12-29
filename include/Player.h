@@ -83,6 +83,6 @@ class Player
     Direction get_direction(const Position& bow, const Position& stern);
 
     //fornisce la taglia della nave da inserire
-    int get_size(const Position& bow, const Position& stern, const Direction& direction);
+    int get_size(const Position& bow, const Position& stern);
 
 #endif

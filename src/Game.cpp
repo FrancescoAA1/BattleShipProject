@@ -73,20 +73,20 @@ void Game::playRound()
 
     } while (m.movetype() == MoveType::invalid);
 
-    std::vector<AttackUnit> units;
+    std::vector<AttackUnit> units2;
 
     //viene individuata la nave (responsabile della mossa effettuata) del primo giocatore 
-    Ship* s = player_1->get_ship(m.origin());
+    Ship* s2 = player_1->get_ship(m.origin());
 
     //risposta del secondo giocatore alla mossa appena effettuata
-    if(m.movetype() == MoveType::moveAndFix)
+    if(m.movetype() != MoveType::moveAndFix)
     {
-        units = player_2->retrieve_unit(m.target(), m.movetype());
+        units2 = player_2->retrieve_unit(m.target(), m.movetype());
     }
 
     //la funzione action permette alla nave di aggiornare la mappa di attacco e/0 difesa
     //l'invocazione dipende dal tipo di nave a cui punta il puntatore
-    s->action(m.target(), units);
+    s2->action(m.target(), units2);
 
 
     //inizio del turno del secondo giocatore
@@ -123,7 +123,7 @@ void Game::playRound()
     std::vector<AttackUnit> units;
     Ship* s = player_2->get_ship(m2.origin());
 
-    if(m2.movetype() == MoveType::moveAndFix)
+    if(m2.movetype() != MoveType::moveAndFix)
     {
         units = player_1->retrieve_unit(m2.target(), m2.movetype());
     }
