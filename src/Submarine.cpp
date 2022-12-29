@@ -7,8 +7,8 @@
 //i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
 void Submarine::action(const Position& target, const std::vector<AttackUnit>& data)
 {
-    defense_map_.move_ship(this->centre(), target); 
-    attack_map_.spot_positions(data);
+    defenseMap().move_ship(this->centre(), target); 
+    attackMap().spot_positions(data);
 }
 
 /*
@@ -22,22 +22,5 @@ void Submarine::action(const Position& target, const std::vector<AttackUnit>& da
     //se il risultato (k) della divisione intera i/kSide è un numero pari, la riga va letta da sinistra a destra (x aumenta);
     //                                                      se è dispari, da destra a sinistra (x diminuisce)
     //il risultato della divisione intera i/kSide è l'indice della riga dell'elemento
-    //
-    //devo comunque lavorare con coordinate relative alla posizione del sottomarino (target), quindi uso le variabili
-    //x_diff e y_diff che oscillano tra -kSide/2 e +kSide/2
-    for(int i = 0; i < data.size(); i++)
-    {
-        int k = i/kSide;
-        if(k % 2 == 0)      //controllo k pari
-        {
-            x_diff++ ;
-            map.attack_map()[target.X() + x_diff][target.Y() + y_diff + k] = data[i];
-        }
-        else                //altrimenti k dispari
-        {
-            x_diff-- ;
-            map.attack_map()[target.X() + x_diff][target.Y() + y_diff + k] = data[i];
-        }
-    }
-}
+    
 */

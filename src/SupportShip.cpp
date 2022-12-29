@@ -8,8 +8,8 @@
 //i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
 void SupportShip::action(const Position& target, const std::vector<AttackUnit>& data) 
 {
-    defense_map_.move_ship(this->centre(), target);
-    defense_map_.fix_ship(target);
+    defenseMap().move_ship(this->centre(), target);
+    defenseMap().fix_ship(target, kSize);
 }
 
 /*    for(int i = -(kSide/2); i <= kSide/2; i++)

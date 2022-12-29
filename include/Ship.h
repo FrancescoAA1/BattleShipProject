@@ -32,6 +32,8 @@ class Ship
         int size() const {return size_;}
         Position centre() const {return centre_;}
         Direction orientation() const {return orientation_;}
+        AttackMap attackMap() const {return attack_map_;}
+        DefenseMap defenseMap() const {return defense_map_;}
 
         //metodi setter
         void set_center(const Position& new_centre) {centre_ = new_centre;}
