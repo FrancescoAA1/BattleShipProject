@@ -35,7 +35,9 @@ class Position
 };
 //operatori di cui fare l'overload
 Position operator+(const Position& p1, const Position& p2); 
-Position operator-(const Position& p1, const Position& p2); 
+Position operator-(const Position& p1, const Position& p2);
+Position operator*(const Position& p, int coeff);  
+Position operator/(const Position& p, int coeff);  
 bool operator==(const Position& p1, const Position& p2);
 bool operator!=(const Position& p1, const Position& p2);  
 //non sono necessari operatori di copia, spostamento e relativi contruttori non avendo memoria dinamica allocata

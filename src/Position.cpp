@@ -51,3 +51,13 @@ bool operator!=(const Position& p1, const Position& p2)
 {
     return !(p1 == p2); 
 }
+
+Position operator/(const Position& p, int coeff)
+{
+    return Position(p.X()/coeff, p.Y()/coeff); 
+}
+
+Position operator*(const Position& p, int coeff)
+{
+    return Position(p.X()*coeff, p.Y()*coeff); 
+}
