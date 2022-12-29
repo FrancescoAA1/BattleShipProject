@@ -6,7 +6,7 @@
 
 //enumeratore che indica il tipo di mossa effettuata dal giocatore
 enum MoveType{
-    addShip, //aggiunta di una nave
+    invalid,
     attack, //attacco (corazzata)
     moveAndFix, //spostamento e cura (nave di supporto)
     moveAndDiscover, //spostamento ed ispezione (sottomarino)
@@ -24,6 +24,8 @@ class Move
     Position origin() const {return origin_;}
     Position target() const {return target_;}
     MoveType movetype() const {return move_;}
+
+    void makeInvalid(){ move_ = MoveType::invalid; origin_.make_absolute_invalid(); target_.make_absolute_invalid();};
 
     private: 
 

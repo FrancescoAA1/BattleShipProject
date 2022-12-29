@@ -8,6 +8,9 @@
 #include "DefenseMap.h"
 #include "Move.h"
 #include "Ship.h"
+#include "Ironclad.h"
+#include "SupportShip.h"
+#include "Submarine.h"
 
 class Player
 {
@@ -76,7 +79,13 @@ class Player
 
     //costante utile per le conversioni da comando a posizione e viceversa
     static constexpr int kEqualityVectorPosition =1;
-
 }; 
+
+
+    //fornisce la direzione della nave da inserire
+    Direction get_direction(const Position& bow, const Position& stern);
+
+    //fornisce la taglia della nave da inserire
+    int get_size(const Position& bow, const Position& stern, const Direction& direction);
 
 #endif

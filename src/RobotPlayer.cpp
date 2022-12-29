@@ -4,13 +4,15 @@
 Move RobotPlayer::get_move(const std::string &move)
 {
     Ship *ship_cmd = ship_list.at(get_random_index(ship_list.size()));
+    Position origin{};
+    Position target{};
 
     if (ship_cmd)
     {
         // posizione di origine corrisponde al centro della nave appena ottenuta
-        Position origin = ship_cmd->centre();
+        origin = ship_cmd->centre();
         //viene generato una posizione target casuale
-        Position target = get_random_pos();
+        target = get_random_pos();
 
         int size = ship_cmd->size();
 
@@ -18,25 +20,20 @@ Move RobotPlayer::get_move(const std::string &move)
         //NOTA: sarebbe opportuno usare delle costanti
         if (size == 5)
         {
-            Move m{origin, target, MoveType::attack};
-            return m;
+            return {origin, target, MoveType::attack};
         }
         else if (size == 3)
         {
-            Move m{origin, target, MoveType::moveAndFix};
-            return m;
+            return {origin, target, MoveType::moveAndFix};
         }
         else
         {
-            Move m{origin, target, MoveType::moveAndDiscover};
-            return m;
+             return {origin, target, MoveType::moveAndDiscover};
         }
     }
     else
     {
-        // se la nave non + stata trovata, il puntatore non punta ad una nave
-        // viene dunque lanciata un'eccezione
-        throw InvalidMove{};
+        return {origin, target, MoveType::invalid};
     }
 }
 

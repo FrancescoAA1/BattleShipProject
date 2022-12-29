@@ -61,9 +61,9 @@ class Ship
         //variabile che indica il centro della nave
         Position centre_;
         //campo che contine un firerimento alla mappa di attacco di cui fa parte
-        AttackMap& attack_map_; 
+        AttackMap attack_map_; 
         //campo che contine un rigferimento alla mappa di difesa di cui fa parte
-        DefenseMap& defense_map_; 
+        DefenseMap defense_map_; 
 
 
 }; 

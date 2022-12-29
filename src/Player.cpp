@@ -77,16 +77,15 @@ std::string &Player::convert_to_command(const Position &position)
 Ship *Player::get_ship(const Position &origin)
 {
     // ricerca del puntatore alla nave avente come centro la posizione di origine
-    auto it = std::find_if(ship_list.begin(), ship_list.end(), [origin](const Ship &ship)
-                           { return ship.centre() == origin; });
+    auto it = std::find_if(ship_list.begin(), ship_list.end(), [origin](Ship* ship)
+                           { return ship->centre() == origin; });
 
     // se l'iteratore ritornato dall'algoritmo STL punta all'ultimo elemento del vettore di navi
     // la nave non è stata trovata e viene ritornato nullptr, altrimenti si calcola l'indice
     // del vettore in cui trova il puntatore e lo si restituisce.
     if (it != ship_list.end())
     {
-        auto index = std::distance(ship_list.begin(), it);
-        return ship_list.at(index);
+        return *it;
     }
     else
     {
@@ -108,13 +107,60 @@ bool Player::add_ship(const std::string &cmd)
     bow = convert_to_position(first_pair);
     stern = convert_to_position(second_pair);
 
-    if(defense_map_.add_ship(bow, stern))
+    if (defense_map_.add_ship(bow, stern))
     {
-        // Ship s = {bow.distance(stern), bow.orientation(stern), defense_map_, attack_map_};
-        // ship_list.push_back(s);
+        int size = get_size(bow, stern);
+        Direction d = get_direction(bow,stern);
+        Position p = (bow+stern)/2;
+
+        if(size == 5)
+        {
+            Ironclad ship {d, p, defense_map_, attack_map_};
+            ship_list.push_back(&ship);
+        }
+        else if(size == 3)
+        {
+            SupportShip ship {d, p, defense_map_, attack_map_};
+            ship_list.push_back(&ship);
+        }
+        else
+        {
+            Submarine ship {p, defense_map_, attack_map_};
+            ship_list.push_back(&ship);
+        }
     }
     else
     {
-        throw ShipNotPlaceable{};
+        return false;
     }
+
+    return true;
 }
+
+// fornisce la direzione della nave da inserire
+Direction get_direction(const Position &bow, const Position &stern)
+{
+    Direction ship_dir;
+    if(bow.X() == stern.X())
+    {
+        return Direction::vertical;
+    }
+    return Direction::horizontal;
+    
+}
+
+// fornisce la taglia della nave da inserire
+int get_size(const Position &bow, const Position &stern)
+{
+    Direction placing = get_direction(bow, stern);
+
+    if (placing == Direction::horizontal)
+    {
+        return abs(bow.X() - stern.X());
+    }
+    else
+        return abs(bow.Y() - stern.Y());
+}
+
+
+

@@ -46,28 +46,25 @@ Move HumanPlayer::get_move(const std::string &cmd)
 
                 if (size == 5)
                 {
-                    Move m{origin, target, MoveType::attack};
-                    return m;
+                    return {origin, target, MoveType::attack};
                 }
                 else if (size == 3)
                 {
-                    Move m{origin, target, MoveType::moveAndFix};
-                    return m;
+                    return {origin, target, MoveType::moveAndFix};
                 }
                 else
                 {
-                    Move m{origin, target, MoveType::moveAndDiscover};
-                    return m;
+                    return {origin, target, MoveType::moveAndDiscover};
                 }
             }
             else
             {
-                throw InvalidMove{};
+                return {origin, target, MoveType::invalid};
             }
         }
         catch (InvalidPosition)
         {
-            throw InvalidMove{};
+            return {origin, target, MoveType::invalid};
         }
     }
 }

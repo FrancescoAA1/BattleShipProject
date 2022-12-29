@@ -8,8 +8,8 @@
 // la cella non è stat soggetta ad attacchi => empty 
 enum AttackUnit
 {
-    empty, 
-    emty_and_hit, //O
+    unknown, 
+    empty_and_hit, //O
     full_and_hit, //X
     spotted //Y
 };
