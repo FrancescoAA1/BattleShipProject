@@ -3,12 +3,12 @@
 
 #include "Player.h"
 
-class RobotPlayer : Player
+class RobotPlayer : public Player
 {
     public:
 
     //costruttore che crea giocatore con nome
-    RobotPlayer(const std::string& nickname) : Player(nickname_){}
+    RobotPlayer(const std::string& nickname_) : Player(nickname_){}
 
     //funzione che dato un comando restituisce una mossa
     Move get_move(const std::string& cmd) override;

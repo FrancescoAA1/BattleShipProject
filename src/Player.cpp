@@ -1,6 +1,6 @@
 #include "../include/Player.h"
 
-Player::Player(const std::string &nickname)
+Player::Player(const std::string& nickname)
 {
     nickname_ = nickname;
     attack_map_ = AttackMap();

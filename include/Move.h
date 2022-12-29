@@ -20,10 +20,18 @@ class Move
     //costruttore valido sia per Human Player, sia per Robot Player
     Move(const Position&, const Position&, MoveType);
 
+    //costruttore che creare una mossa invalida
+    Move();
+
+
     //metodi getter
     Position origin() const {return origin_;}
     Position target() const {return target_;}
     MoveType movetype() const {return move_;}
+
+    //metodi setter
+    void set_movetype(MoveType m){move_ = m;}
+
 
     void makeInvalid(){ move_ = MoveType::invalid; origin_.make_absolute_invalid(); target_.make_absolute_invalid();};
 

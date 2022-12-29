@@ -8,7 +8,7 @@
 void Submarine::action(const Position& target, const std::vector<AttackUnit>& data)
 {
     defenseMap().move_ship(this->centre(), target); 
-    attackMap().spot_positions(data);
+    attackMap().spot_position(data);
 }
 
 /*

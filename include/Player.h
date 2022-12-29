@@ -16,13 +16,6 @@ class Player
 {
     public:
 
-
-    // Eccezione che viene lanciata se la posizione di origine non è presente nel vettore di navi
-    class ShipNotPlaceable : public std::exception {};
-
-    // Eccezione che viene lanciata se la mossa creata non è valida
-    class InvalidMove : public std::exception {}; 
-
     // Eccezione che viene lanciata se la posizione di origine non è presente nel vettore di navi
     class InvalidPosition : public std::exception {};
     
@@ -54,6 +47,10 @@ class Player
 
     //metodi getter
     std::string nickname() {return nickname_;}
+    AttackMap& attackMap(){return attack_map_;}
+    DefenseMap& defenseMap() {return defense_map_;}
+    int getShipsLeft() {return ship_list.size();}
+
 
     protected:
 
