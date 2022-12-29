@@ -10,7 +10,7 @@ Ship::Ship(int size, Direction orientation, Position& centre_position, DefenseMa
     defense_map_ = d_map;
 }
 
-void Ship::hit()
+bool Ship::hit()
 {
     armor_--;
 
