@@ -1,7 +1,6 @@
 #include "Submarine.h"
 
 //Per eseguire la sua azione di spostamento e ispezione, il sottomarino ha bisogno dei seguenti dati:
-//La mappa di attacco del giocatore che ordina la mossa, la quale verrà modificata
 //La posizione obiettivo dello spostamento, anche centro dell'area ispezionata
 //Un vettore di AttackUnit, che contiene la porzione di mappa nemica che è stata ispezionata
 //

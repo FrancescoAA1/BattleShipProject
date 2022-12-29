@@ -17,4 +17,10 @@ class Ironclad : public Ship
         static constexpr int kSize = 5;
 }; 
 
+/*
+classe Ironclad: questa classe rappresenta una nave corazzata, di dimensione 5;
+questa nave può eseguire l'operazione di attacco verso una singola cella avversaria, per ridurre di 1 la
+corazza di una evenutale nave colpita
+*/
+
 #endif
