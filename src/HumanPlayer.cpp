@@ -1,25 +1,22 @@
 #include "../include/HumanPlayer.h"
 
 
-HumanPlayer::HumanPlayer(const std::string& nickname) : Player(nickname)
+Move HumanPlayer::get_move(const std::string &cmd)
 {
-}
-
-Move HumanPlayer::get_move(const std::string& move)
-{
-    //da implementare
-    //controllo subito che la stringa sia AA AA
-    //se è cosi
+    // creazione di due posizioni con il costruttore di default
     Position origin{};
     Position target{};
 
-    if(move == "AA AA")
+    // prima di dividere la stringa nelle due coordinate
+    // si controlla che la stringa corrisponda ad un comando di stampa delle due mappe
+    // oppure ad un comando di pulizia della mappa
+    if (cmd == "AA AA")
     {
         origin.make_absolute_invalid();
         target.make_absolute_invalid();
         return Move{origin, target, MoveType::showMap};
     }
-    else if(move == "YY YY")
+    else if (cmd == "YY YY")
     {
         origin.make_absolute_invalid();
         target.make_absolute_invalid();
@@ -27,47 +24,50 @@ Move HumanPlayer::get_move(const std::string& move)
     }
     else
     {
-        char originX = move[0] - defaultCapitalAscii;
-        char originY = move[1] - 1;
+        // divisione della stringa in due parti (il delimitatore è lo spazio)
+        int pos = cmd.find_first_of(' ');
+        std::string first_pair = cmd.substr(pos + 1);
+        std::string second_pair = cmd.substr(0, pos);
 
-        char targetX = move[3] - defaultCapitalAscii;
-        char targetY = move[4] - 1;
-
-        if((originX >= 0 || originX <= 11) && (originX >= 0 || originX <= 11))
+        try
         {
-            origin = {originX, originY};
+            // per ogni coppia di coordinate viene restituita una posizione
+            origin = convert_to_position(first_pair);
+            target = convert_to_position(second_pair);
+
+            // viene indivuata la nave che compie l'azione
+            Ship *ship_cmd = get_ship(origin);
+
+            if (ship_cmd)
+            {
+                // distinzione del tipo di mossa a seconda della taglia della nave restituita
+                // NOTA: sarebbe opportuno usare delle costanti
+                int size = ship_cmd->size();
+
+                if (size == 5)
+                {
+                    Move m{origin, target, MoveType::attack};
+                    return m;
+                }
+                else if (size == 3)
+                {
+                    Move m{origin, target, MoveType::moveAndFix};
+                    return m;
+                }
+                else
+                {
+                    Move m{origin, target, MoveType::moveAndDiscover};
+                    return m;
+                }
+            }
+            else
+            {
+                throw InvalidMove{};
+            }
         }
-        else
+        catch (InvalidPosition)
         {
             throw InvalidMove{};
         }
-
-        Ship* shipMove = sea_map_.get_ship(origin);
-        shipMove
-
     }
-
-    //altrimenti controllo che la stringa sia YY YY
-
-
-    //altrimenti separo la stringa in due parti
-    
-    //considero la prima stringa e prendo il primo carattere
-    //converto quest'ultimo sottraendo al suo valore ASCII il valore 65 (da aggiungere come costante nella classe Player?)
-    //infatti 'A' - 65 = 0 (posizione X)
-    //tolgo 1 al secondo carattere per avere corrispondenza con gli indice della matrice della mappa
-    //se posizione x e posizione y sono comprese tra 0 e 11
-    //allora procedo con la creazione di una posizione
-
-    //ripeto la procedura precedente per la seconda parte della stringa
-
-    //se una delle due coordinate non vanno bene restituisco eccezione invalidmove
-
-    //ottengo così le due coordinate, ma necessito ancora del tipo di nave
-
-    //richiedo la nave alla mappa con getship(origin, target, nullptr)
-    //creo la mossa con tipo di nave e la ritorno
-
-
-    
 }

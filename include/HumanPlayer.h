@@ -7,12 +7,12 @@ class HumanPlayer : Player
 {
     public:
 
-    HumanPlayer(const std::string& nickname_);
-    Move get_move(const std::string&) override;
+    //costruttore che crea giocatore con nome
+    HumanPlayer(const std::string& nickname) : Player(nickname_){}
 
+    //funzione che dato un comando restituisce una mossa
+    Move get_move(const std::string& cmd) override;
     private:
-
-    static constexpr int defaultCapitalAscii = 65;
 }; 
 
 #endif

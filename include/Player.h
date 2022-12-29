@@ -2,10 +2,12 @@
 #define BATTLESHIPPROJECT_PLAYER_H_
 
 #include <string>
-#include "Map.h"
+#include <vector>
+#include <algorithm>
+#include "AttackMap.h"
+#include "DefenseMap.h"
 #include "Move.h"
-
-
+#include "Ship.h"
 
 class Player
 {
@@ -13,35 +15,33 @@ class Player
 
     // Eccezione che viene lanciata se la mossa creata non è valida
     class InvalidMove : public std::exception {}; 
+
+    // Eccezione che viene lanciata se la posizione di origine non è presente nel vettore di navi
+    class InvalidPosition : public std::exception {};
     
-    //metodo che a partire da un comando ricava la mossa che verrà effettuata dalla nave
-    //La stringa viene manipolata per ricavare posizione di origine e posizione target
-    //Se la stringa non è nel formato corretto viene ritornato null
-    //altrimenti si cerca la posizione di orgine nel dizionario delle navi (disponibile presso la mappa)
-    //Se non viene trovata una nave si ritorna null
-    //Altrimenti viene istanziato un oggetto di tipo Move
+    //funzione virtuale pura di cui effettuare l'override nelle classi derivate
+    //a partire da un comando ricava la mossa che verrà effettuata dalla nave
+    //specificando posizione di origine, posizione target e tipo di mossa;
+    //lancia eccezioni di tipo invalidMove
+    virtual Move get_move(const std::string& cmd) = 0;
 
-    //La mossa verrà poi trasferita al controller e gestita in base al tipo di mossa
-    //Ad eccezione della cura, il giocatore avversario ritornerà un vettore di Attack Unit
-    //contenente le celle ispezionate (nel caso del sonar) oppure la cella da attaccare (corazzata)
+    //funzione che converte una coppia di coordinate (quindi una delle due parti dell'intero comando)
+    //in una posizione
+    Position& convert_to_position(const std::string& coordinate);
 
-    //funzione virtuale pura di cui effettuare l'override nelle classi derivate Human Player e Robot Player
-    virtual Move get_move(const std::string&) = 0;
+    //funzione che converte una posizione in una delle due parti del comando
+    std::string& convert_to_command(const Position& position);
 
-    //metodo che verifica se uno spostamento di un sottomarino o di una nave di supporto può
-    //essere effettuato
-    //la nave, una volta accertatasi che lo spostamento può essere effettuato, compierà la sua azione
-    bool check_movement(const Move&);
+    //data una posizione di origine, la funzione restituisce un puntatore alla nave 
+    //avente come centro la posizione specificata. Se tale nave non esiste
+    //la funzione ritorna nullptr
+    Ship* get_ship(const Position& origin); 
 
-    //metodo che ritorna 0 (cura),1 (attacco),25 (sonar) celle a seconda della tipologia di mossa effettuata
-    std::vector<AttackUnit> retrieve_unit(const Move&);
+    //funzione che ritorna un vettore di attackUnit per le operazioni di attacco e sonar
+    std::vector<AttackUnit>& retrieve_unit(const Position& target, const MoveType& move);
 
     //metodi getter
     std::string nickname() {return nickname_;}
-
-    //non è necessario metodo getter che ritorni puntatore alla nave
-    //dato che il giocatore ottiene dalla mappa la nave interessata da un comanda
-    //e invoca il metodo azione di quest'ultima per compiere una mossa
 
     protected:
 
@@ -50,9 +50,23 @@ class Player
         
     //nome del giocatore
     std::string nickname_;
-    //insieme della mappa di attacco e di difesa del giocatore con metodi di gestione
-    Map sea_map_;
 
+    //mappa di attacco del giocatore
+    AttackMap attack_map_;
+
+    //mappa di difesa del giocatore
+    DefenseMap defense_map_;
+
+    //vector di puntatori ad una nave
+    std::vector<Ship*> ship_list;
+
+    private :
+    
+    //costante utile per le conversioni da comando a posizione e viceversa
+    static constexpr int kDefaultCapitalAscii = 65;
+
+    //costante utile per le conversioni da comando a posizione e viceversa
+    static constexpr int kEqualityVectorPosition =1;
 
 }; 
 
