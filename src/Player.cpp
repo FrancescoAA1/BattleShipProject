@@ -11,7 +11,6 @@ Player::Player(const std::string& nickname)
 
 std::vector<AttackUnit> &Player::retrieve_unit(const Position &target, const MoveType &move)
 {
-    // metodo da ripensare in seguito alla creazione della classe Game e del controller
     std::vector<AttackUnit> att;
     if (move == MoveType::attack)
     {

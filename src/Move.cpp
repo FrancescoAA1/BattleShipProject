@@ -12,7 +12,12 @@ Move::Move()
     origin_ = Position();
     target_ = Position();
 
-    origin_.make_absolute_invalid();
+    makeInvalid();
+}
+
+void Move::makeInvalid()
+{ 
+    move_ = MoveType::invalid; 
+    origin_.make_absolute_invalid(); 
     target_.make_absolute_invalid();
-    move_ = MoveType::invalid;
 }

@@ -32,8 +32,8 @@ class Move
     //metodi setter
     void set_movetype(MoveType m){move_ = m;}
 
-
-    void makeInvalid(){ move_ = MoveType::invalid; origin_.make_absolute_invalid(); target_.make_absolute_invalid();};
+    //rende non valida una mossa invalidandone le posizioni e cambiando il tipo di mossa
+    void makeInvalid();
 
     private: 
 
