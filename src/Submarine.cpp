@@ -1,4 +1,4 @@
-#include "../include/Submarine.h"
+#include "Submarine.h"
 
 //Per eseguire la sua azione di spostamento e ispezione, il sottomarino ha bisogno dei seguenti dati:
 //La mappa di attacco del giocatore che ordina la mossa, la quale verrà modificata
@@ -6,10 +6,10 @@
 //Un vettore di AttackUnit, che contiene la porzione di mappa nemica che è stata ispezionata
 //
 //i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
-void Submarine::action(Map& map, const Position& target, const std::vector<AttackUnit>& data)
+void Submarine::action(const Position& target, const std::vector<AttackUnit>& data)
 {
-    map.move_ship(this->centre(), target); 
-    map.spot_positions(data);
+    defense_map_.move_ship(this->centre(), target); 
+    attack_map_.spot_positions(data);
 }
 
 /*

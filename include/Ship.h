@@ -32,6 +32,9 @@ class Ship
         int size() const {return size_;}
         Position centre() const {return centre_;}
         Direction orientation() const {return orientation_;}
+
+        //metodi setter
+        void set_center(const Position& new_centre) {centre_ = new_centre;}
         
         //la nave è stata colpita: riduce la corazza di 1
         //restituisce true se la nave è appena stata affondata (serve per avvisare di rimuoverla dal dizionario)
@@ -39,13 +42,12 @@ class Ship
         //la nave è stata curata da una nave di supporto: ripristina la corazza al valore iniziale (che è size_)
         void restore() {armor_ = size_;};
         
-        void set_center(const Position& new_centre) {centre_ = new_centre;}
 
 
     protected:
 
-        //costruttore, richiede la dimensione della nave e il suo orientamento
-        Ship(int, Direction, DefenseMap&, AttackMap&);
+        //costruttore, richiede la dimensione della nave, il suo orientamento, il suo centro, le mappe in cui è contenuta
+        Ship(int, Direction, Position&, DefenseMap&, AttackMap&);
     
 
     private:

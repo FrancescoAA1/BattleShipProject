@@ -1,17 +1,15 @@
-#include "../include/SupportShip.h"
+#include "SupportShip.h"
 
 //Per eseguire la sua azione di spostamento e cura, la nave di supporto ha bisogno dei seguenti dati:
-//La mappa di difesa del giocatore che ordina la mossa, la quale verrà modificata
 //La posizione obiettivo dello spostamento, anche centro dell'area di cura
-//
 //anche se la nave non necessita di attack unit fornite da terzi per eseguire la sua azione,
 //viene comunque passato un array (vuoto) per conformare i metodi action di tutte le navi
 //
 //i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
-void SupportShip::action(Map& map, const Position& target, const std::vector<AttackUnit>& data) 
+void SupportShip::action(const Position& target, const std::vector<AttackUnit>& data) 
 {
-    map.move_ship(this->centre(), target);
-    map.fix_ship(target);
+    defense_map_.move_ship(this->centre(), target);
+    defense_map_.fix_ship(target);
 }
 
 /*    for(int i = -(kSide/2); i <= kSide/2; i++)
