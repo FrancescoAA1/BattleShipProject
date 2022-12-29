@@ -2,7 +2,6 @@
 #define BATTLESHIPPROJECT_SUPPORTSHIP_H_
 
 #include "Ship.h"
-#include <vector>
 
 class SupportShip : public Ship
 {
@@ -27,5 +26,10 @@ class SupportShip : public Ship
         std::vector<Position> last_fixed_ship; 
 
 }; 
+
+/*
+classe SupportShip: questa classe rappresenta la nave di supporto, di dimensione 3;
+questa nave può eseguire l'operazione di spostamento + cura delle navi alleate in un'area 3x3
+*/
 
 #endif

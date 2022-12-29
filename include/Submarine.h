@@ -27,4 +27,10 @@ class Submarine : public Ship
         static constexpr int kSide = 5;
 }; 
 
+/*
+classe Submarine: rappresenta un sottomarino;
+questa nave ha dimensione 1, e può eseguire una operazione di spostamento + ispezione della zona dove si è spostato
+in un'area di 5 caselle * 5 caselle (ispezione = segna sulla mappa di attacco del giocatore le navi nemiche con una Y)
+*/
+
 #endif
