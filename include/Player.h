@@ -13,6 +13,10 @@ class Player
 {
     public:
 
+
+    // Eccezione che viene lanciata se la posizione di origine non è presente nel vettore di navi
+    class ShipNotPlaceable : public std::exception {};
+
     // Eccezione che viene lanciata se la mossa creata non è valida
     class InvalidMove : public std::exception {}; 
 
@@ -36,6 +40,11 @@ class Player
     //avente come centro la posizione specificata. Se tale nave non esiste
     //la funzione ritorna nullptr
     Ship* get_ship(const Position& origin); 
+
+    //funzione che aggiunge una nave alla lista dopo aver richiesto alla mappa di controllare
+    //le coordinate di prua e poppa
+    //Restituisce true se la nave è stata aggiunta, altrimenti false
+    bool add_ship(const std::string& cmd);
 
     //funzione che ritorna un vettore di attackUnit per le operazioni di attacco e sonar
     std::vector<AttackUnit>& retrieve_unit(const Position& target, const MoveType& move);
