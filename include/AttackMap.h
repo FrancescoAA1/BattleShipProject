@@ -25,7 +25,9 @@ class AttackMap
     // lo spot fallisce se la cella non è vuota o non è valida
     bool spot_position(const Position& target_destination); 
 
-    // imposta a hit la cella della mappa d'attacco di target specificato
+    // imposta al valore passato come parametro (shot_status) la cella della mappa d'attacco di target specificato
+    // ritorna true se lo shot è andato a buon fine
+    // lo spot fallisce se la cella non è vuota o non è valida
     bool shot_position(const Position& target_destination, AttackUnit shot_status); 
 
     // Funzioni Utilitarie 
@@ -42,11 +44,19 @@ class AttackMap
     static constexpr int kWidth = 12; 
     static constexpr char kHitAndFullSymbol = 'X'; 
     static constexpr char kHitAndEmptySymbol = 'O';
-    static constexpr char kEmptySpace = ' '; 
+    static constexpr char kSpottedSymbol = 'Y';
+    static constexpr char kEmptySpace = ' ';
+    static constexpr char kFirstRowLetter = 'A'; 
+    static constexpr int kFirstColumnNumber = 1;  
     // rappresenta la mappa da usare per l'attacco
     AttackUnit attack_map_[kHeight][kWidth];  
     // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
-    bool check_position(const Position& position) const; 
+    bool check_position(const Position& position) const;
+
+
+    // ATTACK MAP: è un aclasse che rappresenta una mappa di attacco e fornisce i metodi per individuare 
+    // e aggiornare lo stato delle caselle. Viene usata dalle navi per le funzioni di attacco e discover 
+    // del sottomarino. 
 
 }; 
 

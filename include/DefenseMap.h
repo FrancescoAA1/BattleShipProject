@@ -66,6 +66,8 @@ class DefenseMap
     static constexpr char kSubmarineUnit = 'E';  
     static constexpr char kSupportShipUnitHit = 'c'; 
     static constexpr char kSupportShipUnit = 'C'; 
+    static constexpr char kFirstRowLetter = 'A'; 
+    static constexpr int kFirstColumnNumber = 1; 
 
     // rappresenta la mappa da usare per la difesa
     DefenseUnit defense_map_[kHeight][kWidth]; 
