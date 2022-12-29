@@ -8,11 +8,10 @@ class Ironclad : public Ship
     public:
         //costruttore
         //crea una nave con corazza = 5, dimensione = 5 e orientamento fornito
-        Ironclad(Direction orientation, DefenseMap& defense_map, AttackMap& attack_map)  : Ship(kSize, orientation, defense_map, attack_map) {}
+        Ironclad(Direction orientation, Position& centre_position, DefenseMap& defense_map, AttackMap& attack_map)  : Ship(kSize, orientation, centre_position, defense_map, attack_map) {}
 
         //ricordare l'override di action
-
-    private:
+        void action(const Position& target, const std::vector<AttackUnit>& data) override;
 
         //costante che definisce la dimensione della nave corazzata
         static constexpr int kSize = 5;
