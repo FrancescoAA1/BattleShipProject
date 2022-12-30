@@ -1,11 +1,11 @@
 #include "../include/HumanPlayer.h"
 
-
 Move HumanPlayer::get_move(const std::string &cmd)
 {
     // creazione di due posizioni con il costruttore di default
     Position origin{};
     Position target{};
+    Move m;
 
     // prima di dividere la stringa nelle due coordinate
     // si controlla che la stringa corrisponda ad un comando di stampa delle due mappe
@@ -44,27 +44,39 @@ Move HumanPlayer::get_move(const std::string &cmd)
                 // NOTA: sarebbe opportuno usare delle costanti
                 int size = ship_cmd->size();
 
+                // distinzione del tipo di mossa a seconda della taglia della nave restituita
+                // NOTA: sarebbe opportuno usare delle costanti
                 if (size == 5)
                 {
-                    return {origin, target, MoveType::attack};
+                    m = {origin, target, MoveType::attack};
+                    current_move = m;
+                    return m;
                 }
                 else if (size == 3)
                 {
-                    return {origin, target, MoveType::moveAndFix};
+                    m = {origin, target, MoveType::moveAndFix};
+                    current_move = m;
+                    return m;
                 }
                 else
                 {
-                    return {origin, target, MoveType::moveAndDiscover};
+                    m = {origin, target, MoveType::moveAndDiscover};
+                    current_move = m;
+                    return m;
                 }
             }
             else
             {
-                return {origin, target, MoveType::invalid};
+                m = {origin, target, MoveType::invalid};
+                current_move = m;
+                return m;
             }
         }
         catch (InvalidPosition)
         {
-            return {origin, target, MoveType::invalid};
+            m = {origin, target, MoveType::invalid};
+            current_move = m;
+            return m;
         }
     }
 }
