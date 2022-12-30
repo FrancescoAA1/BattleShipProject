@@ -3,7 +3,7 @@
 Player::Player(const std::string& nickname)
 {
     nickname_ = nickname;
-    attack_map_ = AttackMap();
+    attack_grid_ = AttackGrid();
     defense_map_ = DefenseMap();
     // il vector di navi è inizialmente vuoto
     ship_list;
@@ -114,17 +114,17 @@ bool Player::add_ship(const std::string &cmd)
 
         if(size == 5)
         {
-            Ironclad ship {d, p, defense_map_, attack_map_};
+            Ironclad ship {d, p, defense_map_, attack_grid_};
             ship_list.push_back(&ship);
         }
         else if(size == 3)
         {
-            SupportShip ship {d, p, defense_map_, attack_map_};
+            SupportShip ship {d, p, defense_map_, attack_grid_};
             ship_list.push_back(&ship);
         }
         else
         {
-            Submarine ship {p, defense_map_, attack_map_};
+            Submarine ship {p, defense_map_, attack_grid_};
             ship_list.push_back(&ship);
         }
     }

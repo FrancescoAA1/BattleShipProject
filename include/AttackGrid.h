@@ -1,5 +1,5 @@
-#ifndef BATTLESHIPPROJECT_ATTACKMAP_H_
-#define BATTLESHIPPROJECT_ATTACKMAP_H_
+#ifndef BATTLESHIPPROJECT_ATTACKGRID_H_
+#define BATTLESHIPPROJECT_ATTACKGRID_H_
 
 // Classe che rappresenta la mappa di attacco
 // possiede una matrice di unità d'attacco e i metodi per verificarne 
@@ -10,7 +10,7 @@
 #include <vector>
 #include <ostream>
 
-class AttackMap
+class AttackGrid
 {  
     public:
     // le costanti delle dimesnioni possono essere pubbliche e accessibili dall'estreno 
@@ -18,7 +18,7 @@ class AttackMap
     static constexpr int kWidth = 12; 
 
     // costruttore di default che setta tutto a vuoto
-    AttackMap();  
+    AttackGrid();  
 
     // Funzioni per l'ATTACCO: 
 
@@ -50,12 +50,12 @@ class AttackMap
     static constexpr char kFirstRowLetter = 'A'; 
     static constexpr int kFirstColumnNumber = 1;  
     // rappresenta la mappa da usare per l'attacco
-    AttackUnit attack_map_[kHeight][kWidth];  
+    AttackUnit attack_grid_[kHeight][kWidth];  
     // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
     bool check_position(const Position& position) const;
 
 
-    // ATTACK MAP: è un aclasse che rappresenta una mappa di attacco e fornisce i metodi per individuare 
+    // ATTACK GRID: è un aclasse che rappresenta una mappa di attacco e fornisce i metodi per individuare 
     // e aggiornare lo stato delle caselle. Viene usata dalle navi per le funzioni di attacco e discover 
     // del sottomarino. 
 

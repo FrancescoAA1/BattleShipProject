@@ -5,7 +5,7 @@
 #include "Position.h"
 #include "AttackUnit.h"
 #include "Direction.h"
-#include "AttackMap.h"
+#include "AttackGrid.h"
 #include "DefenseMap.h"
 
 
@@ -32,7 +32,7 @@ class Ship
         int size() const {return size_;}
         Position centre() const {return centre_;}
         Direction orientation() const {return orientation_;}
-        AttackMap attackMap() const {return attack_map_;}
+        AttackGrid AttackGrid() const {return attack_grid_;}
         DefenseMap defenseMap() const {return defense_map_;}
 
         //metodi setter
@@ -49,7 +49,7 @@ class Ship
     protected:
 
         //costruttore, richiede la dimensione della nave, il suo orientamento, il suo centro, le mappe in cui è contenuta
-        Ship(int, Direction, Position&, DefenseMap&, AttackMap&);
+        Ship(int, Direction, Position&, DefenseMap&, AttackGrid&);
     
 
     private:
@@ -63,7 +63,7 @@ class Ship
         //variabile che indica il centro della nave
         Position centre_;
         //campo che contine un firerimento alla mappa di attacco di cui fa parte
-        AttackMap attack_map_; 
+        AttackGrid attack_grid_; 
         //campo che contine un rigferimento alla mappa di difesa di cui fa parte
         DefenseMap defense_map_; 
 

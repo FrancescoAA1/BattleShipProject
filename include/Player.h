@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include "AttackMap.h"
+#include "AttackGrid.h"
 #include "DefenseMap.h"
 #include "Move.h"
 #include "Ship.h"
@@ -47,7 +47,7 @@ class Player
 
     //metodi getter
     std::string nickname() {return nickname_;}
-    AttackMap& attackMap(){return attack_map_;}
+    AttackGrid& AttackGrid(){return attack_grid_;}
     DefenseMap& defenseMap() {return defense_map_;}
     int getShipsLeft() {return ship_list.size();}
 
@@ -61,7 +61,7 @@ class Player
     std::string nickname_;
 
     //mappa di attacco del giocatore
-    AttackMap attack_map_;
+    AttackGrid attack_grid_;
 
     //mappa di difesa del giocatore
     DefenseMap defense_map_;

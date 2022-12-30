@@ -9,5 +9,5 @@
 //i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
 void Ironclad::action(const Position& target, const std::vector<AttackUnit>& data)
 {
-    attackMap().shot_position(target, data[0]);
+    AttackGrid().shot_position(target, data[0]);
 }

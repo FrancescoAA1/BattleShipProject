@@ -57,7 +57,7 @@ void Game::playRound()
         if(m.movetype() == MoveType::clearMap)
         {
             //da implementare
-            player_1->attackMap().clear_area();
+            player_1->AttackGrid().clear_area();
             //non è considerata una mossa valida ai fini del turno
             m.set_movetype(MoveType::invalid);
         }
@@ -66,7 +66,7 @@ void Game::playRound()
         {
             //da implementare
             //std::cout << player_1->defenseMap();
-            //std::cout << player_1->attackMap();
+            //std::cout << player_1->AttackGrid();
             //non è considerata una mossa valida ai fini del turno
             m.set_movetype(MoveType::invalid);
         }
@@ -115,14 +115,14 @@ void Game::playRound()
         if(m.movetype() == MoveType::clearMap)
         {
             //da implementare
-            player_2->attackMap().clear_area();
+            player_2->AttackGrid().clear_area();
             m2.set_movetype(MoveType::invalid);
         }
         else if(m2.movetype() == MoveType::showMap)
         {
             //da implementare
             //std::cout << player_2->defenseMap();
-            //std::cout << player_2->attackMap();
+            //std::cout << player_2->AttackGrid();
             m2.set_movetype(MoveType::invalid);
         }
 

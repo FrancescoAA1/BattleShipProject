@@ -1,8 +1,8 @@
-#include "../include/AttackMap.h"
+#include "../include/AttackGrid.h"
 #include <ostream>
 
 // costruttore di default che setta tutto a vuoto
-AttackMap::AttackMap()
+AttackGrid::AttackGrid()
 {
     clear_area(); 
 }
@@ -11,12 +11,12 @@ AttackMap::AttackMap()
 // aggiornando la mappa d'attacco
 // ritorna true se lo spot è andato a buon fine
 // lo spot fallisce se la cella non è vuota o non è valida
-bool AttackMap::spot_position(const Position& target_destination)
+bool AttackGrid::spot_position(const Position& target_destination)
 {
     // Se la posizione è valida aggirno la mappa di attacco come da aspettativa
     if(check_position(target_destination))
     {
-        attack_map_[target_destination.Y()][target_destination.X()] = AttackUnit::spotted; 
+        attack_grid_[target_destination.Y()][target_destination.X()] = AttackUnit::spotted; 
         return true; 
     }
     else return false; 
@@ -26,37 +26,37 @@ bool AttackMap::spot_position(const Position& target_destination)
 // aggiornando la mappa d'attacco
 // ritorna true se lo shot è andato a buon fine
 // lo spot fallisce se la cella non è vuota o non è valida
-bool AttackMap::shot_position(const Position& target_destination, AttackUnit shot_status)
+bool AttackGrid::shot_position(const Position& target_destination, AttackUnit shot_status)
 {
     // Se la posizione è valida aggirno la mappa di attacco come da aspettativa
     if(check_position(target_destination))
     {
-        attack_map_[target_destination.Y()][target_destination.X()] = shot_status; 
+        attack_grid_[target_destination.Y()][target_destination.X()] = shot_status; 
         return true; 
     }
     else return false; 
 }
 
 // funzione che pulisce tutte le caselle nella matrice 
-void AttackMap::clear_area()
+void AttackGrid::clear_area()
 {
     // imposto tutte le celle 
     for (int i = 0; i < kHeight; i++)
     {
         for (int j = 0; j < kWidth; j++)
         {
-            attack_map_[i][j] = AttackUnit::unknown; 
+            attack_grid_[i][j] = AttackUnit::unknown; 
         }
     }
 }
 
 // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
-bool AttackMap::check_position(const Position& position) const
+bool AttackGrid::check_position(const Position& position) const
 {
     return (position.X() >= 0 && position.X() < kWidth && position.Y() >= 0 && position.X() < kHeight); 
 }
 // Overload dell'operatore << che scrive nell'output stream la matrice di difesa
-std::ostream& AttackMap::operator<<(std::ostream& data_stream)
+std::ostream& AttackGrid::operator<<(std::ostream& data_stream)
 {
     // leggo tutte le celle e scrivo nell'out stream 
     // il loro corrispondente valore per la rappresentazione
@@ -74,7 +74,7 @@ std::ostream& AttackMap::operator<<(std::ostream& data_stream)
             {
                 row_index+=2; 
             }
-            switch (attack_map_[i][j])
+            switch (attack_grid_[i][j])
             {
                 case AttackUnit::unknown:
                     data_stream<<" ";
