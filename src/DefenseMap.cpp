@@ -237,7 +237,7 @@ bool DefenseMap::move_ship(const Position& target_origin, const Position& target
     // se la posizione a destra non è valida => è sul bordo destro ed è sicuramente in vericale (a meno di un sottomarino)
     // se il test sotto fallisce => sicuramente la nave è in verticale o è un sottomarino. 
     // Test a DESTRA
-    if(check_position(target_origin + offset_o))
+    if(check_position(target_origin + offset_o)) // controllare anche se il blocco afiianco ha lo stesso centro :)
     {
         if(defense_map_[(target_origin + offset_o).Y()][(target_origin + offset_o).X()].status() != DefenseStatus::empty)
             direction = Direction::horizontal; 
@@ -273,17 +273,17 @@ bool DefenseMap::move_ship(const Position& target_origin, const Position& target
     }
     else return false; 
 }
-    // sparo ad una nave della mia collezione poichè è stata colpita
-    // ritorno un blocco di attacco per rappresentare lo stato finale dell'operazione da comunicare 
-    // all'esterno.
-    // Se la nave è stata affondata richiamare il metodo remove ship se si desidera rimuovere dalla mappa 
-    AttackUnit DefenseMap::receive_shot(const Position& target_destination)
+// sparo ad una nave della mia collezione poichè è stata colpita
+// ritorno un blocco di attacco per rappresentare lo stato finale dell'operazione da comunicare 
+// all'esterno.
+// Se la nave è stata affondata richiamare il metodo remove ship se si desidera rimuovere dalla mappa 
+AttackUnit DefenseMap::receive_shot(const Position& target_destination)
+{
+    //controllo se la posizione è valida e se lo è verifico se continene una posizione occupata e non colpita
+    if(check_position(target_destination) && defense_map_[target_destination.Y()][target_destination.X()].status() == DefenseStatus::taken)
     {
-        //controllo se la posizione è valida e se lo è verifico se continene una posizione occupata e non colpita
-        if(check_position(target_destination) && defense_map_[target_destination.Y()][target_destination.X()].status() == DefenseStatus::taken)
-        {
-            defense_map_[target_destination.Y()][target_destination.X()].set_status(DefenseStatus::hit); 
-            return AttackUnit::full_and_hit; 
-        }
-        else return AttackUnit::empty_and_hit; 
+        defense_map_[target_destination.Y()][target_destination.X()].set_status(DefenseStatus::hit); 
+        return AttackUnit::full_and_hit; 
     }
+    else return AttackUnit::empty_and_hit; 
+}

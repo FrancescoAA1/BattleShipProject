@@ -34,7 +34,7 @@ class DefenseMap
     // ritorno un blocco di attacco per rappresentare lo stato finale dell'operazione da comunicare 
     // all'esterno.
     // Se la nave è stata affondata richiamare il metodo remove ship se si desidera rimuovere dalla mappa 
-    AttackUnit receive_shot(const Position& target_destination); 
+    AttackUnit receive_shot(const Position& target_destination); // ritonare un pair 
 
     // Metodo che permette di rimuovere una nave dalla mappa 
     bool remove_ship(const Position& target_origin); 

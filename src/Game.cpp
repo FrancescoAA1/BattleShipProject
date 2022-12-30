@@ -79,6 +79,14 @@ void Game::playRound()
     Ship* s2 = player_1->get_ship(m.origin());
 
     //risposta del secondo giocatore alla mossa appena effettuata
+
+    //effettuare 2 distinzioni: colpo d'accatto e spot del sottomarino
+    // per lo spot sei a posto -> usi retrive unit
+    // per lo shot invece definire: 
+    // un metodo che riceve un colpo: usi mappa.receive_shot che ti ritorna un pair: (centro della nave colpita, stato del colpo)
+    // se lo AttackUnit = X => mi preoccupo e guardo nella collezione la nave con quel centro e la colpisco (hit). 
+    // ultimo controllo: se la corazza è finita la devo eliminare: rimuovere dal vettore + chiamare mappa.remove_ship
+    // ritotrno l'attackUnit
     if(m.movetype() != MoveType::moveAndFix)
     {
         units2 = player_2->retrieve_unit(m.target(), m.movetype());
