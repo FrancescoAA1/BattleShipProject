@@ -6,7 +6,7 @@
 #include "AttackUnit.h"
 #include "Direction.h"
 #include <ostream>
-#include <vector>
+#include <utility>
 
 class DefenseMap
 {
@@ -34,14 +34,16 @@ class DefenseMap
     // ritorno un blocco di attacco per rappresentare lo stato finale dell'operazione da comunicare 
     // all'esterno.
     // Se la nave è stata affondata richiamare il metodo remove ship se si desidera rimuovere dalla mappa 
-    AttackUnit receive_shot(const Position& target_destination); // ritonare un pair 
+    std::pair<Position, AttackUnit> receive_shot(const Position& target_destination); // ritonare un pair 
 
     // Metodo che permette di rimuovere una nave dalla mappa 
-    bool remove_ship(const Position& target_origin); 
+    bool remove_ship(const Position& target_origin);
+
+    //AGGIINGERE METODO PER OTTENERE I CENTRI LIMITROFI ALLA POSIZIONE CORRENTE  
 
     // funzione che cura tutte le navi in un'area dimxdim a partire del centro specificato come target
     // l'intero serve a specificare il lato di diemnsione per l'area
-    std::vector<Position>& fix_ship(const Position& target_origin, int dim); 
+    bool fix_ship(const Position& target_origin); 
 
     // funzione che scopre tutte le navi in un'area dimxdim a partire del centro specificato come target
     // ritona un'area che rappresenta una matrice dimxdim scritta per righe
@@ -91,7 +93,6 @@ class DefenseMap
     void clear_area(const Position& center_block, int length, Direction orientation); 
     // metodo che resetta tutt ala matrice di difesa
     void clear_defense_map(); 
-
 }; 
 
 
