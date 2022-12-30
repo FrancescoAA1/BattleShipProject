@@ -13,6 +13,8 @@ class RobotPlayer : public Player
     //funzione che dato un comando restituisce una mossa
     Move get_move(const std::string& cmd) override;
 
+    bool add_ships(const std::string& cmd) override;
+
     private:
 
     //funzione che restituisce un indice casuale compreso tra 0 e la dimensione del vettore di navi
