@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include "AttackMap.h"
+#include "AttackGrid.h"
 #include "DefenseMap.h"
 #include "Move.h"
 #include "Ship.h"
