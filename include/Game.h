@@ -14,11 +14,13 @@ class Game
     //costruttore che accetta i nomi dei due giocatori, la modalità di gioco e il numero di round
     Game(const std::string& nickname_1, const std::string& nickname_2, GameMode mode, int nRounds);
 
-    //funzione che 
+    //funzione che simula un turno di gioco
     void playRound();
 
     //funzione che attesta se uno dei due giocatori ha vinto la partita
     bool Win();
+
+    
 
     private:
 

@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include "AttackGrid.h"
+#include "AttackMap.h"
 #include "DefenseMap.h"
 #include "Move.h"
 #include "Ship.h"
@@ -25,6 +25,8 @@ class Player
     //lancia eccezioni di tipo invalidMove
     virtual Move get_move(const std::string& cmd) = 0;
 
+    virtual bool add_ships(const std::string& cmd) = 0;
+
     //funzione che converte una coppia di coordinate (quindi una delle due parti dell'intero comando)
     //in una posizione
     Position& convert_to_position(const std::string& coordinate);
@@ -42,15 +44,31 @@ class Player
     //Restituisce true se la nave è stata aggiunta, altrimenti false
     bool add_ship(const std::string& cmd);
 
-    //funzione che ritorna un vettore di attackUnit per le operazioni di attacco e sonar
-    std::vector<AttackUnit>& retrieve_unit(const Position& target, const MoveType& move);
+    //funzione che ritorna un vettore di attackUnit per l' operazione del sottomarino
+    std::vector<AttackUnit>& retrieve_unit(const Position& target);
+
+    //funzione che identifica richiede l'aggiornamento della mappa di difesa e, nel caso di nave afffondata
+    //della lista delle navi
+    AttackUnit receive_attack(const Position& target);
+
+    //funzione che richiede l'aggiornamento della mappa per il giocatore che riceve una data mossa
+    std::vector<AttackUnit> execute_move(const Position& target, const MoveType& type);
+
+    //funzione che gestisce la ricezione di attackunits dal giocatore avversario
+    void handle_response(std::vector<AttackUnit> units);
+
+    //funzione che verifica se il comando scelto dal giocatore 
+    //è un comando per visualizzare la mappa o pulirla
+    //ed esegue eventualmente tale azione
+    bool check_for_graphic_cmd();
 
     //metodi getter
     std::string nickname() {return nickname_;}
     AttackGrid& AttackGrid(){return attack_grid_;}
     DefenseMap& defenseMap() {return defense_map_;}
     int getShipsLeft() {return ship_list.size();}
-
+    Move& currentMove() {return current_move;}
+ 
 
     protected:
 
@@ -68,6 +86,8 @@ class Player
 
     //vector di puntatori ad una nave
     std::vector<Ship*> ship_list;
+
+    Move current_move;
 
     private :
     

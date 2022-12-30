@@ -5,14 +5,16 @@
 
 class HumanPlayer : public Player
 {
-    public:
+public:
+    // costruttore che crea giocatore con nome
+    HumanPlayer(const std::string &nickname_) : Player(nickname_) {}
 
-    //costruttore che crea giocatore con nome
-    HumanPlayer(const std::string& nickname_) : Player(nickname_){}
+    // funzione che dato un comando restituisce una mossa
+    Move get_move(const std::string &cmd) override;
 
-    //funzione che dato un comando restituisce una mossa
-    Move get_move(const std::string& cmd) override;
-    private:
-}; 
+    bool add_ships(const std::string &cmd) override;
+
+private:
+};
 
 #endif

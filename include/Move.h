@@ -31,6 +31,8 @@ class Move
 
     //metodi setter
     void set_movetype(MoveType m){move_ = m;}
+    void set_origin(const Position& origin){origin_ = origin;}
+    void set_target(const Position& target){target_ = target;}
 
     //rende non valida una mossa invalidandone le posizioni e cambiando il tipo di mossa
     void makeInvalid();
