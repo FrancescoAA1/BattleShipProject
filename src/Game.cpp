@@ -52,32 +52,29 @@ void Game::playRound()
         // passato come parametro, e restituendo una mossa
         m = player_1->get_move(cmd_player_1);
 
-        //controllo comandi AA AA e YY YY
+        // controllo comandi AA AA e YY YY //fallo anche eseguire
         bool invalidCmd = player_1->check_for_graphic_cmd();
 
-        //nei casi menzionati sopra la mossa non è valida ai fini del turno
+        // nei casi menzionati sopra la mossa non è valida ai fini del turno
         if (invalidCmd)
         {
             m.set_movetype(MoveType::invalid);
         }
-        //mossa di stampa della mappa
-        else if(m.movetype() == MoveType::showMap)
+        // mossa di stampa della mappa
+        else if (m.movetype() != MoveType::invalid)
         {
-            //da implementare
-            //std::cout << player_1->defenseMap();
-            //std::cout << player_1->attackMap();
-            //non è considerata una mossa valida ai fini del turno
-            m.set_movetype(MoveType::invalid);
+            std::vector<AttackUnit> units = player_2->execute_move(m.target(), m.movetype());
+            player_1->handle_response(units);
         }
 
     } while (m.movetype() == MoveType::invalid);
 
-    //si controlla se il primo giocatore ha vinto
+    // si controlla se il primo giocatore ha vinto
     if (!Win())
     {
 
         // inizio del turno del secondo giocatore
-        //le procedure sono analoghe a quelle soprastanti
+        // le procedure sono analoghe a quelle soprastanti
         // la stringa sottostante conterrà la mossa del secondo giocatore
         std::string cmd_player_2;
 
@@ -93,23 +90,21 @@ void Game::playRound()
                 std::cin >> cmd_player_2;
             }
 
-            m2 = player_2->get_move(cmd_player_1);
+            m2 = player_2->get_move(cmd_player_2);
 
+            // controllo comandi AA AA e YY YY //fallo anche eseguire
             bool invalidCmd = player_2->check_for_graphic_cmd();
 
-        if(m.movetype() == MoveType::clearMap)
-        {
-            //da implementare
-            player_2->attackMap().clear_area();
-            m2.set_movetype(MoveType::invalid);
-        }
-        else if(m2.movetype() == MoveType::showMap)
-        {
-            //da implementare
-            //std::cout << player_2->defenseMap();
-            //std::cout << player_2->attackMap();
-            m2.set_movetype(MoveType::invalid);
-        }
+            // nei casi menzionati sopra la mossa non è valida ai fini del turno
+            if (invalidCmd)
+            {
+                m2.set_movetype(MoveType::invalid);
+            }
+            else if (m2.movetype() != MoveType::invalid)
+            {
+                std::vector<AttackUnit> units = player_1->execute_move(m2.target(), m2.movetype());
+                player_2->handle_response(units);
+            }
 
         } while (m2.movetype() == MoveType::invalid);
     }

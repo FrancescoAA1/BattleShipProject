@@ -10,12 +10,14 @@ Player::Player(const std::string &nickname)
     current_move;
 }
 
+// metodi privati
 std::vector<AttackUnit> &Player::retrieve_unit(const Position &target)
 {
     std::vector<AttackUnit> att = defense_map_.spot_area(target, 5);
     return att;
 }
 
+// metodi privati
 AttackUnit Player::receive_attack(const Position &target)
 {
     std::pair shot_info = defense_map_.receive_shot(target);
@@ -27,7 +29,7 @@ AttackUnit Player::receive_attack(const Position &target)
         bool sunk = ship_attacked->hit();
         if (sunk)
         {
-            //da implementare rimozione navi dalla lista
+            // da implementare rimozione navi dalla lista
 
             // std::vector<int>::iterator pos = std::find(ship_list.begin(), ship_list.end(), ship_attacked);
             // if (pos != ship_list.end())
@@ -50,7 +52,7 @@ std::vector<AttackUnit> Player::execute_move(const Position &target, const MoveT
     }
     else if (type == MoveType::moveAndDiscover)
     {
-        units = { retrieve_unit(target)};
+        units = {retrieve_unit(target)};
     }
 
     return units;
@@ -67,7 +69,7 @@ bool Player::check_for_graphic_cmd()
     if (current_move.movetype() == MoveType::clearMap)
     {
         // da implementare
-        attackMap().clear_area();
+        AttackGrid().clear_area();
         current_move.makeInvalid();
     }
     else if (current_move.movetype() == MoveType::showMap)
@@ -133,6 +135,7 @@ Ship *Player::get_ship(const Position &origin)
     // se l'iteratore ritornato dall'algoritmo STL punta all'ultimo elemento del vettore di navi
     // la nave non è stata trovata e viene ritornato nullptr, altrimenti si calcola l'indice
     // del vettore in cui trova il puntatore e lo si restituisce.
+
     if (it != ship_list.end())
     {
         return *it;
@@ -165,17 +168,17 @@ bool Player::add_ship(const std::string &cmd)
 
         if (size == 5)
         {
-            Ironclad ship{d, p, defense_map_, attack_map_};
+            Ironclad ship{d, p, defense_map_, attack_grid_};
             ship_list.push_back(&ship);
         }
         else if (size == 3)
         {
-            SupportShip ship{d, p, defense_map_, attack_map_};
+            SupportShip ship{d, p, defense_map_, attack_grid_};
             ship_list.push_back(&ship);
         }
         else
         {
-            Submarine ship{p, defense_map_, attack_map_};
+            Submarine ship{p, defense_map_, attack_grid_};
             ship_list.push_back(&ship);
         }
     }
