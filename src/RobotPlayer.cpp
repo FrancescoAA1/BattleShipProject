@@ -21,28 +21,20 @@ Move RobotPlayer::get_move(const std::string &move)
         // NOTA: sarebbe opportuno usare delle costanti
         if (size == 5)
         {
-            m = {origin, target, MoveType::attack};
-            current_move = m;
-            return m;
+            return {origin, target, MoveType::attack};
         }
         else if (size == 3)
         {
-            m = {origin, target, MoveType::moveAndFix};
-            current_move = m;
-            return m;
+            return {origin, target, MoveType::moveAndFix};
         }
         else
         {
-            m = {origin, target, MoveType::moveAndDiscover};
-            current_move = m;
-            return m;
+            return {origin, target, MoveType::moveAndDiscover};
         }
     }
     else
     {
-        m = {origin, target, MoveType::invalid};
-        current_move = m;
-        return m;
+        return {origin, target, MoveType::invalid};
     }
 }
 
@@ -59,9 +51,38 @@ Position &RobotPlayer::get_random_pos()
     return target;
 }
 
-bool RobotPlayer::add_ships(const std::string& cmd)
+Position &get_random_pos1(const Position &pos, int size)
 {
-    Position origin = get_random_pos();
-    
+    int x = std::rand() % 4;
+    // da finire
+}
+
+bool RobotPlayer::add_ships(const std::string &cmd, int size)
+{
+    Position bow = get_random_pos();
+    Position stern = get_random_pos1(bow, size);
+    bool created = DefenseMap().add_ship(bow, stern);
+
+    Direction d = get_direction(bow, stern);
+    Position p = (bow + stern) / 2;
+
+    if (created)
+    {
+        if (size == 5)
+        {
+            Ironclad ship{d, p, defense_map_, attack_grid_};
+            ship_list.push_back(&ship);
+        }
+        else if (size == 3)
+        {
+            SupportShip ship{d, p, defense_map_, attack_grid_};
+            ship_list.push_back(&ship);
+        }
+        else
+        {
+            Submarine ship{p, defense_map_, attack_grid_};
+            ship_list.push_back(&ship);
+        }
+    }
     return true;
 }
