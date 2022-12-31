@@ -53,18 +53,13 @@ void Game::playRound()
         m = player_1->get_move(cmd_player_1);
 
         // controllo comandi AA AA e YY YY //fallo anche eseguire
-        bool invalidCmd = player_1->check_for_graphic_cmd();
+        player_1->check_for_graphic_cmd(m);
 
         // nei casi menzionati sopra la mossa non è valida ai fini del turno
-        if (invalidCmd)
-        {
-            m.set_movetype(MoveType::invalid);
-        }
-        // mossa di stampa della mappa
-        else if (m.movetype() != MoveType::invalid)
+        if (m.movetype() != MoveType::invalid)
         {
             std::vector<AttackUnit> units = player_2->execute_move(m.target(), m.movetype());
-            player_1->handle_response(units);
+            player_1->handle_response(units, m);
         }
 
     } while (m.movetype() == MoveType::invalid);
@@ -93,17 +88,12 @@ void Game::playRound()
             m2 = player_2->get_move(cmd_player_2);
 
             // controllo comandi AA AA e YY YY //fallo anche eseguire
-            bool invalidCmd = player_2->check_for_graphic_cmd();
+            player_2->check_for_graphic_cmd(m2);
 
-            // nei casi menzionati sopra la mossa non è valida ai fini del turno
-            if (invalidCmd)
-            {
-                m2.set_movetype(MoveType::invalid);
-            }
-            else if (m2.movetype() != MoveType::invalid)
+            if (m2.movetype() != MoveType::invalid)
             {
                 std::vector<AttackUnit> units = player_1->execute_move(m2.target(), m2.movetype());
-                player_2->handle_response(units);
+                player_2->handle_response(units, m2);
             }
 
         } while (m2.movetype() == MoveType::invalid);
@@ -127,3 +117,5 @@ bool Game::Win()
     // nessuno ha ancora vinto
     return false;
 }
+
+
