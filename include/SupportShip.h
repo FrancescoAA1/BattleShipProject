@@ -8,7 +8,7 @@ class SupportShip : public Ship
     public:
         //costruttore
         //crea una nave con corazza = 3, dimensione = 3 e orientamento fornito
-        SupportShip(Direction orientation, Position& centre_position, DefenseMap& defense_map, AttackGrid& attack_grid) : Ship(kSize, orientation, centre_position, defense_map, attack_grid) {}
+        SupportShip(Direction orientation, Position& centre_position, DefenseMap& def_map, AttackGrid& att_grid) : Ship(kSize, orientation, centre_position, def_map, att_grid) {}
 
         //ricordare l'override di action
         void action(const Position& target, const std::vector<AttackUnit>& data) override;

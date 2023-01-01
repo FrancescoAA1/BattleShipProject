@@ -48,35 +48,77 @@ Move HumanPlayer::get_move(const std::string &cmd)
                 // NOTA: sarebbe opportuno usare delle costanti
                 if (size == 5)
                 {
-                    m = {origin, target, MoveType::attack};
-                    current_move = m;
-                    return m;
+                    return {origin, target, MoveType::attack};
                 }
                 else if (size == 3)
                 {
-                    m = {origin, target, MoveType::moveAndFix};
-                    current_move = m;
-                    return m;
+                    return {origin, target, MoveType::moveAndFix};
                 }
                 else
                 {
-                    m = {origin, target, MoveType::moveAndDiscover};
-                    current_move = m;
-                    return m;
+                    return {origin, target, MoveType::moveAndDiscover};
                 }
             }
             else
             {
-                m = {origin, target, MoveType::invalid};
-                current_move = m;
-                return m;
+                return {origin, target, MoveType::invalid};
             }
         }
         catch (InvalidPosition)
         {
-            m = {origin, target, MoveType::invalid};
-            current_move = m;
-            return m;
+            return {origin, target, MoveType::invalid};
         }
     }
+}
+
+bool HumanPlayer::add_ships(const std::string &cmd, int size)
+{
+    Position bow{};
+    Position stern{};
+
+    // divisione della stringa in due parti (il delimitatore è lo spazio)
+    int pos = cmd.find_first_of(' ');
+    std::string first_pair = cmd.substr(pos + 1);
+    std::string second_pair = cmd.substr(0, pos);
+
+    // per ogni coppia di coordinate viene restituita una posizione
+    bow = convert_to_position(first_pair);
+    stern = convert_to_position(second_pair);
+    int c_size = get_size(bow, stern);
+
+    if (c_size == size)
+    {
+        if (defense_map_.add_ship(bow, stern))
+        {
+
+            Direction d = get_direction(bow, stern);
+            Position p = (bow + stern) / 2;
+
+            if (size == 5)
+            {
+                Ironclad ship{d, p, defense_map_, attack_grid_};
+                ship_list.push_back(&ship);
+            }
+            else if (size == 3)
+            {
+                SupportShip ship{d, p, defense_map_, attack_grid_};
+                ship_list.push_back(&ship);
+            }
+            else
+            {
+                Submarine ship{p, defense_map_, attack_grid_};
+                ship_list.push_back(&ship);
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
 }

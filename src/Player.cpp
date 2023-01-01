@@ -7,15 +7,16 @@ Player::Player(const std::string &nickname)
     defense_map_ = DefenseMap();
     // il vector di navi è inizialmente vuoto
     ship_list;
-    current_move;
 }
 
+// metodi privati
 std::vector<AttackUnit> &Player::retrieve_unit(const Position &target)
 {
     std::vector<AttackUnit> att = defense_map_.spot_area(target, 5);
     return att;
 }
 
+// metodi privati
 AttackUnit Player::receive_attack(const Position &target)
 {
     std::pair shot_info = defense_map_.receive_shot(target);
@@ -27,7 +28,7 @@ AttackUnit Player::receive_attack(const Position &target)
         bool sunk = ship_attacked->hit();
         if (sunk)
         {
-            //da implementare rimozione navi dalla lista
+            // da implementare rimozione navi dalla lista
 
             // std::vector<int>::iterator pos = std::find(ship_list.begin(), ship_list.end(), ship_attacked);
             // if (pos != ship_list.end())
@@ -50,32 +51,32 @@ std::vector<AttackUnit> Player::execute_move(const Position &target, const MoveT
     }
     else if (type == MoveType::moveAndDiscover)
     {
-        units = { retrieve_unit(target)};
+        units = {retrieve_unit(target)};
     }
 
     return units;
 }
 
-void Player::handle_response(std::vector<AttackUnit> units)
+void Player::handle_response(std::vector<AttackUnit> units, const Move& m)
 {
-    Ship *ship = get_ship(current_move.origin());
-    ship->action(current_move.target(), units);
+    Ship *ship = get_ship(m.origin());
+    ship->action(m.target(), units);
 }
 
-bool Player::check_for_graphic_cmd()
+bool Player::check_for_graphic_cmd(Move& m)
 {
-    if (current_move.movetype() == MoveType::clearMap)
+    if (m.movetype() == MoveType::clearMap)
     {
         // da implementare
-        attackMap().clear_area();
-        current_move.makeInvalid();
+        AttackGrid().clear_area();
+        m.makeInvalid();
     }
-    else if (current_move.movetype() == MoveType::showMap)
+    else if (m.movetype() == MoveType::showMap)
     {
         // da implementare
         // std::cout << player_2->defenseMap();
         // std::cout << player_2->attackMap();
-        current_move.makeInvalid();
+        m.makeInvalid();
     }
 }
 
@@ -133,6 +134,7 @@ Ship *Player::get_ship(const Position &origin)
     // se l'iteratore ritornato dall'algoritmo STL punta all'ultimo elemento del vettore di navi
     // la nave non è stata trovata e viene ritornato nullptr, altrimenti si calcola l'indice
     // del vettore in cui trova il puntatore e lo si restituisce.
+
     if (it != ship_list.end())
     {
         return *it;
@@ -141,50 +143,6 @@ Ship *Player::get_ship(const Position &origin)
     {
         return nullptr;
     }
-}
-
-bool Player::add_ship(const std::string &cmd)
-{
-    Position bow{};
-    Position stern{};
-
-    // divisione della stringa in due parti (il delimitatore è lo spazio)
-    int pos = cmd.find_first_of(' ');
-    std::string first_pair = cmd.substr(pos + 1);
-    std::string second_pair = cmd.substr(0, pos);
-
-    // per ogni coppia di coordinate viene restituita una posizione
-    bow = convert_to_position(first_pair);
-    stern = convert_to_position(second_pair);
-
-    if (defense_map_.add_ship(bow, stern))
-    {
-        int size = get_size(bow, stern);
-        Direction d = get_direction(bow, stern);
-        Position p = (bow + stern) / 2;
-
-        if (size == 5)
-        {
-            Ironclad ship{d, p, defense_map_, attack_map_};
-            ship_list.push_back(&ship);
-        }
-        else if (size == 3)
-        {
-            SupportShip ship{d, p, defense_map_, attack_map_};
-            ship_list.push_back(&ship);
-        }
-        else
-        {
-            Submarine ship{p, defense_map_, attack_map_};
-            ship_list.push_back(&ship);
-        }
-    }
-    else
-    {
-        return false;
-    }
-
-    return true;
 }
 
 // fornisce la direzione della nave da inserire

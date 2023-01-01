@@ -1,13 +1,13 @@
 #include "Ship.h"
 
-Ship::Ship(int size, Direction orientation, Position& centre_position, DefenseMap& d_map, AttackGrid& a_map)
+Ship::Ship(int size, Direction orientation, Position& centre_position, DefenseMap& def_map, AttackGrid& att_grid)
 {
     armor_ = size;
     size_ = size;
     centre_ = centre_position;
     orientation_ = orientation;
-    attack_grid_ = a_map;
-    defense_map_ = d_map;
+    attack_grid_ = att_grid;
+    defense_map_ = def_map;
 }
 
 bool Ship::hit()
