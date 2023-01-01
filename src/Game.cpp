@@ -118,4 +118,42 @@ bool Game::Win()
     return false;
 }
 
+void Game::add()
+{
+    int nIronclad = kIronclad;
+    int nSupport = kSupportShip;
+    int nSubmarine = kSubmarine;
 
+    std::string cmd_add;
+    bool check;
+
+    while (nIronclad > 0)
+    {
+        std::cin >> cmd_add;
+        check = player_1->add_ships(cmd_add, 5);
+        if (check)
+        {
+            nIronclad--;
+        }
+    }
+
+    while (nSupport > 0)
+    {
+        std::cin >> cmd_add;
+        check = player_1->add_ships(cmd_add, 3);
+        if (check)
+        {
+            nSupport--;
+        }
+    }
+
+    while (nSubmarine > 0)
+    {
+        std::cin >> cmd_add;
+        check = player_1->add_ships(cmd_add, 1);
+        if (check)
+        {
+            nSubmarine--;
+        }
+    }
+}

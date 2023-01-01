@@ -29,7 +29,6 @@ public:
       // funzione che aggiunge una nave alla lista dopo aver richiesto alla mappa di controllare
     // le coordinate di prua e poppa
     // Restituisce true se la nave è stata aggiunta, altrimenti false
-    bool add_ship(const std::string &cmd);
     virtual bool add_ships(const std::string &cmd, int size) = 0;
 
     // funzione che converte una coppia di coordinate (quindi una delle due parti dell'intero comando)
