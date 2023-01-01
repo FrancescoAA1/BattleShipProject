@@ -8,7 +8,6 @@
 #include "AttackGrid.h"
 #include "DefenseMap.h"
 
-
 class Ship
 {
     public:
@@ -66,8 +65,6 @@ class Ship
         AttackGrid attack_grid_; 
         //campo che contine un rigferimento alla mappa di difesa di cui fa parte
         DefenseMap defense_map_; 
-
-
 }; 
 
 /*
