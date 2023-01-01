@@ -20,13 +20,18 @@ class Game
     //funzione che attesta se uno dei due giocatori ha vinto la partita
     bool Win();
 
-    
+    void add();
 
     private:
 
     //puntatori ai due player
     Player* player_1;
     Player* player_2;
+
+    static constexpr int kIronclad = 3;
+    static constexpr int kSupportShip = 3;
+    static constexpr int kSubmarine = 2;
+
 
     //numero di turni 
     int numberOfRounds;
