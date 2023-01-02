@@ -2,7 +2,7 @@
 #include <iostream>
 
 Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMode mode_, int nRounds)
-{
+{ 
     numberOfRounds = nRounds;
     mode = mode_;
 
