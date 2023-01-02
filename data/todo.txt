@@ -1,0 +1,7 @@
+1) scrivere main
+2) metodi mancanti: metodo che data una posizione generata casualmente 
+ne genera una seconda con x oppyre y uguale (aggiunta nave robot)
+controllare codice per la rimozione della nave (removeship (uso di find ed erase))
+metodo per scambiare i riferimenti dei player in modo casuale (per decidere chi inizia la partita)
+verificare il distruttore di player, stampa mappe di attacco e difesa con comando AA AA
+3) Funzionalità di replay
