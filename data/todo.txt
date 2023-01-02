@@ -1,7 +1,20 @@
 1) scrivere main
 2) metodi mancanti: metodo che data una posizione generata casualmente 
-ne genera una seconda con x oppyre y uguale (aggiunta nave robot)
-controllare codice per la rimozione della nave (removeship (uso di find ed erase))
+ne genera una seconda con x oppyre y uguale (aggiunta nave robot) Metodo get_random_pos1 
+in RobotPlayer --> Accetta come parametri una Posizione e un intero (taglia della nave da creare).
+
+controllare codice per la rimozione della nave (removeship (uso di find ed erase)) (Metodo
+receive_attack in Player.cpp) --> sezione commentata
+
+
 metodo per scambiare i riferimenti dei player in modo casuale (per decidere chi inizia la partita)
-verificare il distruttore di player, stampa mappe di attacco e difesa con comando AA AA
+-->da creare nel header player.h e implementare in player.cpp
+
+aggiungere il distruttore di player --> player.h 
+
+richiamare operator << per la stampa mappe di attacco e difesa con comando AA AA --> presente in 
+player.cpp (Metodo check_for_graphic_cmd, parte commentata)
 3) Funzionalità di replay
+
+
+
