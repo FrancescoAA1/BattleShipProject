@@ -103,13 +103,13 @@ void Game::playRound()
 bool Game::Win()
 {
     // se a player1 non rimangono navi, player2 ha vinto
-    if (player_1->getShipsLeft() == 0)
+    if (player_1->get_ships_left() == 0)
     {
         std::cout << player_2->nickname() + "ha vinto!";
         return true;
     }
     // se a player2 non rimangono navi, player1 ha vinto
-    else if (player_2->getShipsLeft() == 0)
+    else if (player_2->get_ships_left() == 0)
     {
         std::cout << player_1->nickname() + "ha vinto!";
         return true;

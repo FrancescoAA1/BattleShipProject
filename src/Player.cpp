@@ -5,8 +5,8 @@ Player::Player(const std::string &nickname)
     nickname_ = nickname;
     attack_grid_ = AttackGrid();
     defense_map_ = DefenseMap();
-    // il vector di navi è inizialmente vuoto
-    ship_list;
+    // il vector di navi è inizialmente vuoto ma lo predispongo per 8 navi
+    ship_list = std::vector<Ship*>(8); 
 }
 
 // metodi privati
@@ -19,7 +19,7 @@ std::vector<AttackUnit> &Player::retrieve_unit(const Position &target)
 // metodi privati
 AttackUnit Player::receive_attack(const Position &target)
 {
-    std::pair shot_info = defense_map_.receive_shot(target);
+    std::pair<Position, AttackUnit> shot_info = defense_map_.receive_shot(target);
     Position p = shot_info.first;
 
     if (!p.is_absolute_invalid())

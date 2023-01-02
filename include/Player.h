@@ -63,9 +63,9 @@ public:
 
     // metodi getter
     std::string nickname() { return nickname_; }
-    AttackGrid &AttackGrid() { return attack_grid_; }
-    DefenseMap &defenseMap() { return defense_map_; }
-    int getShipsLeft() { return ship_list.size(); }
+    AttackGrid &attack_grid() { return attack_grid_; }
+    DefenseMap &defense_map() { return defense_map_; }
+    int get_ships_left() { return ship_list.size(); }
 
 protected:
     // costruttore dato il nome del giocatore
