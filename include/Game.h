@@ -11,8 +11,12 @@ class Game
 {
     public:
 
+    static constexpr int kRoundsComputer = 10;
+
     //costruttore che accetta i nomi dei due giocatori, la modalità di gioco e il numero di round
     Game(const std::string& nickname_1, const std::string& nickname_2, GameMode mode, int nRounds);
+
+    Game();
 
     //funzione che simula un turno di gioco
     void playRound();
@@ -21,6 +25,8 @@ class Game
     bool Win();
 
     void add();
+
+    int get_rounds() {return numberOfRounds;}
 
     private:
 
@@ -31,6 +37,9 @@ class Game
     static constexpr int kIronclad = 3;
     static constexpr int kSupportShip = 3;
     static constexpr int kSubmarine = 2;
+
+    void add_player_ships(Player* p);
+    void Game::play_single_turn(Player* p);
 
 
     //numero di turni 
