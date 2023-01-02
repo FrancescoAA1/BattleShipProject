@@ -11,7 +11,7 @@ class SupportShip : public Ship
         SupportShip(Direction orientation, Position& centre_position, DefenseMap& def_map, AttackGrid& att_grid) : Ship(kSize, orientation, centre_position, def_map, att_grid) {}
 
         //ricordare l'override di action
-        void action(const Position& target, const std::vector<AttackUnit>& data) override;
+        bool action(const Position& target, const std::vector<AttackUnit>& data) override;
         
         //costante che definisce la dimensione della nave di supporto
         static constexpr int kSize = 3;

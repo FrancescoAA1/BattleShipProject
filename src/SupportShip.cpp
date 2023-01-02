@@ -6,34 +6,24 @@
 //viene comunque passato un array (vuoto) per conformare i metodi action di tutte le navi
 //
 //i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
-void SupportShip::action(const Position& target, const std::vector<AttackUnit>& data) 
+//viene comunque ritornato un booleano che conferma che la mossa è stata effettuata
+bool SupportShip::action(const Position& target, const std::vector<AttackUnit>& data) 
 {
-    defense_map().move_ship(this->centre(), target);
-    defense_map().fix_ship(target);
-}
-
-/*    for(int i = -(kSide/2); i <= kSide/2; i++)
+    if(defense_map().move_ship(this->centre(), target))
     {
-        for(int j = -(kSide/2); j <= kSide/2; j++)
+        last_fixed_ship = defense_map().discovers_neighbors(target, kSide);
+        
+        for(int i = 0; i < last_fixed_ship.size(); i++)
         {
-            //controllo se l'unità che sto analizzando appartiene alla nave stessa;
-            //in quel caso non devo procedere alla cura
-            if(map.defense_map()[target.X() + i][target.Y() + j].block_center() != map.defense_map()[target.X()][target.Y()].block_center())
-            {
-                map.defense_map()[target.X() + i][target.Y() + j].heal();
-            }
-        }
-    }    
+            //curo la nave, e se l'azione non è valida restituisco false
+            if(!defense_map().fix_ship(last_fixed_ship[i])) return false;
+        } 
+        
 
+        return true;
+    }
 
-
-//@TOASK il metodo action delle navi semplicemente aggiorna le mappe a livello visivo?
-
-//metodo heal()
-//da aggiungere a DefenseUnit
-
-void heal()
-{
-    if(status_ == DefenseStatus::hit) status_ = DefenseStatus::taken ;
+    //se arrivo qui significa che il movimento non era valido
+    return false;    
+    
 }
-*/

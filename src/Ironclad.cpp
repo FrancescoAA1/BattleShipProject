@@ -7,7 +7,9 @@
 //sebbene la attack unit da ricevere sia una sola, viene utilizzato un array per conformare i metodi action di tutte le navi
 //
 //i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
-void Ironclad::action(const Position& target, const std::vector<AttackUnit>& data)
+//ritorno comunque un booleano che conferma che l'azione è stata effettuata
+bool Ironclad::action(const Position& target, const std::vector<AttackUnit>& data)
 {
-    attack_grid().shot_position(target, data[0]);
+    if(data.size() > 0) return attack_grid().shot_position(target, data[0]);
+    else return false;
 }

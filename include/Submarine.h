@@ -13,7 +13,7 @@ class Submarine : public Ship
         Submarine(Position& centre_position, DefenseMap& defense_map, AttackGrid& attack_grid) : Ship(kSize, kDefaultDirection, centre_position, defense_map, attack_grid) {}
 
         //ricordare l'override di action
-        void action(const Position& target, const std::vector<AttackUnit>& data) override;
+        bool action(const Position& target, const std::vector<AttackUnit>& data) override;
 
         //costante che definisce la dimensione del sottomarino
         static constexpr int kSize = 1;
