@@ -582,3 +582,46 @@ bool DefenseMap::is_sorrounded(const Position& target_origin, int size, Directio
 
     return true; 
 }
+
+// Overload dell'operatore << che scrive nell'output stream la matrice di difesa
+std::ostream& DefenseMap::operator<<(std::ostream& data_stream)
+{
+    // per ogni cella mi devo recuperare la DefenseUnit e guaradre alle informazioni che 
+    // ha per determinare cosa scrivere effettitavemnte 
+
+    char row_index = kFirstRowLetter; 
+    for (int i = 0; i < kHeight; i++)
+    {
+        for (int j = 0; j < kWidth; j++)
+        {
+            data_stream<<row_index; 
+            row_index++; 
+            //Scrivo la colonna indice: 
+            if(i == 8)
+            {
+                row_index+=2; 
+            }
+            switch (defense_map_[i][j].status())
+            {
+                case DefenseStatus::empty: 
+                    data_stream<<" ";
+                break;
+                case DefenseStatus::taken:
+                break;
+                case DefenseStatus::hit:
+                break;  
+            } 
+        }
+        data_stream<<"\n"; 
+    }
+    // scrivo l'ultima riga indice
+    data_stream<<" "; 
+    int column_index = kFirstColumnNumber;
+    for (int i = 0; i < kWidth; i++)
+    {
+        data_stream<<column_index; 
+        column_index++; 
+    }
+    
+    return data_stream; 
+}

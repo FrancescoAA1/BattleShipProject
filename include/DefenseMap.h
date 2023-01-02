@@ -69,8 +69,6 @@ class DefenseMap
     private: 
 
     // Regione delle costanti da utilizzare nella classe  
-    static constexpr int kHeight = 12; 
-    static constexpr int kWidth = 12; 
     static constexpr char kEmptySpace = ' '; 
     static constexpr char kIroncladUnitHit = 'c'; 
     static constexpr char kIroncladUnit = 'C';
