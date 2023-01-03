@@ -606,9 +606,35 @@ std::ostream& DefenseMap::operator<<(std::ostream& data_stream)
                 case DefenseStatus::empty: 
                     data_stream<<" ";
                 break;
-                case DefenseStatus::taken:
-                break;
                 case DefenseStatus::hit:
+                    // in base alla dimensione devo scrivere la lettera corretta
+                    switch (defense_map_[i][j].full_block_dimension())
+                    {
+                        case kShipType1Dim:
+                            data_stream<<kSubmarineUnitHit;
+                            break;                    
+                        case kShipType2Dim:
+                            data_stream<<kSupportShipUnitHit;
+                            break;
+                        case kShipType3Dim:
+                            data_stream<<kIroncladUnitHit;
+                            break; 
+                    }
+                break;
+                case DefenseStatus::taken:
+                    // in base alla dimensione devo scrivere la lettera corretta
+                    switch (defense_map_[i][j].full_block_dimension())
+                    {
+                        case kShipType1Dim:
+                            data_stream<<kSubmarineUnit;
+                            break;                    
+                        case kShipType2Dim:
+                            data_stream<<kSupportShipUnit;
+                            break;
+                        case kShipType3Dim:
+                            data_stream<<kIroncladUnit;
+                            break; 
+                    }
                 break;  
             } 
         }

@@ -74,8 +74,8 @@ class DefenseMap
     static constexpr char kIroncladUnit = 'C';
     static constexpr char kSubmarineUnitHit = 'e'; 
     static constexpr char kSubmarineUnit = 'E';  
-    static constexpr char kSupportShipUnitHit = 'c'; 
-    static constexpr char kSupportShipUnit = 'C'; 
+    static constexpr char kSupportShipUnitHit = 's'; 
+    static constexpr char kSupportShipUnit = 'S'; 
     static constexpr char kFirstRowLetter = 'A'; 
     static constexpr int kFirstColumnNumber = 1;
     static constexpr int kShipType1Dim = 1;
