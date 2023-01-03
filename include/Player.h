@@ -44,7 +44,7 @@ public:
     Ship *get_ship(const Position &origin);
 
     // funzione che ritorna un vettore di attackUnit per l' operazione del sottomarino
-    std::vector<AttackUnit> &retrieve_unit(const Position &target);
+    std::vector<AttackUnit> retrieve_unit(const Position &target);
 
     // funzione che identifica richiede l'aggiornamento della mappa di difesa e, nel caso di nave afffondata
     // della lista delle navi

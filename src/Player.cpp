@@ -10,7 +10,7 @@ Player::Player(const std::string &nickname)
 }
 
 // metodi privati
-std::vector<AttackUnit> &Player::retrieve_unit(const Position &target)
+std::vector<AttackUnit> Player::retrieve_unit(const Position &target)
 {
     std::vector<AttackUnit> att = defense_map_.spot_area(target, 5);
     return att;
@@ -78,6 +78,9 @@ bool Player::check_for_graphic_cmd(Move& m)
         // std::cout << player_2->attackMap();
         m.makeInvalid();
     }
+
+    //se si arriva qui qualcosa è andato storto
+    return false;
 }
 
 Position Player::convert_to_position(const std::string &coordinate)

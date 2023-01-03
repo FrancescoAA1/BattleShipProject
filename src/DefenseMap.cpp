@@ -336,7 +336,7 @@ bool DefenseMap::remove_ship(const Position& target_origin)
 // target_origin specificato
 // se l'area fuoriesce dalla matrice ne fa l'intersezione. Se l'area è più vasta della matrice e 
 // la contiene => ritorna tutti i centri della matrice
-std::vector<Position>& DefenseMap::discovers_neighbors(const Position& target_origin, int side) const 
+std::vector<Position> DefenseMap::discovers_neighbors(const Position& target_origin, int side) const 
 {
     std::vector<Position> neighbors_position{}; 
     // se la posizione non è corretta ritorno un vettore vuoto 
@@ -442,7 +442,7 @@ bool DefenseMap::fix_ship(const Position& target_origin)
 // l'intero serve a specificare il lato di dimensione per l'area
 // se l'area non rientra nella matrice ne fa l'intersezione 
 // se l'area contiene la matrice ritorna tutta la matrice 
-std::vector<AttackUnit>& DefenseMap::spot_area(const Position& target_origin, int side) const 
+std::vector<AttackUnit> DefenseMap::spot_area(const Position& target_origin, int side) const 
 {
     std::vector<AttackUnit> discovered_position{}; 
     // se la posizione non è corretta ritorno un vettore vuoto 

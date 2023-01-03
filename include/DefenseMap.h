@@ -44,7 +44,7 @@ class DefenseMap
     // target_origin specificato
     // se l'area fuoriesce dalla matrice ne fa l'intersezione. Se l'area è più vasta della matrice e 
     // la contiene => ritorna tutti i centri della matrice
-    std::vector<Position>& discovers_neighbors(const Position& target_origin, int side) const; 
+    std::vector<Position> discovers_neighbors(const Position& target_origin, int side) const; 
 
     // funzione che cura la nave con centro specificato in target_origin
     bool fix_ship(const Position& target_origin); 
@@ -54,7 +54,7 @@ class DefenseMap
     // l'intero serve a specificare il lato di dimensione per l'area
     // se l'area non riesntra nella matrice ne fa l'intersezione 
     // se l'area contiene la matrice ritorna tutta la matrice 
-    std::vector<AttackUnit>& spot_area(const Position& target_origin, int side) const;  
+    std::vector<AttackUnit> spot_area(const Position& target_origin, int side) const;  
 
     // altre funzioni UTILITARIE
 

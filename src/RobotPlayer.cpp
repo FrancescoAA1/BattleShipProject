@@ -82,13 +82,17 @@ Position RobotPlayer::get_random_pos(const Position& origin, int size)
             //se l'ascissa sfora dal limite allora sottraggo size 
             else x = 3;
         }
-        else
+        else if(x == 3)
         {
             if(origin.X() - size >= 0) return Position(origin.X() - size, origin.Y());
             //se l'ascissa sfora dal limite allora aggiungo size
             else x = 2;
         }
+        else done = true;
     }
+
+    //se si arriva a questo pezzo di codice c'è stato un errore quindi restituisco la cella di partenza
+    return origin;
     
 }
 
