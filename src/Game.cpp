@@ -106,12 +106,14 @@ void Game::add_player_ships(Player *p)
     int nIronclad = kIronclad;
     int nSupport = kSupportShip;
     int nSubmarine = kSubmarine;
+                std::cout << "SOno QUi";
 
     std::string cmd_add;
     bool check;
 
     while (nIronclad > 0)
     {
+        std::cout << p->nickname() + " inserisci le coordinate della nave";
         std::cin >> cmd_add;
         check = p->add_ships(cmd_add, 5);
         if (check)
