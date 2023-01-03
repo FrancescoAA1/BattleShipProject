@@ -20,4 +20,4 @@ add_library(Game src/Game.cpp)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
-target_link_libraries(${PROJECT_NAME} Position AttackGrid DefenseUnit DefenseMap Ship Ironclad SupportShip Submarine Player RobotPlayer HumanPlayer Move Game)
+target_link_libraries(${PROJECT_NAME} Game RobotPlayer HumanPlayer Ironclad SupportShip Submarine Player Ship AttackGrid DefenseMap DefenseUnit Move Position)
