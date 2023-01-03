@@ -92,7 +92,7 @@ Position &Player::convert_to_position(const std::string &coordinate)
         // stoi lancia std::invalid_argument exception se la sottostringa non è un numero
         // ATTENZIONE (da verificare in fase di debug) potrebbe essere necessario controllare che numero di cifre
         // di y corrisponda alla lunghezza della sottostringa;
-        int y = std::stoi(coordinate.substr(1, coordinate.size() - 1));
+        int y = std::stoi(coordinate.substr(1, coordinate.size() - 1)) -1;
 
         // controllo che x e y siano nel range delle dimensioni delle due mappe
         // NOTA: sarebbe opportuno poter accedere alle costanti di dimensione della mappa

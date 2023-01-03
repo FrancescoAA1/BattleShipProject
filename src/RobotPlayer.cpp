@@ -43,24 +43,59 @@ int RobotPlayer::get_random_index(int size)
     return std::rand() % size;
 }
 
-Position &RobotPlayer::get_random_pos()
+Position RobotPlayer::get_random_pos()
 {
     int x = std::rand() % 12;
     int y = std::rand() % 12;
-    Position target{x, y};
-    return target;
+    return Position(x, y);
 }
 
-Position &get_random_pos1(const Position &pos, int size)
+Position RobotPlayer::get_random_pos(const Position& origin, int size)
 {
+    if(size > 12/2 + 1) return origin;
+
+    bool done = false;
     int x = std::rand() % 4;
-    // da finire
+    //x = 0 --> restituisco posizione con stessa ascissa e ordinata maggiore
+    //x = 1 --> restituisco posizione con stessa ascissa e ordinata minore
+    //x = 2 --> restituisco posizione con stessa ordinata e ascissa maggiore
+    //x = 3 --> restituisco posizione con stessa ordinata e ascissa minore
+    
+    //nel caso la posizione ottenuta randomicamente non vada bene ne cerco un'altra finché non è valida
+    while(!done)
+    {
+        if(x == 0)
+        {
+            if(origin.Y() + size < 12) return Position(origin.X(), origin.Y() + size);
+            //se l'ordinata sfora dal limite allora sottraggo size
+            else x = 1;
+        }
+        else if(x == 1)
+        {
+            if(origin.Y() - size >= 0) return Position(origin.X(), origin.Y() - size);
+            //se l'ordinata sfora dal limite allora aggiungo size
+            else x = 0;
+        }
+        else if(x == 2)
+        {
+            if(origin.X() + size < 12) return Position(origin.X() + size, origin.Y());
+            //se l'ascissa sfora dal limite allora sottraggo size 
+            else x = 3;
+        }
+        else
+        {
+            if(origin.X() - size >= 0) return Position(origin.X() - size, origin.Y());
+            //se l'ascissa sfora dal limite allora aggiungo size
+            else x = 2;
+        }
+    }
+    
 }
 
 bool RobotPlayer::add_ships(const std::string &cmd, int size)
 {
     Position bow = get_random_pos();
-    Position stern = get_random_pos1(bow, size);
+    Position stern = get_random_pos(bow, size);
     bool created = DefenseMap().add_ship(bow, stern);
 
     Direction d = get_direction(bow, stern);
