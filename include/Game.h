@@ -27,6 +27,7 @@ class Game
     void add();
 
     int get_rounds() {return numberOfRounds;}
+    int round_terminated(){numberOfRounds--;}
 
     private:
 

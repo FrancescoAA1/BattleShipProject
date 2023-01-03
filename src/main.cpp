@@ -52,6 +52,7 @@ int main(int argc, char** argv)
         while(match.get_rounds() > 0 && !match.Win())
         {
             match.playRound();
+            match.round_terminated();
         }
     }
 
