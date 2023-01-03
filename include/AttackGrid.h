@@ -38,8 +38,8 @@ class AttackGrid
     // funzione che pulisce tutte le caselle nella matrice 
     void clear_area(); 
 
-    // Overload dell'operatore << che scrive nell'output stream la matrice di difesa
-    std::ostream& operator<<(std::ostream& data_stream); 
+    // funzione che scrive in una stringa la mappa 
+    std::string to_string() const; 
 
     private:    
     // Regione delle costanti da utilizzare nella classe  
@@ -61,4 +61,6 @@ class AttackGrid
 
 }; 
 
+// Overload dell'operatore << che scrive nell'output stream la matrice di difesa
+std::ostream& operator<<(std::ostream& data_stream,  const AttackGrid& attack_grid); 
 #endif

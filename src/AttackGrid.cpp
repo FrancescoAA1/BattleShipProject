@@ -55,9 +55,11 @@ bool AttackGrid::check_position(const Position& position) const
 {
     return (position.X() >= 0 && position.X() < kWidth && position.Y() >= 0 && position.X() < kHeight); 
 }
-// Overload dell'operatore << che scrive nell'output stream la matrice di difesa
-std::ostream& AttackGrid::operator<<(std::ostream& data_stream)
+
+// funzione che scrive in una stringa la mappa 
+std::string AttackGrid::to_string() const
 {
+    std::string result = ""; 
     // leggo tutte le celle e scrivo nell'out stream 
     // il loro corrispondente valore per la rappresentazione
     // aggiungendo la colonna laterale di lettere
@@ -67,7 +69,7 @@ std::ostream& AttackGrid::operator<<(std::ostream& data_stream)
     {
         for (int j = 0; j < kWidth; j++)
         {
-            data_stream<<row_index; 
+            result+=row_index; 
             row_index++; 
             //Scrivo la colonna indice: 
             if(i == 8)
@@ -77,29 +79,35 @@ std::ostream& AttackGrid::operator<<(std::ostream& data_stream)
             switch (attack_grid_[i][j])
             {
                 case AttackUnit::unknown:
-                    data_stream<<" ";
+                    result+=" ";
                 break;
                 case AttackUnit::empty_and_hit:
-                    data_stream<<kHitAndEmptySymbol;
+                    result+=kHitAndEmptySymbol;
                 break;
                 case AttackUnit::full_and_hit:
-                    data_stream<<kHitAndFullSymbol;
+                    result+=kHitAndFullSymbol;
                 break;  
                 case AttackUnit::spotted:
-                    data_stream<<kSpottedSymbol;
+                    result+=kSpottedSymbol;
                 break; 
             } 
         }
-        data_stream<<"\n"; 
+        result+="\n"; 
     }
     // scrivo l'ultima riga indice
-    data_stream<<" "; 
+    result+=" "; 
     int column_index = kFirstColumnNumber;
     for (int i = 0; i < kWidth; i++)
     {
-        data_stream<<column_index; 
+        result+=column_index; 
         column_index++; 
     }
     
-    return data_stream; 
+    return result; 
+}
+
+// Overload dell'operatore << che scrive nell'output stream la matrice di difesa
+std::ostream& operator<<(std::ostream& data_stream,  const AttackGrid& attack_grid)
+{
+    return data_stream<<attack_grid; 
 }

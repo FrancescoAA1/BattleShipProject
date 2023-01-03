@@ -63,8 +63,8 @@ class DefenseMap
     // ritorna true se l'operazione è andata buon fine, false se era già presente poichè non ne vogliamo aggiornare il valore. 
     bool add_ship(const Position& bow_position, const Position& stern_position); 
 
-    // Overload dell'operatore << che scrive nell'output stream la matrice di difesa
-    std::ostream& operator<<(std::ostream& data_stream); 
+    // funzione che scrive in una stringa la mappa 
+    std::string to_string() const; 
 
     private: 
 
@@ -105,5 +105,7 @@ class DefenseMap
     bool center_block_discovery(const Position& center_block) const; 
 }; 
 
+// Overload dell'operatore << che scrive nell'output stream la matrice di difesa
+std::ostream& operator<<(std::ostream& data_stream, const DefenseMap& defense_map); 
 
 #endif

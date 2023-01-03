@@ -1,5 +1,6 @@
 #include "../include/DefenseMap.h"
 #include <algorithm>
+#include <iostream>
 
 // contruttore di default della classe 
 // che inizializza tutte le matrici come vuote
@@ -499,18 +500,17 @@ bool DefenseMap::add_ship(const Position& bow_position, const Position& stern_po
 
     //verifico se ci sono blocchi con lo stesso centro all'interno
     if(center_block_discovery(center_block)) return false; 
-
     int size; 
     Direction orientation = Direction::vertical; 
 
     if(bow_position.Y() == stern_position.Y()) // è in orizzontale 
     {
         orientation = Direction::horizontal; 
-        size = std::abs(bow_position.X() - bow_position.X()); 
+        size = std::abs(bow_position.X() - stern_position.X()); 
     }
     else // è in verticale
     {
-        size = std::abs(bow_position.Y() - bow_position.Y()); 
+        size = std::abs(bow_position.Y() - stern_position.Y()); 
     }
 
     // controllo che la dimensione sia ammissibile 
@@ -583,18 +583,18 @@ bool DefenseMap::is_sorrounded(const Position& target_origin, int size, Directio
     return true; 
 }
 
-// Overload dell'operatore << che scrive nell'output stream la matrice di difesa
-std::ostream& DefenseMap::operator<<(std::ostream& data_stream)
+// funzione che scrive in una stringa la mappa 
+std::string DefenseMap::to_string() const
 {
     // per ogni cella mi devo recuperare la DefenseUnit e guaradre alle informazioni che 
     // ha per determinare cosa scrivere effettitavemnte 
-
+    std::string result = ""; 
     char row_index = kFirstRowLetter; 
     for (int i = 0; i < kHeight; i++)
     {
         for (int j = 0; j < kWidth; j++)
         {
-            data_stream<<row_index; 
+            result+=row_index; 
             row_index++; 
             //Scrivo la colonna indice: 
             if(i == 8)
@@ -604,20 +604,20 @@ std::ostream& DefenseMap::operator<<(std::ostream& data_stream)
             switch (defense_map_[i][j].status())
             {
                 case DefenseStatus::empty: 
-                    data_stream<<" ";
+                    result+=" ";
                 break;
                 case DefenseStatus::hit:
                     // in base alla dimensione devo scrivere la lettera corretta
                     switch (defense_map_[i][j].full_block_dimension())
                     {
                         case kShipType1Dim:
-                            data_stream<<kSubmarineUnitHit;
+                            result+=kSubmarineUnitHit;
                             break;                    
                         case kShipType2Dim:
-                            data_stream<<kSupportShipUnitHit;
+                            result+=kSupportShipUnitHit;
                             break;
                         case kShipType3Dim:
-                            data_stream<<kIroncladUnitHit;
+                            result+=kIroncladUnitHit;
                             break; 
                     }
                 break;
@@ -626,28 +626,34 @@ std::ostream& DefenseMap::operator<<(std::ostream& data_stream)
                     switch (defense_map_[i][j].full_block_dimension())
                     {
                         case kShipType1Dim:
-                            data_stream<<kSubmarineUnit;
+                            result+=kSubmarineUnit;
                             break;                    
                         case kShipType2Dim:
-                            data_stream<<kSupportShipUnit;
+                            result+=kSupportShipUnit;
                             break;
                         case kShipType3Dim:
-                            data_stream<<kIroncladUnit;
+                            result+=kIroncladUnit;
                             break; 
                     }
                 break;  
             } 
         }
-        data_stream<<"\n"; 
+        result+="\n"; 
     }
     // scrivo l'ultima riga indice
-    data_stream<<" "; 
+    result+=" "; 
     int column_index = kFirstColumnNumber;
     for (int i = 0; i < kWidth; i++)
     {
-        data_stream<<column_index; 
+        result+=column_index; 
         column_index++; 
     }
     
-    return data_stream; 
+    return result; 
+}
+
+// Overload dell'operatore << che scrive nell'output stream la matrice di difesa
+std::ostream& operator<<(std::ostream& data_stream, const DefenseMap& defense_map)
+{
+    return data_stream<<defense_map.to_string(); 
 }
