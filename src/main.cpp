@@ -1,5 +1,6 @@
 #include "../include/Game.h"
 #include <iostream>
+#include <string.h>
 
 int main(int argc, char** argv)
 {
@@ -29,7 +30,7 @@ int main(int argc, char** argv)
         GameMode gm;
         Game match;
 
-        if(argv[1] == "pc")
+        if(strcmp(argv[1],"pc") == 0)
         {
             gm = GameMode::PlayerVsComputer;
             std::string name;
@@ -38,7 +39,7 @@ int main(int argc, char** argv)
             match = Game(name, "Player2", gm, -1);
 
         }
-        else if(argv[1] == "cc")
+        else if(strcmp(argv[1],"cc") == 0)
         {
             gm = GameMode::ComputerVsComputer; 
             match = Game("Player1", "Player2", gm, Game::kRoundsComputer);
