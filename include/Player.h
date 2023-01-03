@@ -33,10 +33,10 @@ public:
 
     // funzione che converte una coppia di coordinate (quindi una delle due parti dell'intero comando)
     // in una posizione
-    Position &convert_to_position(const std::string &coordinate);
+    Position convert_to_position(const std::string &coordinate);
 
     // funzione che converte una posizione in una delle due parti del comando
-    std::string &convert_to_command(const Position &position);
+    std::string convert_to_command(const Position &position);
 
     // data una posizione di origine, la funzione restituisce un puntatore alla nave
     // avente come centro la posizione specificata. Se tale nave non esiste
