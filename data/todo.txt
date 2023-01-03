@@ -2,6 +2,7 @@
 2) metodi mancanti: metodo che data una posizione generata casualmente 
 ne genera una seconda con x oppyre y uguale (aggiunta nave robot) Metodo get_random_pos1 
 in RobotPlayer --> Accetta come parametri una Posizione e un intero (taglia della nave da creare).
+(fatto)
 
 controllare codice per la rimozione della nave (removeship (uso di find ed erase)) (Metodo
 receive_attack in Player.cpp) --> sezione commentata

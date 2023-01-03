@@ -80,7 +80,7 @@ bool Player::check_for_graphic_cmd(Move& m)
     }
 }
 
-Position &Player::convert_to_position(const std::string &coordinate)
+Position Player::convert_to_position(const std::string &coordinate)
 {
     try
     {
@@ -111,7 +111,7 @@ Position &Player::convert_to_position(const std::string &coordinate)
     }
 }
 
-std::string &Player::convert_to_command(const Position &position)
+std::string Player::convert_to_command(const Position &position)
 {
     // conversione esplicita da int ad a char (sicura) della coordinata X della posizione
     // stringa formata dal carattere a cui viene sommato il valore ASCII di "A"
