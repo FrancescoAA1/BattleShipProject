@@ -142,3 +142,12 @@ void Game::add_player_ships(Player *p)
         }
     }
 }
+
+Game::~Game()
+{
+    // elimino tutta la memoria allocata nell'heap
+    delete player_1; 
+    delete player_2; 
+    player_1 = nullptr; 
+    player_2 = nullptr; 
+}

@@ -14,6 +14,9 @@ public:
 
     bool add_ships(const std::string &cmd, int size) override;
 
+    ~HumanPlayer() override; 
+
+
 private:
 };
 

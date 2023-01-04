@@ -11,7 +11,8 @@ receive_attack in Player.cpp) --> sezione commentata
 metodo per scambiare i riferimenti dei player in modo casuale (per decidere chi inizia la partita)
 -->da creare nel header player.h e implementare in player.cpp
 
-aggiungere il distruttore di player --> player.h 
+aggiungere il distruttore di player --> (fatto)
+aggiungere il distruttore di Game --> (fatto)
 
 richiamare operator << per la stampa mappe di attacco e difesa con comando AA AA --> presente in 
 player.cpp (Metodo check_for_graphic_cmd, parte commentata)

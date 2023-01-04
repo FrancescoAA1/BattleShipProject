@@ -67,6 +67,8 @@ public:
     DefenseMap &defense_map() { return defense_map_; }
     int get_ships_left() { return ship_list.size(); }
 
+    virtual ~Player(); 
+
 protected:
     // costruttore dato il nome del giocatore
     Player(const std::string &);

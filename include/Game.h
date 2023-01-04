@@ -29,6 +29,8 @@ class Game
     int get_rounds() {return numberOfRounds;}
     int round_terminated(){return numberOfRounds--;}
 
+    ~Game(); 
+
     private:
 
     //puntatori ai due player
