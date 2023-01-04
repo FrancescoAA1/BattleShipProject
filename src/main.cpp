@@ -1,7 +1,24 @@
 #include "../include/Game.h"
+#include "../include/AttackGrid.h"
 #include <iostream>
 #include <string.h>
 
+int main()
+{
+    HumanPlayer p = HumanPlayer("Ciao");
+    
+    Position p1 = Position(3,12);
+    //std::cout << p.convert_to_command(p1);
+    std::string cmd = "A4";
+    Position p2 = p.convert_to_position(cmd);
+    //std::cout << p.convert_to_command(p1);
+    std::cout << p.attack_grid();
+
+    //AttackGrid f = AttackGrid();
+    //std::cout << p.attack_grid();
+}
+
+/*
 int main(int argc, char** argv)
 {
 
@@ -59,3 +76,4 @@ int main(int argc, char** argv)
 
     return 0;
 }
+*/

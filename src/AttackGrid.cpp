@@ -1,5 +1,6 @@
 #include "../include/AttackGrid.h"
 #include <ostream>
+#include <iostream>
 
 // costruttore di default che setta tutto a vuoto
 AttackGrid::AttackGrid()
@@ -59,22 +60,36 @@ bool AttackGrid::check_position(const Position& position) const
 // funzione che scrive in una stringa la mappa 
 std::string AttackGrid::to_string() const
 {
-    std::string result = ""; 
+    std::string result = "X "; 
     // leggo tutte le celle e scrivo nell'out stream 
     // il loro corrispondente valore per la rappresentazione
     // aggiungendo la colonna laterale di lettere
     // e la riga finale di numeri per le coordinates
     char row_index = kFirstRowLetter; 
+    int column_index = kFirstColumnNumber;
+
+    for (int i = 0; i < kHeight; i++)
+    {
+        result.append(1, row_index);
+        result += " ";
+        row_index++;
+    }
+
+    result += "\n";
+
     for (int i = 0; i < kHeight; i++)
     {
         for (int j = 0; j < kWidth; j++)
         {
-            result+=row_index; 
-            row_index++; 
             //Scrivo la colonna indice: 
-            if(i == 8)
+            if(j == 0)
             {
-                row_index+=2; 
+                result += std::to_string(column_index); 
+                column_index++;
+                if(i<9)
+                {
+                    result += " ";
+                }
             }
             switch (attack_grid_[i][j])
             {
@@ -93,14 +108,6 @@ std::string AttackGrid::to_string() const
             } 
         }
         result+="\n"; 
-    }
-    // scrivo l'ultima riga indice
-    result+=" "; 
-    int column_index = kFirstColumnNumber;
-    for (int i = 0; i < kWidth; i++)
-    {
-        result+=column_index; 
-        column_index++; 
     }
     
     return result; 
