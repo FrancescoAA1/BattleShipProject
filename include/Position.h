@@ -2,6 +2,7 @@
 #define BATTLESHIPPROJECT_POSITION_H_
 
 #include <limits.h>
+#include <ostream>
 
 class Position
 {
@@ -41,5 +42,5 @@ Position operator/(const Position& p, int coeff);
 bool operator==(const Position& p1, const Position& p2);
 bool operator!=(const Position& p1, const Position& p2);  
 //non sono necessari operatori di copia, spostamento e relativi contruttori non avendo memoria dinamica allocata
-
+std::ostream& operator<<(std::ostream& data_stream,  const Position& pos); 
 #endif

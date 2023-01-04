@@ -1,4 +1,5 @@
 #include "../include/Position.h"
+#include <ostream>
 
 Position::Position()
 {
@@ -60,4 +61,9 @@ Position operator/(const Position& p, int coeff)
 Position operator*(const Position& p, int coeff)
 {
     return Position(p.X()*coeff, p.Y()*coeff); 
+}
+
+std::ostream& operator<<(std::ostream& data_stream,  const Position& pos)
+{
+    return data_stream<<"( " + std::to_string(pos.X()) + ", " + std::to_string(pos.Y()) + " )"; 
 }

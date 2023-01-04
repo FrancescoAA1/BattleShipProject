@@ -93,7 +93,7 @@ class DefenseMap
     // verifico se la coordinata di centro specificata può essere una posizione plausibile per una nave di lunghezza 
     // length specificata e orientamento orientation.
     // ritorna true se la nave ricoprirebbe una regione non vuota o non rientra nella matrice
-    bool check_area_for_placing(const Position& target_destination, int length, Direction orientation) const; 
+    bool check_area_for_placing(const Position& target_destination, const Position& origin_block_center, int length, Direction orientation) const; 
     // funzione che pulisce tutte le caselle nella regione specificata: centro, lunghezza e direzione
     // le coordinate che andrà a pulire devono essere già testate come corrette!
     void clear_area(const Position& center_block, int length, Direction orientation); 
