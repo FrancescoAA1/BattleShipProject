@@ -22,17 +22,17 @@ int main()
     std::cout << m1.origin() << std::endl;
     std::cout <<m1.target() << std::endl;
 
+
     
 
 
-    //RobotPlayer r = RobotPlayer("ciao");
-    /* std::cout << r.convert_to_command(Position{1,11});
+    RobotPlayer r = RobotPlayer("ciao");
+    std::cout << r.convert_to_command(Position{1,11});
     std::cout << r.convert_to_position("A1");
     r.get_ships_left();
-    std::cout << r.add_ships("A1 A3", 3); */
-    //std::cout<<r.attack_grid();
+    std::cout << r.add_ships("A1 A3", 3); 
     //r.get_move("A1 A5");
-    //p.get_ship(Position{0,1});
+    //r.get_ship(Position{0,1});
 
     //Game g{"c", "g", GameMode::ComputerVsComputer, 6};
     //g.add(); serve metodo 

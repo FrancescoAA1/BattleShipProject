@@ -1,9 +1,12 @@
 #include "../include/RobotPlayer.h"
+#include <iostream>
 
 // il robot inventa la mossa per cui la stringa passata come parametro sarà vuota
 Move RobotPlayer::get_move(const std::string &move)
 {
-    Ship *ship_cmd = ship_list.at(get_random_index(ship_list.size()));
+    int s = get_random_index(ship_list.size());
+    std::cout << std::to_string(s);
+    Ship *ship_cmd = ship_list.at(s);
     Position origin{};
     Position target{};
     Move m;
