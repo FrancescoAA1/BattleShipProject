@@ -4,6 +4,7 @@ project(battaglia_navale)
 
 include_directories(include)
 
+add_library(Utility src/Utility.cpp)
 add_library(Position src/Position.cpp)
 add_library(AttackGrid src/AttackGrid.cpp)
 add_library(DefenseUnit src/DefenseUnit.cpp)
@@ -20,4 +21,4 @@ add_library(Game src/Game.cpp)
 
 add_executable(${PROJECT_NAME} src/test_components.cpp)
 
-target_link_libraries(${PROJECT_NAME} Game RobotPlayer HumanPlayer Ironclad SupportShip Submarine Player Ship AttackGrid DefenseMap DefenseUnit Move Position)
+target_link_libraries(${PROJECT_NAME} Utility Game RobotPlayer HumanPlayer Ironclad SupportShip Submarine Player Ship AttackGrid DefenseMap DefenseUnit Move Position)

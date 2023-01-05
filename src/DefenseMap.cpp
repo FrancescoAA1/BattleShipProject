@@ -39,6 +39,13 @@ void DefenseMap::clear_area(const Position &center_block, int length, Direction 
 
     if (orientation == Direction::vertical)
     {
+        // se front e back sono invertite le scambio
+        if (front.Y() < back.Y())
+        {
+            Position tmp = back;
+            back = front;
+            front = tmp;
+        }
         // creo una posizione che individua l'offset
         Position offset{0, length / 2};
 
@@ -56,6 +63,13 @@ void DefenseMap::clear_area(const Position &center_block, int length, Direction 
     }
     else if (orientation == Direction::horizontal)
     {
+        // se front e back sono invertite le scambio
+        if (front.X() < back.X())
+        {
+            Position tmp = back;
+            back = front;
+            front = tmp;
+        }
         // creo una posizione che individua l'offset
         Position offset{length / 2, 0};
 
@@ -76,7 +90,7 @@ void DefenseMap::clear_area(const Position &center_block, int length, Direction 
 // scrivo nella matrice una nave
 // inizio e fine devono già condividere la stessa riga o la stessa colonna in accordo con la direzione
 // torna true se l'operazione è correttamente eseguibile
-bool DefenseMap::place_ship(Position &init, Position &end, const Position &center_block, int block_dimension, Direction direction)
+bool DefenseMap::place_ship(Position init, Position end, const Position &new_center_block, const Position &old_center_block, int block_dimension, Direction direction)
 {
     // a parire dalla poppa (se è più piccola le inverto), nella direzione specificata, setto le unità
     // della mappa di difesa a pieno fino alla prua
@@ -84,7 +98,7 @@ bool DefenseMap::place_ship(Position &init, Position &end, const Position &cente
     {
         // controllo se l'area che dovrebbe ricoprire è libera e se la distanza tra prua e poppa coincide con
         // la dimensione del blocco da scrivere
-        if (check_area_for_placing(center_block, center_block, std::abs(init.X() - end.X()) + 1, direction) && (std::abs(init.X() - end.X()) + 1 == block_dimension))
+        if (check_area_for_placing(new_center_block, old_center_block, std::abs(init.X() - end.X()) + 1, direction) && (std::abs(init.X() - end.X()) + 1 == block_dimension))
         {
             if (init.X() > end.X())
             {
@@ -95,13 +109,13 @@ bool DefenseMap::place_ship(Position &init, Position &end, const Position &cente
 
             while (init != end)
             {
-                defense_map_[init.Y()][init.X()].set_block_center(center_block);
+                defense_map_[init.Y()][init.X()].set_block_center(new_center_block);
                 defense_map_[init.Y()][init.X()].set_status(DefenseStatus::taken);
                 defense_map_[init.Y()][init.X()].set_full_block_dimension(block_dimension);
                 init.set_x(init.X() + 1);
             }
             // scrivo l'ultima
-            defense_map_[end.Y()][end.X()].set_block_center(center_block);
+            defense_map_[end.Y()][end.X()].set_block_center(new_center_block);
             defense_map_[end.Y()][end.X()].set_status(DefenseStatus::taken);
             defense_map_[init.Y()][init.X()].set_full_block_dimension(block_dimension);
         }
@@ -110,7 +124,7 @@ bool DefenseMap::place_ship(Position &init, Position &end, const Position &cente
     }
     else if (direction == Direction::vertical)
     {
-        if (check_area_for_placing(center_block, center_block, std::abs(init.Y() - end.Y()) + 1, direction) && (std::abs(init.Y() - end.Y()) + 1 == block_dimension))
+        if (check_area_for_placing(new_center_block, old_center_block, std::abs(init.Y() - end.Y()) + 1, direction) && (std::abs(init.Y() - end.Y()) + 1 == block_dimension))
         {
             if (init.Y() > end.Y())
             {
@@ -121,13 +135,13 @@ bool DefenseMap::place_ship(Position &init, Position &end, const Position &cente
 
             while (init != end)
             {
-                defense_map_[init.Y()][init.X()].set_block_center(center_block);
+                defense_map_[init.Y()][init.X()].set_block_center(new_center_block);
                 defense_map_[init.Y()][init.X()].set_status(DefenseStatus::taken);
                 defense_map_[init.Y()][init.X()].set_full_block_dimension(block_dimension);
                 init.set_y(init.Y() + 1);
             }
             // scrivo l'ultima
-            defense_map_[end.Y()][end.X()].set_block_center(center_block);
+            defense_map_[end.Y()][end.X()].set_block_center(new_center_block);
             defense_map_[end.Y()][end.X()].set_status(DefenseStatus::taken);
             defense_map_[init.Y()][init.X()].set_full_block_dimension(block_dimension);
         }
@@ -164,16 +178,39 @@ bool DefenseMap::check_area_for_placing(const Position &target_destination, cons
             // mi preparo ad andare avanti e indietro sommando l'offset
             front = target_destination + offset;
             back = target_destination - offset;
+
             // se sono posizioni corrette e vuote
             // attenzione al caso in cui siano piene ma con lo stesso centro => è valido...una nave che sistopsta in una posizione già da essa occupata
-            if (check_position(front) && check_position(back) &&
-                ( defense_map_[front.Y()][front.X()].status() != DefenseStatus::empty && defense_map_[front.Y()][front.X()].block_center() == origin_block_center || defense_map_[front.Y()][front.X()].status() != DefenseStatus::empty && defense_map_[back.Y()][back.X()].block_center() == origin_block_center) 
-                ||
-                ( defense_map_[front.Y()][front.X()].status() == DefenseStatus::empty && defense_map_[back.Y()][back.X()].status() == DefenseStatus::empty )
-            )
+            if (check_position(front) && check_position(back)) // se le posizioni sono corrette
             {
-                // proseguo per la prossima posizione lungo la direzione verticale
-                offset.set_y(offset.Y() - 1);
+                // controllo che entrambe siano libere o una delle due o entrambe occupano un posto della nave stessa
+
+                // 1) entrambe sono vuote
+                if (defense_map_[front.Y()][front.X()].status() == DefenseStatus::empty && defense_map_[back.Y()][back.X()].status() == DefenseStatus::empty)
+                {
+                    offset.set_y(offset.Y() - 1);
+                }
+                else if (defense_map_[front.Y()][front.X()].status() == DefenseStatus::empty && defense_map_[back.Y()][back.X()].status() != DefenseStatus::empty) // 2) front è vuota ma back è piena => deve avere lo stesso centro il blocco
+                {
+                    if (defense_map_[back.Y()][back.X()].block_center() == origin_block_center)
+                        offset.set_y(offset.Y() - 1);
+                    else
+                        return false;
+                }
+                else if (defense_map_[back.Y()][back.X()].status() == DefenseStatus::empty && defense_map_[front.Y()][front.X()].status() != DefenseStatus::empty) // 3) back è vuota ma front è piena => deve avere lo stesso centro il blocco
+                {
+                    if (defense_map_[front.Y()][front.X()].block_center() == origin_block_center)
+                        offset.set_y(offset.Y() - 1);
+                    else
+                        return false;
+                }
+                else // 4) in tal caso entrambe sono piene allora devono avere lo stesso centro
+                {
+                    if (defense_map_[front.Y()][front.X()].block_center() == origin_block_center && defense_map_[front.Y()][front.X()].block_center() == origin_block_center)
+                        offset.set_y(offset.Y() - 1);
+                    else
+                        return false; // in tal caso allora non va bene se anche quest'utlimo test non veiene superato
+                }
             }
             else
                 return false; // altriementi lo spostamento non può essere valido
@@ -189,18 +226,40 @@ bool DefenseMap::check_area_for_placing(const Position &target_destination, cons
             // mi preparo ad andare avanti e indietro sommando l'offset
             front = target_destination + offset;
             back = target_destination - offset;
-            // se sono posizioni corrette e vuote
-            if  (check_position(front) && check_position(back) &&
-                ( defense_map_[front.Y()][front.X()].status() != DefenseStatus::empty && defense_map_[front.Y()][front.X()].block_center() == origin_block_center || defense_map_[front.Y()][front.X()].status() != DefenseStatus::empty && defense_map_[back.Y()][back.X()].block_center() == origin_block_center) 
-                ||
-                ( defense_map_[front.Y()][front.X()].status() == DefenseStatus::empty && defense_map_[back.Y()][back.X()].status() == DefenseStatus::empty )
-            )
+
+            if (check_position(front) && check_position(back)) // se le posizioni sono corrette
             {
-                // proseguo per la prossima posizione lungo la direzione verticale
-                offset.set_x(offset.X() - 1);
+                // controllo che entrambe siano libere o una delle due o entrambe occupano un posto della nave stessa
+
+                // 1) entrambe sono vuote
+                if (defense_map_[front.Y()][front.X()].status() == DefenseStatus::empty && defense_map_[back.Y()][back.X()].status() == DefenseStatus::empty)
+                {
+                    offset.set_x(offset.X() - 1);
+                }
+                else if (defense_map_[front.Y()][front.X()].status() == DefenseStatus::empty && defense_map_[back.Y()][back.X()].status() != DefenseStatus::empty) // 2) front è vuota ma back è piena => deve avere lo stesso centro il blocco
+                {
+                    if (defense_map_[back.Y()][back.X()].block_center() == origin_block_center)
+                        offset.set_x(offset.X() - 1);
+                    else
+                        return false;
+                }
+                else if (defense_map_[back.Y()][back.X()].status() == DefenseStatus::empty && defense_map_[front.Y()][front.X()].status() != DefenseStatus::empty) // 3) back è vuota ma front è piena => deve avere lo stesso centro il blocco
+                {
+                    if (defense_map_[front.Y()][front.X()].block_center() == origin_block_center)
+                        offset.set_x(offset.X() - 1);
+                    else
+                        return false;
+                }
+                else // 4) in tal caso entrambe sono piene allora devono avere lo stesso centro
+                {
+                    if (defense_map_[front.Y()][front.X()].block_center() == origin_block_center && defense_map_[front.Y()][front.X()].block_center() == origin_block_center)
+                        offset.set_x(offset.X() - 1);
+                    else
+                        return false; // in tal caso allora non va bene se anche quest'utlimo test non veiene superato
+                }
             }
             else
-                return false; // altrimenti lo spostamento non può essere valido
+                return false; // altriementi lo spostamento non può essere valido
         }
     }
     return true;
@@ -225,10 +284,9 @@ bool DefenseMap::move_ship(const Position &target_origin, const Position &target
         return false;
 
     // se la nave non c'è nell'origine specificata o la destinazione non è vuota (a meno che no sia occupata dalla nave stessa) allora ritorno
-    if ( (defense_map_[target_origin.Y()][target_origin.X()].status() == DefenseStatus::empty || defense_map_[target_origin.Y()][target_origin.X()].block_center() != target_origin)
-    || (defense_map_[target_destination.Y()][target_destination.X()].status() != DefenseStatus::empty && defense_map_[target_destination.Y()][target_destination.X()].block_center() != target_origin ))
+    if ((defense_map_[target_origin.Y()][target_origin.X()].status() == DefenseStatus::empty || defense_map_[target_origin.Y()][target_origin.X()].block_center() != target_origin) || (defense_map_[target_destination.Y()][target_destination.X()].status() != DefenseStatus::empty && defense_map_[target_destination.Y()][target_destination.X()].block_center() != target_origin))
         return false;
-std::cout<<"ci siamo 1!!"; 
+
     // Ora posizioni di origine e destinazione sono valide => inizio i test di spostamento
     // (1) dal blocco di origine (centro della nave) mi ricavo la grandezza del blocco totale
     int dimension = defense_map_[target_origin.Y()][target_origin.X()].full_block_dimension();
@@ -255,14 +313,6 @@ std::cout<<"ci siamo 1!!";
             direction = Direction::horizontal;
     }
 
-    // controllo se si è mossa su se stessa prima di scrivere la nuova nave
-    bool is_on_itself = defense_map_[target_destination.Y()][target_destination.X()].block_center() == target_origin;
-
-    // verifico che l'area di destinazione non sia accerchiata: la nave deve aver modo di poterci entrare
-    // questo solo se non si è moosa su se stessa
-    if (!is_on_itself && is_sorrounded(target_destination, dimension, direction))
-        return false;
-
     // provo ora a scriverla nella nuova area
     // se va a buon fine è già nella posizione corretta e cancello la vecchia are a occupata
     // altrimenti ritorno.
@@ -280,80 +330,97 @@ std::cout<<"ci siamo 1!!";
     }
     else
     {
-        bow = target_destination + Position{0, dimension / 2};
-        stern = target_destination - Position{0, dimension / 2};
+        bow = target_destination - Position{0, dimension / 2};
+        stern = target_destination + Position{0, dimension / 2};
     }
-    std::cout<<"ok ok"<<"è su se stessa? "<<is_on_itself<<" -?-"; 
+
+    // controllo se si è mossa su se stessa prima di scrivere la nuova nave
+    bool is_on_itself = false; 
+    // se la nuova prua o la nuova poppa hanno ina posizione centro uguale al target origin => è su se stessa
+    if(defense_map_[bow.Y()][bow.X()].block_center() == target_origin || defense_map_[stern.Y()][stern.X()].block_center() == target_origin)
+        is_on_itself = true; 
+
+    // verifico che l'area di destinazione non sia accerchiata: la nave deve aver modo di poterci entrare
+    // questo solo se non si è moosa su se stessa
+    if (!is_on_itself && is_sorrounded(target_destination, dimension, direction))
+        return false;
 
     // si occupa palce ship di verificare che l'area sia libera
-    if (place_ship(bow, stern, target_destination, dimension, direction))
+    if (place_ship(bow, stern, target_destination, target_origin, dimension, direction))
     {
         // lo spostamento è andato a buon fine e la nave è stata scritta nella posizione corretta
         // allora la cancello dalla vecchia se non si è spostata in una posizion eparzialmente occupata da se stessa
         // altrimeni cancello le singole celle
+
         if (is_on_itself)
         {
-            std::cout<<"su se stessa"; 
             // determino di quanto si è spostata su se stessa. Questo è già l'offset da sommare nella corretta direzione
-            Position off = target_origin - target_destination;
+            Position off = target_destination - target_origin;
+
             // se la direzione è verticale allora mi sposto verso l'alto o basso dal centro nuovo
             // se la direzione è orizzontale allora mi sposto verso destra o sinistra dal centro nuovo
             // basta solo sottrarre l'offset
-            Position stern = target_destination - off;
-            // determino la vecchia poppa
-            Position end = target_origin;
-            // la nave è tornata indietro allora la vecchia poppa è avanti
-            if (direction == Direction::horizontal && off.X() < 0)
-            {
-                end.set_x(end.X() + (defense_map_[target_origin.Y()][target_origin.X()].full_block_dimension() / 2));
-                stern.set_x(stern.X() + 1);
-            }
-            else if (direction == Direction::horizontal && off.X() >= 0) // la nave è andata avanti e la vecchia poppa è indietro
-            {
-                end.set_x(end.X() - (defense_map_[target_origin.Y()][target_origin.X()].full_block_dimension() / 2));
-                stern.set_x(stern.X() - 1);
-            }
-            else if (direction == Direction::vertical && off.X() < 0)
-            {
-                end.set_y(end.Y() + (defense_map_[target_origin.Y()][target_origin.X()].full_block_dimension() / 2));
-                stern.set_y(stern.Y() + 1);
-            }
-            else if (direction == Direction::vertical && off.X() >= 0) // la nave è andata avanti e la vecchia poppa è indietro
-            {
-                end.set_y(end.Y() - (defense_map_[target_origin.Y()][target_origin.X()].full_block_dimension() / 2));
-                stern.set_y(stern.Y() - 1);
-            }
-            // ora incremento di 1 la x o la y in base alla direzione
-            // e cancello la cella finchè non arrivo alla vecchia poppa
-            while (stern != end)
-            {
-                defense_map_[stern.Y()][stern.X()].clear();
 
-                if (direction == Direction::horizontal && off.X() < 0)
+            Position end_clear = target_origin;
+            Position start_clear = target_destination;
+            // determino la vecchia poppa e la vecchia prua
+            if (direction == Direction::horizontal)
+            {
+                // sono in orizzontale
+                // determino la coordinata più vicina al vecchio centro e le sommo l'offset
+                if (std::abs((target_origin - bow).X()) < std::abs((target_origin - stern).X()))
                 {
-                    stern.set_x(stern.X() + 1);
+                    end_clear.set_x(bow.X() - off.X());
+                    start_clear = bow;
                 }
-                else if (direction == Direction::horizontal && off.X() >= 0) // la nave è andata avanti e la vecchia poppa è indietro
+                else
                 {
-                    stern.set_x(stern.X() - 1);
+                    end_clear.set_x(stern.X() - off.X());
+                    start_clear = stern;
                 }
-                else if (direction == Direction::vertical && off.X() < 0)
+                // mi metto subito dopo
+                off.X() < 0 ? start_clear.set_x(start_clear.X() + 1) : start_clear.set_x(start_clear.X() - 1);
+
+                while (start_clear != end_clear)
                 {
-                    stern.set_y(stern.Y() + 1);
+                    defense_map_[start_clear.Y()][start_clear.X()].clear();
+                    off.X() < 0 ? start_clear.set_x(start_clear.X() + 1) : start_clear.set_x(start_clear.X() - 1);
                 }
-                else if (direction == Direction::vertical && off.X() >= 0) // la nave è andata avanti e la vecchia poppa è indietro
-                {
-                    stern.set_y(stern.Y() - 1);
-                }
+                // l'ultima cosa da fare è cancellare la fine
+                defense_map_[end_clear.Y()][end_clear.X()].clear();
             }
-            // mi manca solo la vecchia poppa
-            defense_map_[stern.Y()][stern.X()].clear();
+            else
+            {
+                // sono in verticale
+                // determino la coordinata più vicina al vecchio centro e le sommo l'offset
+                if (std::abs((target_origin - bow).Y()) < std::abs((target_origin - stern).Y()))
+                {
+                    end_clear.set_y(bow.Y() - off.Y());
+                    start_clear = bow;
+                }
+                else
+                {
+                    end_clear.set_y(stern.Y() - off.Y());
+                    start_clear = stern;
+                }
+                // mi metto subito dopo
+                off.Y() < 0 ? start_clear.set_y(start_clear.Y() + 1) : start_clear.set_y(start_clear.Y() - 1);
+
+                while (start_clear != end_clear)
+                {
+                    defense_map_[start_clear.Y()][start_clear.X()].clear();
+                    off.Y() < 0 ? start_clear.set_y(start_clear.Y() + 1) : start_clear.set_y(start_clear.Y() - 1);
+                }
+                // l'ultima cosa da fare è cancellare la fine
+                defense_map_[end_clear.Y()][end_clear.X()].clear();
+            }
         }
         else
             clear_area(target_origin, dimension, direction);
+        // in etrambe i casi l'operazione è andata a buon fine e ho spostato la nave
         return true;
     }
-    else
+    else // in tal caso l'area che occuperebbe la nave non è accessibile => non la posso spostare li
         return false;
 }
 
@@ -421,6 +488,7 @@ std::vector<Position> DefenseMap::discovers_neighbors(const Position &target_ori
         return neighbors_position;
     // determino il vertice di partenza
     Position start = target_origin - Position{side / 2, side / 2};
+
     Position tmp;
     // cerco per tutta l'area posizioni non vuote e aggiugno il loro centro
     for (int i = 0; i < side; i++)
@@ -429,7 +497,8 @@ std::vector<Position> DefenseMap::discovers_neighbors(const Position &target_ori
         {
             if (check_position(start))
             {
-                if (defense_map_[start.Y()][start.X()].status() != DefenseStatus::empty)
+                // controllo se è piena e ovviamente s enon è il target origin
+                if (defense_map_[start.Y()][start.X()].status() != DefenseStatus::empty && start != target_origin)
                 {
                     // controllo se non è già presente
                     tmp = defense_map_[start.Y()][start.X()].block_center();
@@ -437,10 +506,10 @@ std::vector<Position> DefenseMap::discovers_neighbors(const Position &target_ori
                         neighbors_position.push_back(tmp);
                 }
             }
-            start.set_x(start.X() + j);
+            start.set_x(start.X() + 1);
         }
-        start.set_y(start.Y() + i);
-        start.set_x(target_origin.X() - side / 2);
+        start.set_y(start.Y() + 1);
+        start.set_x(target_origin.X() - side/2);
     }
     return neighbors_position;
 }
@@ -538,12 +607,12 @@ std::vector<AttackUnit> DefenseMap::spot_area(const Position &target_origin, int
                 else
                     discovered_position.push_back(AttackUnit::spotted);
             }
-            start.set_x(start.X() + j);
+            start.set_x(start.X() + 1);
         }
-        start.set_y(start.Y() + i);
+        start.set_y(start.Y() + 1);
         start.set_x(target_origin.X() - side / 2);
     }
-    // il vettore contirnr la matrice scritta per righe
+    // il vettore contenere la matrice scritta per righe
     return discovered_position;
 }
 
@@ -600,7 +669,7 @@ bool DefenseMap::add_ship(const Position &bow_position, const Position &stern_po
     Position init = bow_position;
     Position end = stern_position;
 
-    return place_ship(init, end, center_block, size, orientation);
+    return place_ship(init, end, center_block, center_block, size, orientation);
 }
 
 // funzione che verifica se un'area è accerchiata
@@ -616,8 +685,12 @@ bool DefenseMap::is_sorrounded(const Position &target_origin, int size, Directio
         // controllo sopra e sotto all'area che ricopre
         // se uno dei due è vuoto allora l'area non è accerchiata
         if (check_position(target_origin - offset) && check_position(target_origin + offset))
+        {
             if (defense_map_[(target_origin - offset).Y()][(target_origin - offset).X()].status() == DefenseStatus::empty || defense_map_[(target_origin + offset).Y()][(target_origin + offset).X()].status() == DefenseStatus::empty)
                 return false;
+        }
+        else return false; // sono fuori da un muro=> accedo dal lato opposto 
+
 
         // ora sopra e sotto sono bloccati
         // controllo i lati
@@ -629,9 +702,12 @@ bool DefenseMap::is_sorrounded(const Position &target_origin, int size, Directio
             checker.set_y(checker.Y() + i);
             // non appena ne trovo uno vuoto ritorno
             // devo controllare da entrambe i lati => sommo 2 alla x
-            if (check_position(checker) && check_position(checker + Position{2, 0}) &&
-                (defense_map_[checker.Y()][checker.X()].status() == DefenseStatus::empty || defense_map_[checker.Y()][checker.X() + 2].status() == DefenseStatus::empty))
-                return false;
+            if (check_position(checker) && check_position(checker + Position{2, 0}) )
+            {
+                if(defense_map_[checker.Y()][checker.X()].status() == DefenseStatus::empty || defense_map_[checker.Y()][checker.X() + 2].status() == DefenseStatus::empty)
+                    return false;
+            } 
+            else return false; // sono fuori da un muro=> accedo dal lato opposto 
         }
     }
     else
@@ -641,8 +717,12 @@ bool DefenseMap::is_sorrounded(const Position &target_origin, int size, Directio
         // controllo a destra e sinistra l'area che ricopre
         // se uno dei due è vuoto allora l'area non è accerchiata
         if (check_position(target_origin - offset) && check_position(target_origin + offset))
+        {
             if (defense_map_[(target_origin - offset).Y()][(target_origin - offset).X()].status() == DefenseStatus::empty || defense_map_[(target_origin + offset).Y()][(target_origin + offset).X()].status() == DefenseStatus::empty)
                 return false;
+        }
+        else return false; // sono fuori da un muro=> accedo dal lato opposto 
+
 
         // ora sopra e sotto sono bloccati
         // controllo i lati
@@ -654,9 +734,13 @@ bool DefenseMap::is_sorrounded(const Position &target_origin, int size, Directio
             checker.set_x(checker.X() + i);
             // non appena ne trovo uno vuoto ritorno
             // devo controllare da entrambe i lati => sommo 2 alla x
-            if (check_position(checker) && check_position(checker + Position{2, 0}) &&
-                (defense_map_[checker.Y()][checker.X()].status() == DefenseStatus::empty || defense_map_[checker.Y()][checker.X() + 2].status() == DefenseStatus::empty))
-                return false;
+            if (check_position(checker) && check_position(checker + Position{2, 0}))
+            {
+                if(defense_map_[checker.Y()][checker.X()].status() == DefenseStatus::empty || defense_map_[checker.Y()][checker.X() + 2].status() == DefenseStatus::empty)
+                    return false;
+            }
+            else return false; // sono fuori da un muro=> accedo dal lato opposto  
+
         }
     }
 

@@ -40,7 +40,9 @@ class AttackGrid
 
     // funzione che scrive in una stringa la mappa 
     std::string to_string() const; 
-
+    // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
+    bool check_position(const Position& position) const;
+    
     private:    
     // Regione delle costanti da utilizzare nella classe  
     static constexpr char kHitAndFullSymbol = 'X'; 
@@ -51,9 +53,6 @@ class AttackGrid
     static constexpr int kFirstColumnNumber = 1;  
     // rappresenta la mappa da usare per l'attacco
     AttackUnit attack_grid_[kHeight][kWidth];  
-    // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
-    bool check_position(const Position& position) const;
-
 
     // ATTACK GRID: è un aclasse che rappresenta una mappa di attacco e fornisce i metodi per individuare 
     // e aggiornare lo stato delle caselle. Viene usata dalle navi per le funzioni di attacco e discover 

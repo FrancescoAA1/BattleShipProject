@@ -66,6 +66,9 @@ class DefenseMap
     // funzione che scrive in una stringa la mappa 
     std::string to_string() const; 
 
+    // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
+    bool check_position(const Position& position) const; 
+
     private: 
 
     // Regione delle costanti da utilizzare nella classe  
@@ -84,12 +87,11 @@ class DefenseMap
 
     // rappresenta la mappa da usare per la difesa
     DefenseUnit defense_map_[kHeight][kWidth]; 
-    // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
-    bool check_position(const Position& position) const; 
     // scrivo una nave nella matrice
     // inizio e fine devono già condividere la stessa riga o la stessa colonna in accordo con la direzione 
     // true se l'operazione è correttamente eseguibile
-    bool place_ship(Position& init, Position& end, const Position& center_block, int block_dimension, Direction direction); 
+    // init e end le passo per valore poichè verranno modificate all'interno
+    bool place_ship(Position init, Position end, const Position& new_center_block, const Position& old_center_block, int block_dimension, Direction direction); 
     // verifico se la coordinata di centro specificata può essere una posizione plausibile per una nave di lunghezza 
     // length specificata e orientamento orientation.
     // ritorna true se la nave ricoprirebbe una regione non vuota o non rientra nella matrice
