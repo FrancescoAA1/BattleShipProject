@@ -19,6 +19,6 @@ add_library(HumanPlayer src/HumanPlayer.cpp)
 add_library(Move src/Move.cpp)
 add_library(Game src/Game.cpp)
 
-add_executable(${PROJECT_NAME} src/test_components.cpp)
+add_executable(${PROJECT_NAME} src/test_players.cpp)
 
 target_link_libraries(${PROJECT_NAME} Utility Game RobotPlayer HumanPlayer Ironclad SupportShip Submarine Player Ship AttackGrid DefenseMap DefenseUnit Move Position)

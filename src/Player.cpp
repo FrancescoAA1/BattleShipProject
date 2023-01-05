@@ -6,8 +6,8 @@ Player::Player(const std::string &nickname)
     nickname_ = nickname;
     attack_grid_ = AttackGrid();
     defense_map_ = DefenseMap();
-    // il vector di navi è inizialmente vuoto ma lo predispongo per 8 navi
-    ship_list = std::vector<Ship *>(8);
+    // il vector di navi è inizialmente vuoto perchè vengono aggiunte con push_back
+    ship_list = std::vector<Ship *>(0);
 }
 
 // metodi privati
@@ -127,22 +127,22 @@ std::string Player::convert_to_command(const Position &position)
         std::string letter(1, (char)position.X() + kDefaultCapitalAscii);
 
         // conversione da int a string della coordinata Y della posizione
-        std::string number = std::to_string(position.Y());
+        std::string number = std::to_string(position.Y()+1);
 
         // concatenazione delle due stringhe contenenti le coordinate in formato (A1)
         std::string coordinate = letter + number;
-        std::cout << coordinate;
         return coordinate;
     }
 
     throw InvalidPosition{};
 }
 
-Ship *Player::get_ship(const Position &origin)
+Ship *Player::get_ship(const Position origin)
 {
     // ricerca del puntatore alla nave avente come centro la posizione di origine
-    auto it = std::find_if(ship_list.begin(), ship_list.end(), [origin](Ship *ship)
-                           { return ship->centre() == origin; });
+    auto it = std::find_if(ship_list.begin(), ship_list.end(), [origin](Ship *ship) -> bool
+                          { return (ship->centre() == origin); });
+
 
     // se l'iteratore ritornato dall'algoritmo STL punta all'ultimo elemento del vettore di navi
     // la nave non è stata trovata e viene ritornato nullptr, altrimenti si calcola l'indice
@@ -176,10 +176,10 @@ int get_size(const Position &bow, const Position &stern)
 
     if (placing == Direction::horizontal)
     {
-        return abs(bow.X() - stern.X());
+        return abs(bow.X() - stern.X()) + 1;
     }
     else
-        return abs(bow.Y() - stern.Y());
+        return abs(bow.Y() - stern.Y()) + 1;
 }
 
 Player::~Player() 

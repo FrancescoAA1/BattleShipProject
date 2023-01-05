@@ -1,4 +1,5 @@
 #include "../include/HumanPlayer.h"
+#include <iostream>
 
 Move HumanPlayer::get_move(const std::string &cmd)
 {
@@ -84,8 +85,12 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size)
     // per ogni coppia di coordinate viene restituita una posizione
     bow = convert_to_position(first_pair);
     stern = convert_to_position(second_pair);
+    std::cout<< bow;
+    std::cout<<stern;
+    
     int c_size = get_size(bow, stern);
-
+    std::cout << c_size;
+    
     if (c_size == size)
     {
         if (defense_map_.add_ship(bow, stern))
@@ -93,21 +98,21 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size)
 
             Direction d = get_direction(bow, stern);
             Position p = (bow + stern) / 2;
-
             if (size == 5)
             {
-                Ironclad ship{d, p, defense_map_, attack_grid_};
-                ship_list.push_back(&ship);
+                Ironclad *ship= new Ironclad{d, p, defense_map_, attack_grid_};
+                ship_list.push_back(ship);
             }
             else if (size == 3)
             {
-                SupportShip ship{d, p, defense_map_, attack_grid_};
-                ship_list.push_back(&ship);
+                SupportShip *ship = new SupportShip{d, p, defense_map_, attack_grid_};
+                ship_list.push_back(ship);
+                std::cout << ship_list.size();
             }
             else
             {
-                Submarine ship{p, defense_map_, attack_grid_};
-                ship_list.push_back(&ship);
+                Submarine *ship = new Submarine{p, defense_map_, attack_grid_};
+                ship_list.push_back(ship);
             }
         }
         else

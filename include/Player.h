@@ -41,7 +41,7 @@ public:
     // data una posizione di origine, la funzione restituisce un puntatore alla nave
     // avente come centro la posizione specificata. Se tale nave non esiste
     // la funzione ritorna nullptr
-    Ship *get_ship(const Position &origin);
+    Ship *get_ship(const Position origin);
 
     // funzione che ritorna un vettore di attackUnit per l' operazione del sottomarino
     std::vector<AttackUnit> retrieve_unit(const Position &target);
