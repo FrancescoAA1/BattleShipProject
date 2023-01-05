@@ -50,6 +50,11 @@ class Ship
 
         //costruttore, richiede la dimensione della nave, il suo orientamento, il suo centro, le mappe in cui è contenuta
         Ship(int, Direction, Position&, DefenseMap&, AttackGrid&);
+
+        //campo che contine un firerimento alla mappa di attacco di cui fa parte
+        AttackGrid attack_grid_; 
+        //campo che contine un rigferimento alla mappa di difesa di cui fa parte
+        DefenseMap defense_map_; 
     
 
     private:
@@ -62,10 +67,7 @@ class Ship
         int size_;
         //variabile che indica il centro della nave
         Position centre_;
-        //campo che contine un firerimento alla mappa di attacco di cui fa parte
-        AttackGrid attack_grid_; 
-        //campo che contine un rigferimento alla mappa di difesa di cui fa parte
-        DefenseMap defense_map_; 
+
 }; 
 
 /*

@@ -11,8 +11,19 @@ player.cpp (Metodo check_for_graphic_cmd, parte commentata)
 3) Funzionalità di replay
 
 
-
-
+4) I METODI GETTER NELLE CLASSI CHE HANNO DELLE DERIVATE
+se una classe ha delle classi derivate, queste potrebbero dover accedere a dei membri privati
+per farlo solitamente si penserebbe di usare il getter, ma un normale getter, del genere
+ClassType get_field() const {return field;}
+ritorna una copia del campo, che è utile solo in lettura ma ovviamente non in scrittura
+per modificare effettivamente il campo ci sarebbero i metodi setter, ma se il campo è un oggetto
+e non tipo di dato primitivo, il setter non è di aiuto
+si potrebbe fare un getter del tipo
+ClassType& get_field() {return field;}
+ma questo violerebbe l'incapsulamento, in quanto un metodo pubblico permetterebbe di modificare un
+membro privato
+La soluzione che ho trovato migliore è stata quella di mettere tali membri come protected (restituire una reference non è un errore
+di per sè, ma è più corretto fare così secondo me, quindi potremmo sistemarlo alla fine del progetto)
 
 
 

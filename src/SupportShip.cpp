@@ -11,12 +11,12 @@ bool SupportShip::action(const Position& target, const std::vector<AttackUnit>& 
 {
     if(defense_map().move_ship(this->centre(), target))
     {
-        last_fixed_ship = defense_map().discovers_neighbors(target, kSide);
+        last_fixed_ship = defense_map_.discovers_neighbors(target, kSide);
         
         for(int i = 0; i < last_fixed_ship.size(); i++)
         {
             //curo la nave, e se l'azione non è valida restituisco false
-            if(!defense_map().fix_ship(last_fixed_ship[i])) return false;
+            if(!defense_map_.fix_ship(last_fixed_ship[i])) return false;
         } 
         
 

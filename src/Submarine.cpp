@@ -12,29 +12,12 @@ bool Submarine::action(const Position& target, const std::vector<AttackUnit>& da
     //sposto il sottomarino
     if(defense_map().move_ship(this->centre(), target))
     {
-        //il vettore contiene una matrice di unità, salvando le sue entrate a "S" (la prima riga da sinistra a destra, la seconda
-        //riga da destra a sinistra, la terza da sinistra a destra ecc...)
-        //per leggere il vettore come una matrice a S devo considerare i seguenti punti:
-        //se il risultato (k) della divisione intera i/kSide è un numero pari, la riga va letta da sinistra a destra (x aumenta);
-        //                                                      se è dispari, da destra a sinistra (x diminuisce)
-        //il risultato della divisione intera i/kSide è l'indice della riga dell'elemento
-
-        //devo comunque lavorare con coordinate relative alla posizione del sottomarino (target), quindi uso le variabili
-        //x_diff e y_diff che oscillano tra -kSide/2 e +kSide/2
-
-        int y_diff = -(kSide/2);
-        int x_diff = -(kSide/2);
-
-        for(int i = 0; i < data.size(); i++)
+        //data è un vettore che salva una matrice kSide * kSide salvata per righe
+        for(int i = -kSide/2; i < kSide/2; i++)
         {
-            int k = i/kSide;
-            if(k % 2 == 0) x_diff++ ;   //controllo k pari
-            else x_diff-- ;             //altrimenti k dispari
-
-            if(data[i] == AttackUnit::spotted)
+            for(int j = -kSide/2; j < kSide/2; j++)
             {
-                Position temp = Position(target.X() + x_diff, target.Y() + y_diff + k);
-                attack_grid().spot_position(temp);
+                if(data[kSide*i + j] == AttackUnit::spotted) attack_grid_.spot_position(target + Position(i, j));
             }
         }
 
@@ -46,3 +29,4 @@ bool Submarine::action(const Position& target, const std::vector<AttackUnit>& da
 
     
 }
+
