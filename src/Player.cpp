@@ -181,3 +181,16 @@ int get_size(const Position &bow, const Position &stern)
     else
         return abs(bow.Y() - stern.Y());
 }
+
+Player::~Player() 
+{
+    Ship* pointer; 
+    // dealloco tutta la memoria adelle navi
+    for (int i = 0; i < ship_list.size(); i++)
+    {
+        pointer = ship_list[i]; 
+        delete pointer; 
+    }
+    
+    pointer = nullptr; 
+}

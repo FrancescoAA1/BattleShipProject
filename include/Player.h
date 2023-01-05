@@ -69,6 +69,7 @@ public:
 
     virtual ~Player(); 
 
+
 protected:
     // costruttore dato il nome del giocatore
     Player(const std::string &);

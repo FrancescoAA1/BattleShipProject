@@ -15,8 +15,6 @@ class RobotPlayer : public Player
 
     bool add_ships(const std::string& cmd, int size) override;
 
-    ~RobotPlayer() override; 
-
     private:
 
     //funzione che restituisce un indice casuale compreso tra 0 e la dimensione del vettore di navi

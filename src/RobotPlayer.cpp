@@ -125,17 +125,3 @@ bool RobotPlayer::add_ships(const std::string &cmd, int size)
     }
     return true;
 }
-
-
-RobotPlayer::~RobotPlayer() 
-{
-    Ship* pointer; 
-    // dealloco tutta la memoria adelle navi
-    for (int i = 0; i < ship_list.size(); i++)
-    {
-        pointer = ship_list[i]; 
-        delete pointer; 
-    }
-    
-    pointer = nullptr; 
-}

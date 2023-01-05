@@ -44,7 +44,7 @@ class Ship
         //la nave è stata curata da una nave di supporto: ripristina la corazza al valore iniziale (che è size_)
         void restore() {armor_ = size_;};
         
-        virtual ~Ship(); 
+        virtual ~Ship() {}; 
 
     protected:
 

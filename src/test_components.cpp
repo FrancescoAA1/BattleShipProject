@@ -1,9 +1,12 @@
 #include "../include/DefenseMap.h"
 #include "../include/AttackGrid.h"
+#include "../include/HumanPlayer.h"
 #include <iostream>
 
 int main(void)
 {
+    HumanPlayer p = HumanPlayer("Picaciu"); 
+    /*
     DefenseMap def_map = DefenseMap();
     std::cout << def_map.add_ship(Position{1, 1}, Position{1, 5}) << std::endl;
     std::cout << def_map.add_ship(Position{2, 2}, Position{3, 5}) << std::endl;
