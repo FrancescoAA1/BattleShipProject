@@ -2,6 +2,8 @@
 #define BATTLESHIPPROJECT_ROBOTPLAYER_H_
 
 #include "Player.h"
+#include <stdlib.h>
+#include <time.h>
 
 class RobotPlayer : public Player
 {

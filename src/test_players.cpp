@@ -29,10 +29,11 @@ int main()
     RobotPlayer r = RobotPlayer("ciao");
     std::cout << r.convert_to_command(Position{1,11});
     std::cout << r.convert_to_position("A1");
-    r.get_ships_left();
+
     std::cout << r.add_ships("A1 A3", 3); 
-    //r.get_move("A1 A5");
-    //r.get_ship(Position{0,1});
+    std::cout<<  "Ships:" << r.get_ships_left() <<std::endl;
+    r.get_move("");
+    r.get_ship(Position{0,1});
 
     //Game g{"c", "g", GameMode::ComputerVsComputer, 6};
     //g.add(); serve metodo 

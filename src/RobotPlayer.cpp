@@ -4,9 +4,7 @@
 // il robot inventa la mossa per cui la stringa passata come parametro sarà vuota
 Move RobotPlayer::get_move(const std::string &move)
 {
-    int s = get_random_index(ship_list.size());
-    std::cout << std::to_string(s);
-    Ship *ship_cmd = ship_list.at(s);
+    Ship *ship_cmd = ship_list.at(get_random_index(ship_list.size()));
     Position origin{};
     Position target{};
     Move m;
@@ -43,23 +41,26 @@ Move RobotPlayer::get_move(const std::string &move)
 
 int RobotPlayer::get_random_index(int size)
 {
-    return std::rand() % size;
+    srand(time(0));
+    return rand() % size;
 }
 
 Position RobotPlayer::get_random_pos()
 {
-    int x = std::rand() % 12;
-    int y = std::rand() % 12;
+    srand(time(0));
+    int x = abs(std::rand() % 12);
+    int y = abs(std::rand() % 12);
     return Position(x, y);
 }
 
 Position RobotPlayer::get_random_pos(const Position &origin, int size)
 {
+    srand(time(0));
     if (size > 12 / 2 + 1)
         return origin;
 
     bool done = false;
-    int x = std::rand() % 4;
+    int x = abs(std::rand() % 4);
     // x = 0 --> restituisco posizione con stessa ascissa e ordinata maggiore
     // x = 1 --> restituisco posizione con stessa ascissa e ordinata minore
     // x = 2 --> restituisco posizione con stessa ordinata e ascissa maggiore
@@ -71,7 +72,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
         if (x == 0)
         {
             if (origin.Y() + size < 12)
-                return Position(origin.X(), origin.Y() + size);
+                return Position(origin.X(), origin.Y() + size - 1);
             // se l'ordinata sfora dal limite allora sottraggo size
             else
                 x = 1;
@@ -79,7 +80,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
         else if (x == 1)
         {
             if (origin.Y() - size >= 0)
-                return Position(origin.X(), origin.Y() - size);
+                return Position(origin.X(), origin.Y() - size - 1);
             // se l'ordinata sfora dal limite allora aggiungo size
             else
                 x = 0;
@@ -87,7 +88,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
         else if (x == 2)
         {
             if (origin.X() + size < 12)
-                return Position(origin.X() + size, origin.Y());
+                return Position(origin.X() + size - 1, origin.Y());
             // se l'ascissa sfora dal limite allora sottraggo size
             else
                 x = 3;
@@ -95,7 +96,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
         else if (x == 3)
         {
             if (origin.X() - size >= 0)
-                return Position(origin.X() - size, origin.Y());
+                return Position(origin.X() - size - 1, origin.Y());
             // se l'ascissa sfora dal limite allora aggiungo size
             else
                 x = 2;
@@ -112,6 +113,8 @@ bool RobotPlayer::add_ships(const std::string &cmd, int size)
 {
     Position bow = get_random_pos();
     Position stern = get_random_pos(bow, size);
+    std::cout << bow;
+    std::cout << stern;
     bool created = DefenseMap().add_ship(bow, stern);
 
     Direction d = get_direction(bow, stern);
@@ -134,6 +137,7 @@ bool RobotPlayer::add_ships(const std::string &cmd, int size)
             Submarine *ship = new Submarine{p, defense_map_, attack_grid_};
             ship_list.push_back(ship);
         }
+        return true;
     }
-    return true;
+    return false;
 }
