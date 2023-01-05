@@ -2,6 +2,7 @@
 #define BATTLESHIPPROJECT_GAME_H_
 
 #include <string>
+#include <typeinfo>
 #include "GameMode.h"
 #include "Player.h"
 #include "RobotPlayer.h"

@@ -33,8 +33,8 @@ Game::Game()
 void Game::playRound()
 {
     play_single_turn(player_1);
-    
-    if(!Win())
+
+    if (!Win())
     {
         play_single_turn(player_2);
     }
@@ -98,7 +98,7 @@ bool Game::Win()
 void Game::add()
 {
     add_player_ships(player_1);
-    add_player_ships(player_2);
+    //add_player_ships(player_2);
 }
 
 void Game::add_player_ships(Player *p)
@@ -106,15 +106,19 @@ void Game::add_player_ships(Player *p)
     int nIronclad = kIronclad;
     int nSupport = kSupportShip;
     int nSubmarine = kSubmarine;
-                std::cout << "SOno QUi";
+    std::cout << "SOno QUi";
 
     std::string cmd_add;
     bool check;
 
     while (nIronclad > 0)
     {
-        std::cout << p->nickname() + " inserisci le coordinate della nave";
-        std::cin >> cmd_add;
+        // if (typeid(*p) == typeid(HumanPlayer))
+        // {
+        //     std::cout << p->nickname() + " inserisci le coordinate della CORAZZATA";
+        //     std::cin >> cmd_add;
+        // }
+
         check = p->add_ships(cmd_add, 5);
         if (check)
         {
@@ -122,32 +126,40 @@ void Game::add_player_ships(Player *p)
         }
     }
 
-    while (nSupport > 0)
-    {
-        std::cin >> cmd_add;
-        check = p->add_ships(cmd_add, 3);
-        if (check)
-        {
-            nSupport--;
-        }
-    }
+    // while (nSupport > 0)
+    // {
+    //     if (typeid(*p) == typeid(HumanPlayer))
+    //     {
+    //         std::cout << p->nickname() + " inserisci le coordinate della NAVE DI SUPPORTO";
+    //         std::cin >> cmd_add;
+    //     }
+    //     check = p->add_ships(cmd_add, 3);
+    //     if (check)
+    //     {
+    //         nSupport--;
+    //     }
+    // }
 
-    while (nSubmarine > 0)
-    {
-        std::cin >> cmd_add;
-        check = p->add_ships(cmd_add, 1);
-        if (check)
-        {
-            nSubmarine--;
-        }
-    }
+    // while (nSubmarine > 0)
+    // {
+    //     if (typeid(*p) == typeid(HumanPlayer))
+    //     {
+    //         std::cout << p->nickname() + " inserisci le coordinate del SOTTOMARINO";
+    //         std::cin >> cmd_add;
+    //     }
+    //     check = p->add_ships(cmd_add, 1);
+    //     if (check)
+    //     {
+    //         nSubmarine--;
+    //     }
+    // }
 }
 
 Game::~Game()
 {
     // elimino tutta la memoria allocata nell'heap
-    delete player_1; 
-    delete player_2; 
-    player_1 = nullptr; 
-    player_2 = nullptr; 
+    delete player_1;
+    delete player_2;
+    player_1 = nullptr;
+    player_2 = nullptr;
 }

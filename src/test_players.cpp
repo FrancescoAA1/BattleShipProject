@@ -35,7 +35,7 @@ int main()
     r.get_move("");
     r.get_ship(Position{0,1});
 
-    //Game g{"c", "g", GameMode::ComputerVsComputer, 6};
-    //g.add(); serve metodo 
+    Game g{"c", "g", GameMode::ComputerVsComputer, 6};
+    g.add();
     return 0;
 }
