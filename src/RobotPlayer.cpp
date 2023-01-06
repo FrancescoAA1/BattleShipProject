@@ -47,7 +47,7 @@ int RobotPlayer::get_random_index(int size)
 
 Position RobotPlayer::get_random_pos()
 {
-    srand(time(0));
+    srand(time(NULL));
     int x = abs(std::rand() % 12);
     int y = abs(std::rand() % 12);
     return Position(x, y);
@@ -113,7 +113,7 @@ bool RobotPlayer::add_ships(const std::string &cmd, int size)
 {
     Position bow = get_random_pos();
     Position stern = get_random_pos(bow, size);
-    std::cout << bow;
+    std::cout << "\n Posizione Nave: " << bow;
     std::cout << stern;
     bool created = DefenseMap().add_ship(bow, stern);
 

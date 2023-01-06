@@ -1,6 +1,5 @@
 #include "../include/HumanPlayer.h"
 #include <iostream>
-
 Move HumanPlayer::get_move(const std::string &cmd)
 {
     // creazione di due posizioni con il costruttore di default
@@ -27,8 +26,9 @@ Move HumanPlayer::get_move(const std::string &cmd)
     {
         // divisione della stringa in due parti (il delimitatore è lo spazio)
         int pos = cmd.find_first_of(' ');
-        std::string first_pair = cmd.substr(pos + 1);
-        std::string second_pair = cmd.substr(0, pos);
+        std::string first_pair = cmd.substr(0, pos);
+        std::string second_pair = cmd.substr(pos + 1);
+
 
         try
         {
@@ -41,6 +41,7 @@ Move HumanPlayer::get_move(const std::string &cmd)
 
             if (ship_cmd)
             {
+                std::cout << "ok";
                 // distinzione del tipo di mossa a seconda della taglia della nave restituita
                 // NOTA: sarebbe opportuno usare delle costanti
                 int size = ship_cmd->size();
@@ -85,11 +86,8 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size)
     // per ogni coppia di coordinate viene restituita una posizione
     bow = convert_to_position(first_pair);
     stern = convert_to_position(second_pair);
-    std::cout<< bow;
-    std::cout<<stern;
     
     int c_size = get_size(bow, stern);
-    std::cout << c_size;
     
     if (c_size == size)
     {
@@ -107,7 +105,6 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size)
             {
                 SupportShip *ship = new SupportShip{d, p, defense_map_, attack_grid_};
                 ship_list.push_back(ship);
-                std::cout << ship_list.size();
             }
             else
             {
