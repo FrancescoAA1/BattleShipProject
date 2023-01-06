@@ -71,7 +71,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
     {
         if (x == 0)
         {
-            if (origin.Y() + size < 12)
+            if (origin.Y() + size <= 12)
                 return Position(origin.X(), origin.Y() + size - 1);
             // se l'ordinata sfora dal limite allora sottraggo size
             else
@@ -79,7 +79,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
         }
         else if (x == 1)
         {
-            if (origin.Y() - size >= 0)
+            if (origin.Y() - size > 0)
                 return Position(origin.X(), origin.Y() - size - 1);
             // se l'ordinata sfora dal limite allora aggiungo size
             else
@@ -87,7 +87,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
         }
         else if (x == 2)
         {
-            if (origin.X() + size < 12)
+            if (origin.X() + size <= 12)
                 return Position(origin.X() + size - 1, origin.Y());
             // se l'ascissa sfora dal limite allora sottraggo size
             else
@@ -95,7 +95,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
         }
         else if (x == 3)
         {
-            if (origin.X() - size >= 0)
+            if (origin.X() - size > 0)
                 return Position(origin.X() - size - 1, origin.Y());
             // se l'ascissa sfora dal limite allora aggiungo size
             else

@@ -11,19 +11,19 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
     if (mode == GameMode::PlayerVsComputer)
     {
         // se la modalità di gioco è PlayerVsComputer uno dei due giocatori sarà umano
-        HumanPlayer p = HumanPlayer(nickname_1);
-        player_1 = &p;
+        player_1 = new HumanPlayer(nickname_1);
+        //player_1 = &p;
     }
     else if (mode == GameMode::ComputerVsComputer)
     {
         // in modalità ComputerVsComputer entrambi i giocatori sono computer
-        RobotPlayer p = RobotPlayer(nickname_1);
-        player_1 = &p;
+        player_1 = new RobotPlayer(nickname_1);
+        //player_1 = &p;
     }
 
     // in entrambe le modalità, uno dei due giocatori è un computer
-    RobotPlayer p = RobotPlayer(nickname_2);
-    player_2 = &p;
+    player_2 = new RobotPlayer(nickname_2);
+    //player_2 = &p;
 }
 
 Game::Game()
