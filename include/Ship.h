@@ -52,9 +52,9 @@ class Ship
         Ship(int, Direction, Position&, DefenseMap&, AttackGrid&);
 
         //campo che contine un firerimento alla mappa di attacco di cui fa parte
-        AttackGrid attack_grid_; 
+        AttackGrid& attack_grid_; 
         //campo che contine un rigferimento alla mappa di difesa di cui fa parte
-        DefenseMap defense_map_; 
+        DefenseMap& defense_map_; 
     
 
     private:

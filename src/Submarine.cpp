@@ -1,4 +1,5 @@
 #include "Submarine.h"
+#include <iostream>
 
 //Per eseguire la sua azione di spostamento e ispezione, il sottomarino ha bisogno dei seguenti dati:
 //La posizione obiettivo dello spostamento, anche centro dell'area ispezionata
@@ -8,16 +9,18 @@
 bool Submarine::action(const Position& target, const std::vector<AttackUnit>& data)
 {
     if(data.size() < kSide*kSide) return false;
-
+    
     //sposto il sottomarino
     if(defense_map().move_ship(this->centre(), target))
     {
+        int counter = 0;
         //data è un vettore che salva una matrice kSide * kSide salvata per righe
-        for(int i = -kSide/2; i < kSide/2; i++)
+        for(int i = -kSide/2; i <= kSide/2; i++)
         {
-            for(int j = -kSide/2; j < kSide/2; j++)
+            for(int j = -kSide/2; j <= kSide/2; j++)
             {
-                if(data[kSide*i + j] == AttackUnit::spotted) attack_grid_.spot_position(target + Position(i, j));
+                
+                if(data[counter++] == AttackUnit::spotted) attack_grid_.spot_position(target + Position(j, i));
             }
         }
 
