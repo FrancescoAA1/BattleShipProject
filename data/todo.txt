@@ -25,6 +25,9 @@ membro privato
 La soluzione che ho trovato migliore è stata quella di mettere tali membri come protected (restituire una reference non è un errore
 di per sè, ma è più corretto fare così secondo me, quindi potremmo sistemarlo alla fine del progetto)
 
+5) Nella creazione delle mosse del computer e la creazione delle coordinate delle navi std::rand si dimostra poco randomico (crea sempre le stesse coordinate)
+
+6) Bug Robot Player: invocazione del metodo receive_attack presente in Player.cpp, lancia Floating Point Exception (core dumped) a riga 36, durante la rimozione della nave
 
 
 // COSE FATTE

@@ -25,17 +25,18 @@ AttackUnit Player::receive_attack(const Position &target)
 
     if (!p.is_absolute_invalid())
     {
-        Ship *ship_attacked = get_ship(shot_info.first);
-        bool sunk = ship_attacked->hit();
-        if (sunk)
+        Ship *ship_attacked = get_ship(p);
+
+        if (ship_attacked)
         {
-            // da implementare rimozione navi dalla lista
+            bool sunk = ship_attacked->hit();
+            if (sunk)
+            {
+                std::cout << "Affondata";
+                ship_list.erase(std::remove(ship_list.begin(), ship_list.end(), ship_attacked), ship_list.end());
 
-            // std::vector<int>::iterator pos = std::find(ship_list.begin(), ship_list.end(), ship_attacked);
-            // if (pos != ship_list.end())
-            //     ship_list.erase(pos);
-
-            defense_map_.remove_ship(p);
+                defense_map_.remove_ship(p);
+            }
         }
     }
 
@@ -102,7 +103,7 @@ Position Player::convert_to_position(const std::string &coordinate)
         // NOTA: sarebbe opportuno poter accedere alle costanti di dimensione della mappa
         if (x >= 0 && x <= 11 && y >= 0 && y <= 11)
         {
-            Position pos = Position(x,y);
+            Position pos = Position(x, y);
             return pos;
         }
         else
@@ -127,7 +128,7 @@ std::string Player::convert_to_command(const Position &position)
         std::string letter(1, (char)position.X() + kDefaultCapitalAscii);
 
         // conversione da int a string della coordinata Y della posizione
-        std::string number = std::to_string(position.Y()+1);
+        std::string number = std::to_string(position.Y() + 1);
 
         // concatenazione delle due stringhe contenenti le coordinate in formato (A1)
         std::string coordinate = letter + number;
@@ -141,8 +142,7 @@ Ship *Player::get_ship(const Position origin)
 {
     // ricerca del puntatore alla nave avente come centro la posizione di origine
     auto it = std::find_if(ship_list.begin(), ship_list.end(), [origin](Ship *ship) -> bool
-                          { return (ship->centre() == origin); });
-
+                           { return (ship->centre() == origin); });
 
     // se l'iteratore ritornato dall'algoritmo STL punta all'ultimo elemento del vettore di navi
     // la nave non è stata trovata e viene ritornato nullptr, altrimenti si calcola l'indice
@@ -182,15 +182,15 @@ int get_size(const Position &bow, const Position &stern)
         return abs(bow.Y() - stern.Y()) + 1;
 }
 
-Player::~Player() 
+Player::~Player()
 {
-    Ship* pointer; 
+    Ship *pointer;
     // dealloco tutta la memoria adelle navi
     for (int i = 0; i < ship_list.size(); i++)
     {
-        pointer = ship_list[i]; 
-        delete pointer; 
+        pointer = ship_list[i];
+        delete pointer;
     }
-    
-    pointer = nullptr; 
+
+    pointer = nullptr;
 }
