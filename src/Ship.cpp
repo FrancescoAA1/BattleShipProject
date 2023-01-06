@@ -7,8 +7,6 @@ Ship::Ship(int size, Direction orientation, Position& centre_position, DefenseMa
     size_ = size;
     centre_ = centre_position;
     orientation_ = orientation;
-    attack_grid_ = att_grid;
-    defense_map_ = def_map;
 }
 
 bool Ship::hit()
