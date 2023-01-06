@@ -11,7 +11,7 @@ player.cpp (Metodo check_for_graphic_cmd, parte commentata)
 3) Funzionalità di replay
 
 
-4) I METODI GETTER NELLE CLASSI CHE HANNO DELLE DERIVATE
+4) I METODI GETTER NELLE CLASSI CHE HANNO DELLE DERIVATE XXXXX
 se una classe ha delle classi derivate, queste potrebbero dover accedere a dei membri privati
 per farlo solitamente si penserebbe di usare il getter, ma un normale getter, del genere
 ClassType get_field() const {return field;}
@@ -24,6 +24,7 @@ ma questo violerebbe l'incapsulamento, in quanto un metodo pubblico permetterebb
 membro privato
 La soluzione che ho trovato migliore è stata quella di mettere tali membri come protected (restituire una reference non è un errore
 di per sè, ma è più corretto fare così secondo me, quindi potremmo sistemarlo alla fine del progetto)
+----------> Ottima Soluzione. 
 
 5) Nella creazione delle mosse del computer e la creazione delle coordinate delle navi std::rand si dimostra poco randomico (crea sempre le stesse coordinate)
 
