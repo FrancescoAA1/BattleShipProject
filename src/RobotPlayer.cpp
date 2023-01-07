@@ -1,14 +1,26 @@
 #include "../include/RobotPlayer.h"
-#include <iostream>
 
 // il robot inventa la mossa per cui la stringa passata come parametro sarà vuota
 Move RobotPlayer::get_move(const std::string &move)
 {
-    Ship *ship_cmd = ship_list.at(get_random_index(ship_list.size()));
     Position origin{};
     Position target{};
     Move m;
 
+    int size_list = ship_list.size();
+    Ship *ship_cmd;
+
+    //se esiste almeno una nave nella lista, ne viene prelevata una in modo casuale
+    if (size_list > 0)
+    {
+        ship_cmd = ship_list.at(get_random_index(ship_list.size()));
+    }
+    else
+    {
+        ship_cmd = nullptr;
+    }
+
+    //se la nave è stata prelevata, tale nave eseguirà l'azione
     if (ship_cmd)
     {
         // posizione di origine corrisponde al centro della nave appena ottenuta
@@ -41,13 +53,13 @@ Move RobotPlayer::get_move(const std::string &move)
 
 int RobotPlayer::get_random_index(int size)
 {
-    srand(time(0));
+    srand(time(NULL));
     return rand() % size;
 }
 
 Position RobotPlayer::get_random_pos()
 {
-    srand(time(0));
+    srand(time(NULL));
     int x = abs(std::rand() % 12);
     int y = abs(std::rand() % 12);
     return Position(x, y);
@@ -55,12 +67,11 @@ Position RobotPlayer::get_random_pos()
 
 Position RobotPlayer::get_random_pos(const Position &origin, int size)
 {
-    srand(time(0));
+    srand(time(NULL));
     if (size > 12 / 2 + 1)
         return origin;
 
     bool done = false;
-    int x = abs(std::rand() % 4);
     // x = 0 --> restituisco posizione con stessa ascissa e ordinata maggiore
     // x = 1 --> restituisco posizione con stessa ascissa e ordinata minore
     // x = 2 --> restituisco posizione con stessa ordinata e ascissa maggiore
@@ -69,34 +80,39 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
     // nel caso la posizione ottenuta randomicamente non vada bene ne cerco un'altra finché non è valida
     while (!done)
     {
+        int x = abs(std::rand() % 4);
         if (x == 0)
         {
-            if (origin.Y() + size <= 12)
-                return Position(origin.X(), origin.Y() + size - 1);
+            int y = origin.Y() + size - 1;
+            if (y <= 11)
+                return Position(origin.X(), y);
             // se l'ordinata sfora dal limite allora sottraggo size
             else
                 x = 1;
         }
         else if (x == 1)
         {
-            if (origin.Y() - size > 0)
-                return Position(origin.X(), origin.Y() - size - 1);
+            int y = origin.Y() - size + 1;
+            if (y >= 0)
+                return Position(origin.X(), y);
             // se l'ordinata sfora dal limite allora aggiungo size
             else
                 x = 0;
         }
         else if (x == 2)
         {
-            if (origin.X() + size <= 12)
-                return Position(origin.X() + size - 1, origin.Y());
+            int x = origin.X() + size - 1;
+            if (x <= 11)
+                return Position(x, origin.Y());
             // se l'ascissa sfora dal limite allora sottraggo size
             else
                 x = 3;
         }
         else if (x == 3)
         {
-            if (origin.X() - size > 0)
-                return Position(origin.X() - size - 1, origin.Y());
+            int x = origin.X() - size + 1;
+            if (x >= 0)
+                return Position(x, origin.Y());
             // se l'ascissa sfora dal limite allora aggiungo size
             else
                 x = 2;
@@ -111,15 +127,20 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
 
 bool RobotPlayer::add_ships(const std::string &cmd, int size)
 {
+    //vengono generate posizioni casuali di prua e poppa
     Position bow = get_random_pos();
+    //la generazione della posizione di poppa è basata su quella della prua
     Position stern = get_random_pos(bow, size);
-    std::cout << "\n Posizione Nave: " << bow;
-    std::cout << stern;
+
+    //si controlla se la nave può essere inserita nella mappa
     bool created = defense_map_.add_ship(bow, stern);
 
     Direction d = get_direction(bow, stern);
     Position p = (bow + stern) / 2;
 
+    //se l'inserimento è andato a buon fine, a seconda del tipo di nave,
+    //viene chiamato il relativo costruttore
+    //infine, la nave appena istanziata viene aggiunta alla lista di navi
     if (created)
     {
         if (size == 5)

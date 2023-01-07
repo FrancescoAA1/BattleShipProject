@@ -33,11 +33,18 @@ Game::Game()
 
 void Game::playRound()
 {
+    // primo giocatore esegue il proprio turno
     play_single_turn(player_1);
+    std::cout << "\n"
+              << player_1->nickname() << " Ha giocato\n";
 
+    // se il primo giocatore non ha vinto, si continua a giocare
     if (!Win())
     {
+        // secondo giocatore esegue il proprio turno
         play_single_turn(player_2);
+        std::cout << "\n"
+                  << player_2->nickname() << " Ha giocato\n";
     }
 }
 
@@ -55,8 +62,9 @@ void Game::play_single_turn(Player *p)
         // se la modalità è pc, il giocatore umano è tenuto ad inserire la propria mossa
         if (mode == GameMode::PlayerVsComputer)
         {
-            std::cout << "Inserisci una mossa";
-            std::cin >> cmd_player_1;
+            std::cout << "\n"
+                      << p->nickname() << " Inserisci una mossa";
+            getline(std::cin, cmd_player_1);
         }
         // se il giocatore è un computer, la funzione get_move ignora
         // la stringa vuota passata come parametro e restituisce una mossa valida
@@ -74,7 +82,7 @@ void Game::play_single_turn(Player *p)
             }
             else if (m.movetype() == MoveType::showMap)
             {
-                std::cout<<visual_merge_grid(p->attack_grid(), p->defense_map());
+                std::cout << visual_merge_grid(p->attack_grid(), p->defense_map());
             }
         }
 
@@ -108,62 +116,93 @@ bool Game::Win()
 
 void Game::add()
 {
+    std::cout << "\n"
+              << player_1->nickname() << " Inizia Ad Aggiungere le tue NAVI!" << std::endl;
+
+    // Aggiunta delle navi da parte del primo giocatore
     add_player_ships(player_1);
-    // add_player_ships(player_2);
+    std::cout << "\n"
+              << player_2->nickname() << " Inizia Ad Aggiungere le tue NAVI!" << std::endl;
+    // Aggiunta delle navi da parte del seconda giocatore
+    add_player_ships(player_2);
+    std::cout << "\n\nNumero navi " << player_1->nickname() << " dopo inserimento: " << std::to_string(player_1->get_ships_left());
+    std::cout << "\n\nNumero navi Player 2 dopo inserimento: " << std::to_string(player_2->get_ships_left());
 }
 
 void Game::add_player_ships(Player *p)
 {
+    // variabili che indicano il numero di navi da inserire per ogni tipologia
     int nIronclad = kIronclad;
     int nSupport = kSupportShip;
     int nSubmarine = kSubmarine;
-    std::cout << "SOno QUi";
 
     std::string cmd_add;
     bool check;
 
+    // per ogni tipo di nave, vengono aggiunte alla lista tante navi quante sono quelle definite dalle relative costanti
     while (nIronclad > 0)
     {
-        // if (typeid(*p) == typeid(HumanPlayer))
-        // {
-        //     std::cout << p->nickname() + " inserisci le coordinate della CORAZZATA";
-        //     std::cin >> cmd_add;
-        // }
+        // se l'input è effettuato da un giocatore umano, quest'ultimo deve inserire le coordinate delle navi
+        // in caso di giocatore computer, le coordinate vengono generate randomicamente
+        if (typeid(*p) == typeid(HumanPlayer))
+        {
+            std::cout << "\n"
+                      << p->nickname() + " inserisci le coordinate della CORAZZATA\n";
+            getline(std::cin, cmd_add);
+        }
 
         check = p->add_ships(cmd_add, 5);
         if (check)
         {
             nIronclad--;
+            std::cout << "Corazzata Aggiunta! Ne mancano " << std::to_string(nIronclad) << std::endl;
+        }
+        else if (typeid(*p) == typeid(HumanPlayer))
+        {
+            // solo il giocatore umano (e non il PC) deve essere notificato dell'errore
+            std::cout << "Coordinate Non Valide" << std::endl;
         }
     }
 
-    // while (nSupport > 0)
-    // {
-    //     if (typeid(*p) == typeid(HumanPlayer))
-    //     {
-    //         std::cout << p->nickname() + " inserisci le coordinate della NAVE DI SUPPORTO";
-    //         std::cin >> cmd_add;
-    //     }
-    //     check = p->add_ships(cmd_add, 3);
-    //     if (check)
-    //     {
-    //         nSupport--;
-    //     }
-    // }
+    while (nSupport > 0)
+    {
+        if (typeid(*p) == typeid(HumanPlayer))
+        {
+            std::cout << "\n"
+                      << p->nickname() + " inserisci le coordinate della NAVE DI SUPPORTO\n";
+            getline(std::cin, cmd_add);
+        }
+        check = p->add_ships(cmd_add, 3);
+        if (check)
+        {
+            nSupport--;
+            std::cout << "Nave di Supporto Aggiunta! Ne mancano " << std::to_string(nSupport) << std::endl;
+        }
+        else if (typeid(*p) == typeid(HumanPlayer))
+        {
+            std::cout << "Coordinate Non Valide" << std::endl;
+        }
+    }
 
-    // while (nSubmarine > 0)
-    // {
-    //     if (typeid(*p) == typeid(HumanPlayer))
-    //     {
-    //         std::cout << p->nickname() + " inserisci le coordinate del SOTTOMARINO";
-    //         std::cin >> cmd_add;
-    //     }
-    //     check = p->add_ships(cmd_add, 1);
-    //     if (check)
-    //     {
-    //         nSubmarine--;
-    //     }
-    // }
+    while (nSubmarine > 0)
+    {
+        if (typeid(*p) == typeid(HumanPlayer))
+        {
+            std::cout << "\n"
+                      << p->nickname() + " inserisci le coordinate del SOTTOMARINO\n";
+            getline(std::cin, cmd_add);
+        }
+        check = p->add_ships(cmd_add, 1);
+        if (check)
+        {
+            nSubmarine--;
+            std::cout << "Sottomarino Aggiunto! Ne mancano " << std::to_string(nSubmarine) << std::endl;
+        }
+        else if (typeid(*p) == typeid(HumanPlayer))
+        {
+            std::cout << "Coordinate Non Valide" << std::endl;
+        }
+    }
 }
 
 Game::~Game()

@@ -20,19 +20,23 @@ std::vector<AttackUnit> Player::retrieve_unit(const Position &target)
 // metodi privati
 AttackUnit Player::receive_attack(const Position &target)
 {
+    //la mappa del giocatore che riceva la mossa viene aggiornata
     std::pair<Position, AttackUnit> shot_info = defense_map_.receive_shot(target);
+    //posizione da analizzare
     Position p = shot_info.first;
 
     if (!p.is_absolute_invalid())
     {
+        //controllo se è presente una nave nella posizione restituita da receive shot
         Ship *ship_attacked = get_ship(p);
 
         if (ship_attacked)
         {
             bool sunk = ship_attacked->hit();
+            //se la nave è stata affondata, viene rimossa dalla lista delle navi
             if (sunk)
             {
-                std::cout << "Affondata";
+                std::cout << "Nave Affondata!";
                 ship_list.erase(std::remove(ship_list.begin(), ship_list.end(), ship_attacked), ship_list.end());
 
                 defense_map_.remove_ship(p);
@@ -61,7 +65,9 @@ std::vector<AttackUnit> Player::execute_move(const Position &target, const MoveT
 
 void Player::handle_response(std::vector<AttackUnit> units, const Move &m)
 {
+    //LA NAVE INCARICATA DI COMPIERE L'AZIONE VIENE TROVATA
     Ship *ship = get_ship(m.origin());
+    //IL GIOCATORE FA ESEGUIRE L'AZIONE ALLA NAVE INCARICATA
     ship->action(m.target(), units);
 }
 
@@ -88,6 +94,8 @@ bool Player::check_for_graphic_cmd(Move &m)
 
 Position Player::convert_to_position(const std::string &coordinate)
 {
+    Position pos{};
+
     try
     {
         // sottrazione del valore ASCII di 'A' al primo carattere della stringa
@@ -104,18 +112,20 @@ Position Player::convert_to_position(const std::string &coordinate)
         // NOTA: sarebbe opportuno poter accedere alle costanti di dimensione della mappa
         if (x >= 0 && x <= 11 && y >= 0 && y <= 11)
         {
-            Position pos = Position(x, y);
+            pos = Position(x, y);
             return pos;
         }
         else
         {
-            // se una delle due cooridnate non è valida, viene lanciata un'eccezione
-            throw InvalidPosition{};
+            // se una delle due cooridnate non è valida, viene ritornata posizione non valida
+            pos.make_absolute_invalid();
+            return pos;
         }
     }
     catch (std::invalid_argument)
     {
-        throw InvalidPosition{};
+        pos.make_absolute_invalid();
+        return pos;
     }
 }
 

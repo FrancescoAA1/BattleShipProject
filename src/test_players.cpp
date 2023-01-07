@@ -8,15 +8,15 @@
 
 int main()
 {
-    AttackGrid a = AttackGrid(); 
-    DefenseMap d = DefenseMap(); 
-    std::cout<<visual_merge_grid(a,d); 
-    /*
-    HumanPlayer p = HumanPlayer("ciao");
-    
-    //tester conversioni
-    std::cout << "\nPosition convertita in comando: " << p.convert_to_command(Position{1,11});
-    std::cout << "\nComando convertito in posizione: " <<p.convert_to_position("A1");
+    // AttackGrid a = AttackGrid();
+    // DefenseMap d = DefenseMap();
+    // std::cout<<visual_merge_grid(a,d);
+
+    // HumanPlayer p = HumanPlayer("ciao");
+
+    // //tester conversioni
+    // std::cout << "\nPosition convertita in comando: " << p.convert_to_command(Position{1,11});
+    // std::cout << "\nComando convertito in posizione: " <<p.convert_to_position("A1");
 
     // // aggiunta di una nave
     // std::cout << "\nAggiunta nave " + std::to_string(p.add_ships("A1 A3", 3));
@@ -78,61 +78,86 @@ int main()
     // // tester handleResponse
     // p.handle_response(u, m3);
 
-    RobotPlayer r = RobotPlayer("ciao");
-    std::cout << "\nPosition convertita in comando: " << r.convert_to_command(Position{1, 11});
-    std::cout << "\nComando convertito in posizione: " << r.convert_to_position("A1");
+    // RobotPlayer r = RobotPlayer("ciao");
+    // std::cout << "\nPosition convertita in comando: " << r.convert_to_command(Position{1, 11});
+    // std::cout << "\nComando convertito in posizione: " << r.convert_to_position("A1");
 
-    std::cout << "\nAggiunta nave casuale" + std::to_string(r.add_ships("", 1));
-    std::cout << "\nAggiunta nave casuale" + std::to_string(r.add_ships("", 1));
-    std::cout << "\nAggiunta nave casuale" + std::to_string(r.add_ships("", 5));
+    // tester creazione di navi casuali (robot)
+    //  for (int i = 0; i < 32000; i++)
+    //  {
+    //      std::cout << "\nAggiunta nave casuale" + std::to_string(r.add_ships("", 1));
+    //      std::cout << "\nAggiunta nave casuale" + std::to_string(r.add_ships("", 3));
+    //      std::cout << "\nAggiunta nave casuale" + std::to_string(r.add_ships("", 5));
+    //  }
 
-    std::cout << "\nNumero navi dopo inserimento: " << r.get_ships_left();
-    // r.get_move("");
-    r.get_ship(Position{0, 1});
+    // std::cout << "\nNumero navi dopo inserimento: " << r.get_ships_left();
+    // // r.get_move("");
+    // r.get_ship(Position{0, 1});
 
-    // tester creazione mossa
-    Move m4 = r.get_move("");
-    std::cout << "\n\nTester Inserimento Mossa\nPosizione origine: " << std::endl;
-    std::cout << m4.origin() << std::endl;
-    std::cout << "\nPosizione target: " << std::endl;
-    std::cout << m4.target() << std::endl;
-    std::cout << "\nTipo di mossa: " << std::endl;
-    std::cout << std::to_string(m4.movetype()) << std::endl;
+    // // tester creazione mossa
+    // Move m4 = r.get_move("");
+    // std::cout << "\n\nTester Inserimento Mossa\nPosizione origine: " << std::endl;
+    // std::cout << "Posizione origine: " << m4.origin() << std::endl;
+    // std::cout << "Posizione target: " << m4.target() << std::endl;
+    // std::cout << "Tipo di mossa: " << std::to_string(m4.movetype()) << std::endl;
 
-    // tester retrieve unit
-    std::vector<AttackUnit> units_r = r.retrieve_unit(m4.target());
+    // // tester retrieve unit
+    // std::cout << "\n\nTester Retrieve Unit" << std::endl;
+    // std::vector<AttackUnit> units_r = r.retrieve_unit(m4.target());
 
-    // stampa unit (se mossa è attacco, 1 unit, se mossa è discover, <=25 unit, altrimenti 0)
-    // std::vector<AttackUnit> unit = p.execute_move(m.target(), m.movetype());
-    for (int i = 0; i < units_r.size(); i++)
-    {
-        std::cout << "\n Unit " + std::to_string(i) + ": ";
-        std::cout << units_r[i];
-    }
+    // // stampa unit (se mossa è attacco, 1 unit, se mossa è discover, <=25 unit, altrimenti 0)
+    // // std::vector<AttackUnit> unit = p.execute_move(m.target(), m.movetype());
+    // for (int i = 0; i < units_r.size(); i++)
+    // {
+    //     std::cout << "Unit " + std::to_string(i) + ": ";
+    //     std::cout << units_r[i] << "  ";
+    // }
 
-    // tester receiveattack
-    // r.receive_attack(m4.target());
-    Move mr = r.get_move("");
-    std::cout << "\nPosizione origine: " << std::endl;
-    std::cout << mr.origin() << std::endl;
-    std::cout << "\nPosizione target: " << std::endl;
-    std::cout << mr.target() << std::endl;
-    std::cout << "\nTipo di mossa: " << std::endl;
-    std::cout << std::to_string(mr.movetype()) << std::endl;
-    r.receive_attack(mr.target());
-    //Move mr1 = r.get_move("");
-    // std::cout << "\nPosizione origine: " << std::endl;
-    // std::cout << mr1.origin() << std::endl;
-    // std::cout << "\nPosizione target: " << std::endl;
-    // std::cout << mr1.target() << std::endl;
-    // std::cout << "\nTipo di mossa: " << std::endl;
-    // std::cout << std::to_string(mr1.movetype()) << std::endl;
-    //AttackUnit un = r.receive_attack(mr1.target());
-    //std::cout << std::to_string(un);
+    // // tester receiveattack
+    // // r.receive_attack(m4.target());
+    // Move mr = r.get_move("");
+    // std::cout << "\n\nTester Inserimento Mossa" << std::endl;
+    // std::cout << "\nPosizione origine: " << mr.origin() << std::endl;
+    // std::cout << "Posizione target: " << mr.target() << std::endl;
+    // std::cout << "Tipo di mossa: " << std::to_string(mr.movetype()) << std::endl;
+
+    // r.receive_attack(mr.target());
+
+    // Move mr1 = r.get_move("");
+    // std::cout << "\n\nTester Inserimento Mossa" << std::endl;
+    // std::cout << "\nPosizione origine: " << mr1.origin() << std::endl;
+    // std::cout << "Posizione target: " << mr1.target() << std::endl;
+    // std::cout << "Tipo di mossa: " << std::to_string(mr1.movetype()) << std::endl;
+
+    // AttackUnit un = r.receive_attack(mr1.target());
+    // std::cout << std::to_string(un);
 
     // std::cout << "\nNumero navi dopo rimozione: " << r.get_ships_left();
 
-    // Game g{"c", "g", GameMode::ComputerVsComputer, 6};
-    // g.add(); */
+    // tester Game CvC
+    Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, 6};
+    g.add();
+
+    while (g.get_rounds() > 0 && !g.Win())
+    {
+        g.playRound();
+        std::cout << "\nRound finito\n\n" << std::endl;
+        g.round_terminated();
+    }
+    std::cout << "Game Over";
+
+    //tester Game PvC
+    Game g1{"GiocatoreX", "GiocatoreY", GameMode::PlayerVsComputer, 6};
+    std::cout << "Battaglia Navale - Inizio Partita" << std::endl;
+    g1.add();
+
+    while (g1.get_rounds() > 0 && !g1.Win())
+    {
+        g1.playRound();
+        std::cout << "Round finito" << std::endl;
+        g1.round_terminated();
+    }
+    std::cout << "Game Over";
+
     return 0;
 }
