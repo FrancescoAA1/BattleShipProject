@@ -21,3 +21,13 @@ void Move::makeInvalid()
     origin_.make_absolute_invalid(); 
     target_.make_absolute_invalid();
 }
+
+std::string Move::to_string() const
+{
+    if(move_ == MoveType::showMap)
+        return "AA AA"; 
+    else if(move_ == MoveType::clearMap)
+        return "YY YY"; 
+    else return origin_.to_string() + " " + target_.to_string(); 
+
+}

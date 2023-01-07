@@ -37,6 +37,9 @@ class Move
     //rende non valida una mossa invalidandone le posizioni e cambiando il tipo di mossa
     void makeInvalid();
 
+    // converte a stringa la mossa
+    std::string to_string() const; 
+
     private: 
 
     //posizione da cui viene effettuata la mossa

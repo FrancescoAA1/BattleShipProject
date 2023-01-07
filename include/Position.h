@@ -24,7 +24,9 @@ class Position
     //imposto la coordinata a invalida
     void make_absolute_invalid(); 
     //verifico se una coordinata è assolutamente invalida
-    bool is_absolute_invalid(); 
+    bool is_absolute_invalid();
+
+    std::string to_string() const;  
 
     private: 
     int x_; 

@@ -45,3 +45,23 @@ std::vector<std::string> splitstr(std::string str, std::string delim)
 
     return out; 
 }
+
+// funzione che permette di convertire una posizione in una stringa che la rappresneta per al mappa
+std::string convert_to_visual_position(const Position& position)
+{
+    // sommo 1 alla colonna e converto in lettera l'ascissa
+    std::string result = ""; 
+
+    char column = kDefaultCapitalAscii + position.Y(); 
+
+    if(column == 'J')
+        column = 'M'; 
+    if(column == 'K')
+        column = 'N'; 
+
+    result.append(1, column); 
+
+    result+= position.X() + 1; 
+
+    return result; 
+}

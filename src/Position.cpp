@@ -63,7 +63,12 @@ Position operator*(const Position& p, int coeff)
     return Position(p.X()*coeff, p.Y()*coeff); 
 }
 
+std::string Position::to_string() const 
+{
+    return "( " + std::to_string(x_) + ", " + std::to_string(y_) + " )"; 
+}
+
 std::ostream& operator<<(std::ostream& data_stream,  const Position& pos)
 {
-    return data_stream<<"( " + std::to_string(pos.X()) + ", " + std::to_string(pos.Y()) + " )"; 
+    return data_stream<<pos.to_string(); 
 }
