@@ -3,6 +3,10 @@
 metodo per scambiare i riferimenti dei player in modo casuale (per decidere chi inizia la partita)
 -->da creare nel header player.h e implementare in player.cpp
 
+convertire a smart pointer i puntatori a nave della collezione in player
+
+spostare i metodi che vanno in Utility nella apposita raccolta di metodi 
+
 3) Funzionalità di replay
 
 // COSE FATTE ==========================================================================================================
