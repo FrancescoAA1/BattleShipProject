@@ -2,12 +2,16 @@
 #include "../include/RobotPlayer.h"
 #include "../include/Game.h"
 #include "../include/Move.h"
+#include "../include/Utility.h"
 #include <string>
 #include <iostream>
 
 int main()
 {
-
+    AttackGrid a = AttackGrid(); 
+    DefenseMap d = DefenseMap(); 
+    std::cout<<visual_merge_grid(a,d); 
+    /*
     HumanPlayer p = HumanPlayer("ciao");
     
     //tester conversioni
@@ -118,6 +122,6 @@ int main()
     std::cout << "\nNumero navi dopo rimozione: " << r.get_ships_left();
 
     // Game g{"c", "g", GameMode::ComputerVsComputer, 6};
-    // g.add();
+    // g.add(); */
     return 0;
 }

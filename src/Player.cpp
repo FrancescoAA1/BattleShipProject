@@ -67,6 +67,7 @@ void Player::handle_response(std::vector<AttackUnit> units, const Move &m)
 
 bool Player::check_for_graphic_cmd(Move &m)
 {
+    /*
     if (m.movetype() == MoveType::clearMap)
     {
         // da implementare
@@ -80,9 +81,9 @@ bool Player::check_for_graphic_cmd(Move &m)
         // std::cout << player_2->attackMap();
         m.makeInvalid();
     }
-
+*/
     // se si arriva qui qualcosa è andato storto
-    return false;
+    return m.movetype() == MoveType::clearMap || m.movetype() == MoveType::showMap;
 }
 
 Position Player::convert_to_position(const std::string &coordinate)

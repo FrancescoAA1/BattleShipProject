@@ -6,10 +6,23 @@ receive_attack in Player.cpp) --> sezione commentata
 metodo per scambiare i riferimenti dei player in modo casuale (per decidere chi inizia la partita)
 -->da creare nel header player.h e implementare in player.cpp
 
-richiamare operator << per la stampa mappe di attacco e difesa con comando AA AA --> presente in 
-player.cpp (Metodo check_for_graphic_cmd, parte commentata)
 3) Funzionalità di replay
 
+6) Bug Robot Player: invocazione del metodo receive_attack presente in Player.cpp, lancia Floating Point Exception (core dumped) a riga 36, durante la rimozione della nave
+
+
+// COSE FATTE
+1) scrivere main
+2) metodi mancanti: metodo che data una posizione generata casualmente 
+ne genera una seconda con x oppyre y uguale (aggiunta nave robot) Metodo get_random_pos1 
+in RobotPlayer --> Accetta come parametri una Posizione e un intero (taglia della nave da creare).
+(fatto)
+
+aggiungere il distruttore di player --> (fatto)
+aggiungere il distruttore di Game --> (fatto)
+
+richiamare operator << per la stampa mappe di attacco e difesa con comando AA AA --> presente in 
+player.cpp (Metodo check_for_graphic_cmd, parte commentata) ----> fatto
 
 4) I METODI GETTER NELLE CLASSI CHE HANNO DELLE DERIVATE XXXXX
 se una classe ha delle classi derivate, queste potrebbero dover accedere a dei membri privati
@@ -27,20 +40,4 @@ di per sè, ma è più corretto fare così secondo me, quindi potremmo sistemarl
 ----------> Ottima Soluzione. 
 
 5) Nella creazione delle mosse del computer e la creazione delle coordinate delle navi std::rand si dimostra poco randomico (crea sempre le stesse coordinate)
-
-6) Bug Robot Player: invocazione del metodo receive_attack presente in Player.cpp, lancia Floating Point Exception (core dumped) a riga 36, durante la rimozione della nave
-
-
-// COSE FATTE
-1) scrivere main
-2) metodi mancanti: metodo che data una posizione generata casualmente 
-ne genera una seconda con x oppyre y uguale (aggiunta nave robot) Metodo get_random_pos1 
-in RobotPlayer --> Accetta come parametri una Posizione e un intero (taglia della nave da creare).
-(fatto)
-
-aggiungere il distruttore di player --> (fatto)
-aggiungere il distruttore di Game --> (fatto)
-
-
-
-
+------> non ci si può far nulla
