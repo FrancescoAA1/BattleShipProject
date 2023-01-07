@@ -1,17 +1,11 @@
 // TO DO 
-controllare codice per la rimozione della nave (removeship (uso di find ed erase)) (Metodo
-receive_attack in Player.cpp) --> sezione commentata
-
 
 metodo per scambiare i riferimenti dei player in modo casuale (per decidere chi inizia la partita)
 -->da creare nel header player.h e implementare in player.cpp
 
 3) Funzionalità di replay
 
-6) Bug Robot Player: invocazione del metodo receive_attack presente in Player.cpp, lancia Floating Point Exception (core dumped) a riga 36, durante la rimozione della nave
-
-
-// COSE FATTE
+// COSE FATTE ==========================================================================================================
 1) scrivere main
 2) metodi mancanti: metodo che data una posizione generata casualmente 
 ne genera una seconda con x oppyre y uguale (aggiunta nave robot) Metodo get_random_pos1 
@@ -41,3 +35,8 @@ di per sè, ma è più corretto fare così secondo me, quindi potremmo sistemarl
 
 5) Nella creazione delle mosse del computer e la creazione delle coordinate delle navi std::rand si dimostra poco randomico (crea sempre le stesse coordinate)
 ------> non ci si può far nulla
+
+controllare codice per la rimozione della nave (removeship (uso di find ed erase)) (Metodo
+receive_attack in Player.cpp) --> sezione commentata
+
+6) Bug Robot Player: invocazione del metodo receive_attack presente in Player.cpp, lancia Floating Point Exception (core dumped) a riga 36, durante la rimozione della nave
