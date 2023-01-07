@@ -1,6 +1,5 @@
 #include "../include/DefenseMap.h"
 #include <algorithm>
-#include <iostream>
 
 // contruttore di default della classe
 // che inizializza tutte le matrici come vuote

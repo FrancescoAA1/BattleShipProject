@@ -2,17 +2,21 @@
 #include "../include/RobotPlayer.h"
 #include "../include/Game.h"
 #include "../include/Move.h"
+#include "../include/Utility.h"
 #include <string>
 #include <iostream>
 
 int main()
 {
-
-    // HumanPlayer p = HumanPlayer("ciao");
-
-    // // tester conversioni
-    // std::cout << "\nPosition convertita in comando: " << p.convert_to_command(Position{1, 11});
-    // std::cout << "\nComando convertito in posizione: " << p.convert_to_position("A1");
+    AttackGrid a = AttackGrid(); 
+    DefenseMap d = DefenseMap(); 
+    std::cout<<visual_merge_grid(a,d); 
+    /*
+    HumanPlayer p = HumanPlayer("ciao");
+    
+    //tester conversioni
+    std::cout << "\nPosition convertita in comando: " << p.convert_to_command(Position{1,11});
+    std::cout << "\nComando convertito in posizione: " <<p.convert_to_position("A1");
 
     // // aggiunta di una nave
     // std::cout << "\nAggiunta nave " + std::to_string(p.add_ships("A1 A3", 3));
@@ -129,6 +133,6 @@ int main()
     // std::cout << "\nNumero navi dopo rimozione: " << r.get_ships_left();
 
     // Game g{"c", "g", GameMode::ComputerVsComputer, 6};
-    // g.add();
+    // g.add(); */
     return 0;
 }

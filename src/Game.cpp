@@ -1,4 +1,5 @@
 #include "../include/Game.h"
+#include "../include/Utility.h"
 #include <iostream>
 
 Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMode mode_, int nRounds)
@@ -12,18 +13,18 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
     {
         // se la modalità di gioco è PlayerVsComputer uno dei due giocatori sarà umano
         player_1 = new HumanPlayer(nickname_1);
-        //player_1 = &p;
+        // player_1 = &p;
     }
     else if (mode == GameMode::ComputerVsComputer)
     {
         // in modalità ComputerVsComputer entrambi i giocatori sono computer
         player_1 = new RobotPlayer(nickname_1);
-        //player_1 = &p;
+        // player_1 = &p;
     }
 
     // in entrambe le modalità, uno dei due giocatori è un computer
     player_2 = new RobotPlayer(nickname_2);
-    //player_2 = &p;
+    // player_2 = &p;
 }
 
 Game::Game()
@@ -65,7 +66,17 @@ void Game::play_single_turn(Player *p)
         m = p->get_move(cmd_player_1);
 
         // controllo comandi AA AA e YY YY //fallo anche eseguire
-        p->check_for_graphic_cmd(m);
+        if (p->check_for_graphic_cmd(m))
+        {
+            if (m.movetype() == MoveType::clearMap)
+            {
+                // da implementare
+            }
+            else if (m.movetype() == MoveType::showMap)
+            {
+                std::cout<<visual_merge_grid(p->attack_grid(), p->defense_map());
+            }
+        }
 
         // nei casi menzionati sopra la mossa non è valida ai fini del turno
         if (m.movetype() != MoveType::invalid)
@@ -98,7 +109,7 @@ bool Game::Win()
 void Game::add()
 {
     add_player_ships(player_1);
-    //add_player_ships(player_2);
+    // add_player_ships(player_2);
 }
 
 void Game::add_player_ships(Player *p)
