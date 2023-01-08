@@ -1,4 +1,5 @@
 #include "../include/HumanPlayer.h"
+#include <iostream>
 Move HumanPlayer::get_move(const std::string &cmd)
 {
     // creazione di due posizioni con il costruttore di default
@@ -11,22 +12,30 @@ Move HumanPlayer::get_move(const std::string &cmd)
     // oppure ad un comando di pulizia della mappa
     if (cmd == "AA AA")
     {
-        origin.make_absolute_invalid();
-        target.make_absolute_invalid();
-        return Move{origin, target, MoveType::showMap};
+        m.set_movetype(MoveType::showMap);
+        return m;
     }
     else if (cmd == "YY YY")
     {
-        origin.make_absolute_invalid();
-        target.make_absolute_invalid();
-        return Move{origin, target, MoveType::clearMap};
+        m.set_movetype(MoveType::clearMap);
+        return m;
     }
     else
     {
         // divisione della stringa in due parti (il delimitatore è lo spazio)
-        int pos = cmd.find_first_of(' ');
-        std::string first_pair = cmd.substr(0, pos);
-        std::string second_pair = cmd.substr(pos + 1);
+        int pos;
+        try
+        {
+            pos = cmd.find_first_of(' ');
+        }
+        catch (const std::out_of_range& e)
+        {
+            return m;
+        }
+
+        std::cout << std::to_string(pos) << std::endl;
+         std::string first_pair = cmd.substr(0, pos);
+         std::string second_pair = cmd.substr(pos + 1);
 
         try
         {
