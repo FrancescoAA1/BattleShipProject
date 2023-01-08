@@ -646,6 +646,7 @@ bool DefenseMap::add_ship(const Position &bow_position, const Position &stern_po
     // verifico se ci sono blocchi con lo stesso centro all'interno
     if (center_block_discovery(center_block))
         return false;
+        
     int size;
     Direction orientation = Direction::vertical;
 
