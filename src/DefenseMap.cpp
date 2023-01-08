@@ -356,7 +356,8 @@ bool DefenseMap::move_ship(const Position &target_origin, const Position &target
         {
             // determino di quanto si è spostata su se stessa. Questo è già l'offset da sommare nella corretta direzione
             Position off = target_destination - target_origin;
-
+            // se l'offset è zero ho finito, non devo cancellare più nulla
+            if(off.X() == 0 && off.Y() == 0) return true; 
             // se la direzione è verticale allora mi sposto verso l'alto o basso dal centro nuovo
             // se la direzione è orizzontale allora mi sposto verso destra o sinistra dal centro nuovo
             // basta solo sottrarre l'offset
