@@ -30,51 +30,47 @@ Move HumanPlayer::get_move(const std::string &cmd)
         {
             pos = cmd.find_first_of(' ');
         }
-        catch (const std::out_of_range& e)
+        catch (const std::out_of_range &e)
         {
             return m;
         }
 
         std::cout << std::to_string(pos) << std::endl;
-         std::string first_pair = cmd.substr(0, pos);
-         std::string second_pair = cmd.substr(pos + 1);
+        std::string first_pair = cmd.substr(0, pos);
+        std::string second_pair = cmd.substr(pos + 1);
 
-        try
+        // per ogni coppia di coordinate viene restituita una posizione
+        origin = convert_to_position(first_pair);
+        target = convert_to_position(second_pair);
+
+        if (origin.is_absolute_invalid())
+            return {origin, target, MoveType::invalid};
+
+        // viene indivuata la nave che compie l'azione
+        Ship *ship_cmd = get_ship(origin);
+
+        if (ship_cmd)
         {
-            // per ogni coppia di coordinate viene restituita una posizione
-            origin = convert_to_position(first_pair);
-            target = convert_to_position(second_pair);
+            // distinzione del tipo di mossa a seconda della taglia della nave restituita
+            // NOTA: sarebbe opportuno usare delle costanti
+            int size = ship_cmd->size();
 
-            // viene indivuata la nave che compie l'azione
-            Ship *ship_cmd = get_ship(origin);
-
-            if (ship_cmd)
+            // distinzione del tipo di mossa a seconda della taglia della nave restituita
+            // NOTA: sarebbe opportuno usare delle costanti
+            if (size == Ironclad::kSize)
             {
-                // distinzione del tipo di mossa a seconda della taglia della nave restituita
-                // NOTA: sarebbe opportuno usare delle costanti
-                int size = ship_cmd->size();
-
-                // distinzione del tipo di mossa a seconda della taglia della nave restituita
-                // NOTA: sarebbe opportuno usare delle costanti
-                if (size == 5)
-                {
-                    return {origin, target, MoveType::attack};
-                }
-                else if (size == 3)
-                {
-                    return {origin, target, MoveType::moveAndFix};
-                }
-                else
-                {
-                    return {origin, target, MoveType::moveAndDiscover};
-                }
+                return {origin, target, MoveType::attack};
+            }
+            else if (size == SupportShip::kSize)
+            {
+                return {origin, target, MoveType::moveAndFix};
             }
             else
             {
-                return {origin, target, MoveType::invalid};
+                return {origin, target, MoveType::moveAndDiscover};
             }
         }
-        catch (InvalidPosition)
+        else
         {
             return {origin, target, MoveType::invalid};
         }
@@ -104,12 +100,12 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size)
 
             Direction d = get_direction(bow, stern);
             Position p = (bow + stern) / 2;
-            if (size == 5)
+            if (size == Ironclad::kSize)
             {
                 Ironclad *ship = new Ironclad{d, p, defense_map_, attack_grid_};
                 ship_list.push_back(ship);
             }
-            else if (size == 3)
+            else if (size == SupportShip::kSize)
             {
                 SupportShip *ship = new SupportShip{d, p, defense_map_, attack_grid_};
                 ship_list.push_back(ship);
