@@ -146,7 +146,7 @@ int main()
     // }
     // std::cout << "Game Over";
 
-    // //tester Game PvC
+    // // //tester Game PvC
     Game g1{"GiocatoreX", "GiocatoreY", GameMode::PlayerVsComputer, 6};
     std::cout << "Battaglia Navale - Inizio Partita" << std::endl;
     g1.add();
@@ -158,6 +158,16 @@ int main()
         g1.round_terminated();
     }
     std::cout << "Game Over";
+
+    // HumanPlayer h1 = HumanPlayer("Nome");
+    // h1.add_ships("K3 K3", 1);
+    // h
+
+    // std::cout << h1.defense_map();
+
+    // HumanPlayer h1 = HumanPlayer("Prova");
+    // std::cout << h1.convert_to_position("C3");
+    // std::cout << h1.convert_to_position("G7");
 
     return 0;
 }

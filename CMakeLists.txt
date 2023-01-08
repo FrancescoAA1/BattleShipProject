@@ -22,4 +22,4 @@ add_library(Replay src/Replay.cpp)
 
 add_executable(${PROJECT_NAME} src/test_players.cpp)
 
-target_link_libraries(${PROJECT_NAME} Replay Game Utility RobotPlayer HumanPlayer Ironclad SupportShip Submarine Player Ship AttackGrid DefenseMap DefenseUnit Move Position)
+target_link_libraries(${PROJECT_NAME} Replay Game RobotPlayer HumanPlayer Ironclad SupportShip Submarine Player Ship Utility AttackGrid DefenseMap DefenseUnit Move Position)

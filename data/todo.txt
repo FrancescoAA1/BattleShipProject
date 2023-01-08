@@ -14,17 +14,15 @@ Importante!
 4) Action di Submarine.cpp
 Non Sempre il vettore di attackUnit ottenuto come parametro ha kSide*kSide unit. Ad esempio, se si effettua la scansione a partire dalla posizione
 d'angolo della mappa A1, il vettore avrà 9 celle. Quindi il minimo di unità nel vettore sono parte alta di kSide*parte alta di kSide. Va quindi sistemato il controllo.
+Vedi algoritmo presente in test_components
 
-5) Bug nella rappresentazione (o forse nei metodi della mappa stessa di agigunta navi). Le navi risultano sovrapposte nella defense map.
-//Aggiornamento: il sottomarino può essere messo ovunque (non importa se cella è occupata)
-//Segmentation Fault per coordinate come V3 V3 (potrebbe essere problema convert_to_position)
 6) Bug nell'attackGrid (o nel passaggio del riferimento alla nave che chiama il to_string). L'attackgrid risulta sempre vuota.
-
-7) Segmentation fault lanciato da mosse del tipo D2 D2, cioè con target e origine identiche.
 
 8) Errore inserendo riga vuota come mossa o aggiunta nave (da risolvere in Player.cpp nel prelievo dell'input)
 
-9)Le Coordinate per la corazzata C3 G7 lanciano Segmentation Fault
+10) Quando l'azione della nave fallisce è necessario che il player se ne accorga e richeda l'inserrimento di un'altra mossa
+
+
 
 // COSE FATTE ==========================================================================================================
 1) scrivere main
@@ -61,3 +59,12 @@ controllare codice per la rimozione della nave (removeship (uso di find ed erase
 receive_attack in Player.cpp) --> sezione commentata
 
 6) Bug Robot Player: invocazione del metodo receive_attack presente in Player.cpp, lancia Floating Point Exception (core dumped) a riga 36, durante la rimozione della nave
+
+
+9)Le Coordinate per la corazzata C3 G7 lanciano Segmentation Fault
+
+5) Bug nella rappresentazione (o forse nei metodi della mappa stessa di agigunta navi). Le navi risultano sovrapposte nella defense map.
+//Aggiornamento: il sottomarino può essere messo ovunque (non importa se cella è occupata)
+//Segmentation Fault per coordinate come V3 V3 (potrebbe essere problema convert_to_position)
+
+7) Segmentation fault lanciato da mosse del tipo D2 D2, cioè con target e origine identiche.

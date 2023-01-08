@@ -1,5 +1,6 @@
 #include "../include/DefenseMap.h"
 #include <algorithm>
+#include <iostream>
 
 // contruttore di default della classe
 // che inizializza tutte le matrici come vuote
@@ -172,7 +173,7 @@ bool DefenseMap::check_area_for_placing(const Position &target_destination, cons
         // creo una posizione che individua l'offset
         Position offset{0, length / 2};
 
-        while (offset.Y() != 0)
+        while (offset.Y() != -1)
         {
             // mi preparo ad andare avanti e indietro sommando l'offset
             front = target_destination + offset;
@@ -220,7 +221,7 @@ bool DefenseMap::check_area_for_placing(const Position &target_destination, cons
         // creo una posizione che individua l'offset
         Position offset{length / 2, 0};
 
-        while (offset.X() != 0)
+        while (offset.X() != -1)
         {
             // mi preparo ad andare avanti e indietro sommando l'offset
             front = target_destination + offset;
@@ -334,10 +335,10 @@ bool DefenseMap::move_ship(const Position &target_origin, const Position &target
     }
 
     // controllo se si è mossa su se stessa prima di scrivere la nuova nave
-    bool is_on_itself = false; 
+    bool is_on_itself = false;
     // se la nuova prua o la nuova poppa hanno ina posizione centro uguale al target origin => è su se stessa
-    if(defense_map_[bow.Y()][bow.X()].block_center() == target_origin || defense_map_[stern.Y()][stern.X()].block_center() == target_origin)
-        is_on_itself = true; 
+    if (defense_map_[bow.Y()][bow.X()].block_center() == target_origin || defense_map_[stern.Y()][stern.X()].block_center() == target_origin)
+        is_on_itself = true;
 
     // verifico che l'area di destinazione non sia accerchiata: la nave deve aver modo di poterci entrare
     // questo solo se non si è moosa su se stessa
@@ -508,7 +509,7 @@ std::vector<Position> DefenseMap::discovers_neighbors(const Position &target_ori
             start.set_x(start.X() + 1);
         }
         start.set_y(start.Y() + 1);
-        start.set_x(target_origin.X() - side/2);
+        start.set_x(target_origin.X() - side / 2);
     }
     return neighbors_position;
 }
@@ -637,7 +638,7 @@ bool DefenseMap::center_block_discovery(const Position &center_block) const
 bool DefenseMap::add_ship(const Position &bow_position, const Position &stern_position)
 {
     // controllo se le posizioni sono valide e se condividono la stessa colonna o la stessa riga
-    if (!check_position(bow_position) && !check_position(stern_position) && bow_position.X() != stern_position.X() && bow_position.Y() != stern_position.Y())
+    if ((!check_position(bow_position) || !check_position(stern_position)) || (bow_position.X() != stern_position.X() && bow_position.Y() != stern_position.Y()))
         return false;
 
     // determino centro, direzione e dimensione:
@@ -646,7 +647,7 @@ bool DefenseMap::add_ship(const Position &bow_position, const Position &stern_po
     // verifico se ci sono blocchi con lo stesso centro all'interno
     if (center_block_discovery(center_block))
         return false;
-        
+
     int size;
     Direction orientation = Direction::vertical;
 
@@ -689,8 +690,8 @@ bool DefenseMap::is_sorrounded(const Position &target_origin, int size, Directio
             if (defense_map_[(target_origin - offset).Y()][(target_origin - offset).X()].status() == DefenseStatus::empty || defense_map_[(target_origin + offset).Y()][(target_origin + offset).X()].status() == DefenseStatus::empty)
                 return false;
         }
-        else return false; // sono fuori da un muro=> accedo dal lato opposto 
-
+        else
+            return false; // sono fuori da un muro=> accedo dal lato opposto
 
         // ora sopra e sotto sono bloccati
         // controllo i lati
@@ -702,12 +703,13 @@ bool DefenseMap::is_sorrounded(const Position &target_origin, int size, Directio
             checker.set_y(checker.Y() + i);
             // non appena ne trovo uno vuoto ritorno
             // devo controllare da entrambe i lati => sommo 2 alla x
-            if (check_position(checker) && check_position(checker + Position{2, 0}) )
+            if (check_position(checker) && check_position(checker + Position{2, 0}))
             {
-                if(defense_map_[checker.Y()][checker.X()].status() == DefenseStatus::empty || defense_map_[checker.Y()][checker.X() + 2].status() == DefenseStatus::empty)
+                if (defense_map_[checker.Y()][checker.X()].status() == DefenseStatus::empty || defense_map_[checker.Y()][checker.X() + 2].status() == DefenseStatus::empty)
                     return false;
-            } 
-            else return false; // sono fuori da un muro=> accedo dal lato opposto 
+            }
+            else
+                return false; // sono fuori da un muro=> accedo dal lato opposto
         }
     }
     else
@@ -721,8 +723,8 @@ bool DefenseMap::is_sorrounded(const Position &target_origin, int size, Directio
             if (defense_map_[(target_origin - offset).Y()][(target_origin - offset).X()].status() == DefenseStatus::empty || defense_map_[(target_origin + offset).Y()][(target_origin + offset).X()].status() == DefenseStatus::empty)
                 return false;
         }
-        else return false; // sono fuori da un muro=> accedo dal lato opposto 
-
+        else
+            return false; // sono fuori da un muro=> accedo dal lato opposto
 
         // ora sopra e sotto sono bloccati
         // controllo i lati
@@ -736,11 +738,11 @@ bool DefenseMap::is_sorrounded(const Position &target_origin, int size, Directio
             // devo controllare da entrambe i lati => sommo 2 alla x
             if (check_position(checker) && check_position(checker + Position{2, 0}))
             {
-                if(defense_map_[checker.Y()][checker.X()].status() == DefenseStatus::empty || defense_map_[checker.Y()][checker.X() + 2].status() == DefenseStatus::empty)
+                if (defense_map_[checker.Y()][checker.X()].status() == DefenseStatus::empty || defense_map_[checker.Y()][checker.X() + 2].status() == DefenseStatus::empty)
                     return false;
             }
-            else return false; // sono fuori da un muro=> accedo dal lato opposto  
-
+            else
+                return false; // sono fuori da un muro=> accedo dal lato opposto
         }
     }
 
