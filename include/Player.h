@@ -15,19 +15,6 @@
 class Player
 {
 public:
-
-    // funzione virtuale pura di cui effettuare l'override nelle classi derivate
-    // a partire da un comando ricava la mossa che verrà effettuata dalla nave
-    // specificando posizione di origine, posizione target e tipo di mossa;
-    // lancia eccezioni di tipo invalidMove
-    virtual Move get_move(const std::string &cmd) = 0;
-
-      // funzione che aggiunge una nave alla lista dopo aver richiesto alla mappa di controllare
-    // le coordinate di prua e poppa
-    // Restituisce true se la nave è stata aggiunta, altrimenti false
-    virtual bool add_ships(const std::string &cmd, int size) = 0;
-
-    // data una posizione di origine, la funzione restituisce un puntatore alla nave
     // avente come centro la posizione specificata. Se tale nave non esiste
     // la funzione ritorna nullptr
     Ship *get_ship(const Position origin);

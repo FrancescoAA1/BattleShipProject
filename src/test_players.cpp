@@ -3,6 +3,7 @@
 #include "../include/Game.h"
 #include "../include/Move.h"
 #include "../include/Utility.h"
+#include "../include/Replay.h"
 #include <string>
 #include <iostream>
 
@@ -176,6 +177,11 @@ int main()
     // HumanPlayer h1 = HumanPlayer("Prova");
     // std::cout << h1.convert_to_position("C3");
     // std::cout << h1.convert_to_position("G7");
+
+    Replay repl("log.txt");
+    repl.record_move("Mario", Move{Position{1, 1}, Position{2, 2}, MoveType::attack});
+    repl.record_move("Mario", Move{Position{9, 1}, Position{10, 2}, MoveType::attack});
+    repl.flush_recording();
 
     return 0;
 }

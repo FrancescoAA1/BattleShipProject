@@ -15,7 +15,7 @@ Replay::Replay(std::string file_name)
 // player_name è il nome del giocatore che l'ha effettuata
 void Replay::record_move(std::string player_name, const Move &move)
 {
-    recording_.push_back(move.to_string());
+    recording_.push_back(player_name + " " + move.to_string());
 }
 
 // funzione che permette di salvare su file tutto lo sotrico registrato
@@ -34,7 +34,7 @@ bool Replay::flush_recording()
         
         for (int i = 0; i < recording_.size(); i++)
         {
-            file << recording_[i]; 
+            file << recording_[i] << kLineMarker; 
         }
         
         file.close();

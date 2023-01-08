@@ -32,7 +32,7 @@ private:
 
     // AREA DELLE CONSTANTI
     static constexpr char kMarker = ' ';
-    static constexpr char kLineMarket = '\n';
+    static constexpr char kLineMarker = '\n';
 };
 
 // La presente classe ha lo scopo registrare tutte le mosse effettuate in una partita e salvarle in un file di log

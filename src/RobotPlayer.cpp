@@ -34,11 +34,11 @@ Move RobotPlayer::get_move(const std::string &move)
 
         // distinzione del tipo di mossa a seconda della taglia della nave restituita
         // NOTA: sarebbe opportuno usare delle costanti
-        if (size == 5)
+        if (size == Ironclad::kSize)
         {
             return {origin, target, MoveType::attack};
         }
-        else if (size == 3)
+        else if (size == SupportShip::kSize)
         {
             return {origin, target, MoveType::moveAndFix};
         }
@@ -145,13 +145,13 @@ bool RobotPlayer::add_ships(const std::string &cmd, int size)
     //infine, la nave appena istanziata viene aggiunta alla lista di navi
     if (created)
     {
-        if (size == 5)
+        if (size == Ironclad::kSize)
         {
             Ironclad *ship = new Ironclad{d, p, defense_map_, attack_grid_};
             ship_list.push_back(ship);
             std::cout << "Corazzata Aggiunta in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern);
         }
-        else if (size == 3)
+        else if (size == SupportShip::kSize)
         {
             SupportShip *ship = new SupportShip{d, p, defense_map_, attack_grid_};
             ship_list.push_back(ship);
