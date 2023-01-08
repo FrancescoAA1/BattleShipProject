@@ -11,11 +11,6 @@ convertire a smart pointer i puntatori a nave della collezione in player
 
 Importante!
 
-4) Action di Submarine.cpp
-Non Sempre il vettore di attackUnit ottenuto come parametro ha kSide*kSide unit. Ad esempio, se si effettua la scansione a partire dalla posizione
-d'angolo della mappa A1, il vettore avrà 9 celle. Quindi il minimo di unità nel vettore sono parte alta di kSide*parte alta di kSide. Va quindi sistemato il controllo.
-Vedi algoritmo presente in test_components
-
 6) Bug nell'attackGrid (o nel passaggio del riferimento alla nave che chiama il to_string). L'attackgrid risulta sempre vuota.
 
 8) Errore inserendo riga vuota come mossa o aggiunta nave (da risolvere in Player.cpp nel prelievo dell'input)
@@ -69,4 +64,9 @@ receive_attack in Player.cpp) --> sezione commentata
 
 7) Segmentation fault lanciato da mosse del tipo D2 D2, cioè con target e origine identiche.
 
-spostare i metodi che vanno in Utility nella apposita raccolta di metodi 
+spostare i metodi che vanno in Utility nella apposita raccolta di metodi
+
+4) Action di Submarine.cpp
+Non Sempre il vettore di attackUnit ottenuto come parametro ha kSide*kSide unit. Ad esempio, se si effettua la scansione a partire dalla posizione
+d'angolo della mappa A1, il vettore avrà 9 celle. Quindi il minimo di unità nel vettore sono parte alta di kSide*parte alta di kSide. Va quindi sistemato il controllo.
+Vedi algoritmo presente in test_components

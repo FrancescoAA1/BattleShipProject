@@ -1,7 +1,5 @@
 #include "../include/HumanPlayer.h"
-#include "../include/Utility.h"
 #include <iostream>
-
 Move HumanPlayer::get_move(const std::string &cmd)
 {
     // creazione di due posizioni con il costruttore di default
@@ -28,52 +26,50 @@ Move HumanPlayer::get_move(const std::string &cmd)
 
         if (cmd.find(space) != std::string::npos)
         {
-            pos = cmd.find_first_of(' ');
-        }
-        catch (const std::out_of_range &e)
-        {
-            return m;
-        }
+            // divisione della stringa in due parti (il delimitatore è lo spazio)
+            int pos = cmd.find_first_of(' ');
 
-        std::cout << std::to_string(pos) << std::endl;
-        std::string first_pair = cmd.substr(0, pos);
-        std::string second_pair = cmd.substr(pos + 1);
+            std::cout << std::to_string(pos) << std::endl;
+            std::string first_pair = cmd.substr(0, pos);
+            std::string second_pair = cmd.substr(pos + 1);
 
-        // per ogni coppia di coordinate viene restituita una posizione
-        origin = convert_to_position(first_pair);
-        target = convert_to_position(second_pair);
+            // per ogni coppia di coordinate viene restituita una posizione
+            origin = convert_to_position(first_pair);
+            target = convert_to_position(second_pair);
 
-        if (origin.is_absolute_invalid())
-            return {origin, target, MoveType::invalid};
+            if(origin.is_absolute_invalid())
+                return {origin, target, MoveType::invalid};
 
-        // viene indivuata la nave che compie l'azione
-        Ship *ship_cmd = get_ship(origin);
+            // viene indivuata la nave che compie l'azione
+            Ship *ship_cmd = get_ship(origin);
 
-        if (ship_cmd)
-        {
-            // distinzione del tipo di mossa a seconda della taglia della nave restituita
-            // NOTA: sarebbe opportuno usare delle costanti
-            int size = ship_cmd->size();
-
-            // distinzione del tipo di mossa a seconda della taglia della nave restituita
-            // NOTA: sarebbe opportuno usare delle costanti
-            if (size == Ironclad::kSize)
+            if (ship_cmd)
             {
-                return {origin, target, MoveType::attack};
-            }
-            else if (size == SupportShip::kSize)
-            {
-                return {origin, target, MoveType::moveAndFix};
+                // distinzione del tipo di mossa a seconda della taglia della nave restituita
+                // NOTA: sarebbe opportuno usare delle costanti
+                int size = ship_cmd->size();
+
+                // distinzione del tipo di mossa a seconda della taglia della nave restituita
+                // NOTA: sarebbe opportuno usare delle costanti
+                if (size == Ironclad::kSize)
+                {
+                    return {origin, target, MoveType::attack};
+                }
+                else if (size == SupportShip::kSize)
+                {
+                    return {origin, target, MoveType::moveAndFix};
+                }
+                else
+                {
+                    return {origin, target, MoveType::moveAndDiscover};
+                }
             }
             else
             {
-                return {origin, target, MoveType::moveAndDiscover};
+                return {origin, target, MoveType::invalid};
             }
         }
-        else
-        {
-            return {origin, target, MoveType::invalid};
-        }
+        return {origin, target, MoveType::invalid};
     }
 }
 

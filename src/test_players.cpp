@@ -3,6 +3,7 @@
 #include "../include/Game.h"
 #include "../include/Move.h"
 #include "../include/Utility.h"
+#include "../include/Replay.h"
 #include <string>
 #include <iostream>
 
@@ -159,23 +160,28 @@ int main()
         }
         std::cout << "Game Over"; */
 
-    HumanPlayer h1 = HumanPlayer("Nome");
-    h1.add_ships("K3 K5", 3);
-    h1.add_ships("K3 K3", 1);
-    h1.add_ships("A1 A5", 5);
-    h1.add_ships("B2 B2", 1);
-    h1.add_ships("E2 I2", 5);
+    // HumanPlayer h1 = HumanPlayer("Nome");
+    // h1.add_ships("K3 K5", 3);
+    // h1.add_ships("K3 K3", 1);
+    // h1.add_ships("A1 A5", 5);
+    // h1.add_ships("B2 B2", 1);
+    // h1.add_ships("E2 I2", 5);
 
-    // h
-    h1.defense_map().move_ship(Position{10, 3}, Position{10, 3});
-    std::cout << h1.defense_map().move_ship(Position{10, 3}, Position{0,4}) << std::endl;
-    std::cout << h1.defense_map().move_ship(Position{1, 1}, Position{0, 2}) << std::endl;
-    std::cout << h1.defense_map().move_ship(Position{6, 1}, Position{10, 1}) << std::endl;
-    std::cout << h1.defense_map();
+    // // h
+    // h1.defense_map().move_ship(Position{10, 3}, Position{10, 3});
+    // std::cout << h1.defense_map().move_ship(Position{10, 3}, Position{0,4}) << std::endl;
+    // std::cout << h1.defense_map().move_ship(Position{1, 1}, Position{0, 2}) << std::endl;
+    // std::cout << h1.defense_map().move_ship(Position{6, 1}, Position{10, 1}) << std::endl;
+    // std::cout << h1.defense_map();
 
     // HumanPlayer h1 = HumanPlayer("Prova");
     // std::cout << h1.convert_to_position("C3");
     // std::cout << h1.convert_to_position("G7");
+
+    Replay repl("log.txt");
+    repl.record_move("Mario", Move{Position{1, 1}, Position{2, 2}, MoveType::attack});
+    repl.record_move("Mario", Move{Position{9, 1}, Position{10, 2}, MoveType::attack});
+    repl.flush_recording();
 
     return 0;
 }
