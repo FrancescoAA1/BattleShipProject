@@ -1,4 +1,5 @@
 #include "../include/Move.h"
+#include "../include/Utility.h"
 
 Move::Move(const Position& origin, const Position& target, MoveType move)
 {
@@ -28,6 +29,11 @@ std::string Move::to_string() const
         return "AA AA"; 
     else if(move_ == MoveType::clearMap)
         return "YY YY"; 
-    else return origin_.to_string() + " " + target_.to_string(); 
+    else return convert_to_command(origin_) + " " + convert_to_command(target_); 
 
+}
+
+bool Move::check_for_graphic_cmd()
+{
+    return move_ == MoveType::clearMap ||move_ == MoveType::showMap;
 }

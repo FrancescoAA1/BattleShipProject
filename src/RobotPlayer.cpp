@@ -1,4 +1,5 @@
 #include "../include/RobotPlayer.h"
+#include "../include/Utility.h"
 #include <iostream>
 
 // il robot inventa la mossa per cui la stringa passata come parametro sarà vuota
@@ -148,19 +149,19 @@ bool RobotPlayer::add_ships(const std::string &cmd, int size)
         {
             Ironclad *ship = new Ironclad{d, p, defense_map_, attack_grid_};
             ship_list.push_back(ship);
-            std::cout << "Corazzata Aggiunta in Con Comando " << this->convert_to_command(bow) << " " << this->convert_to_command(stern);
+            std::cout << "Corazzata Aggiunta in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern);
         }
         else if (size == 3)
         {
             SupportShip *ship = new SupportShip{d, p, defense_map_, attack_grid_};
             ship_list.push_back(ship);
-            std::cout << "Nave di Supporto Aggiunta in Con Comando " << this->convert_to_command(bow) << " " << this->convert_to_command(stern);
+            std::cout << "Nave di Supporto Aggiunta in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern);
         }
         else
         {
             Submarine *ship = new Submarine{p, defense_map_, attack_grid_};
             ship_list.push_back(ship);
-            std::cout << "Sottomarino Aggiunto in Con Comando " << this->convert_to_command(bow) << " " << this->convert_to_command(stern);
+            std::cout << "Sottomarino Aggiunto in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern);
         }
         return true;
     }

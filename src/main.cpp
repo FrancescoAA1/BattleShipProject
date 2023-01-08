@@ -10,7 +10,7 @@ int main()
     Position p1 = Position(3,12);
     //std::cout << p.convert_to_command(p1);
     std::string cmd = "A4";
-    Position p2 = p.convert_to_position(cmd);
+    Position p2 = convert_to_position(cmd);
     //std::cout << p.convert_to_command(p1);
     std::cout << p.attack_grid();
 
