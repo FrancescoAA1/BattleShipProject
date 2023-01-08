@@ -34,17 +34,21 @@ Game::Game()
 void Game::playRound()
 {
     // primo giocatore esegue il proprio turno
+    std::cout << "\n"
+              << player_1->nickname() << " inizia il proprio turno.\n";
     play_single_turn(player_1);
     std::cout << "\n"
-              << player_1->nickname() << " Ha giocato\n";
+              << player_1->nickname() << " Ha terminato il proprio turno.\n";
 
     // se il primo giocatore non ha vinto, si continua a giocare
     if (!Win())
     {
         // secondo giocatore esegue il proprio turno
+        std::cout << "\n"
+                  << player_2->nickname() << " inizia il proprio turno.\n";
         play_single_turn(player_2);
         std::cout << "\n"
-                  << player_2->nickname() << " Ha giocato\n";
+                  << player_2->nickname() << " Ha terminato il proprio turno.\n";
     }
 }
 
@@ -63,7 +67,7 @@ void Game::play_single_turn(Player *p)
         if (mode == GameMode::PlayerVsComputer)
         {
             std::cout << "\n"
-                      << p->nickname() << " Inserisci una mossa";
+                      << p->nickname() << " Inserisci una mossa ";
             getline(std::cin, cmd_player_1);
         }
         // se il giocatore è un computer, la funzione get_move ignora
@@ -89,8 +93,15 @@ void Game::play_single_turn(Player *p)
         // nei casi menzionati sopra la mossa non è valida ai fini del turno
         if (m.movetype() != MoveType::invalid)
         {
+            std::cout << "Mossa Effettuata: " << p->convert_to_command(m.origin()) << " " << p->convert_to_command(m.target()) << "\n"
+                      << std::endl;
             std::vector<AttackUnit> units = p->execute_move(m.target(), m.movetype());
             p->handle_response(units, m);
+
+            // if(mode == GameMode::ComputerVsComputer)
+            // {
+            //  std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
+            // }
         }
 
     } while (m.movetype() == MoveType::invalid);
@@ -125,8 +136,11 @@ void Game::add()
               << player_2->nickname() << " Inizia Ad Aggiungere le tue NAVI!" << std::endl;
     // Aggiunta delle navi da parte del seconda giocatore
     add_player_ships(player_2);
-    std::cout << "\n\nNumero navi " << player_1->nickname() << " dopo inserimento: " << std::to_string(player_1->get_ships_left());
-    std::cout << "\n\nNumero navi Player 2 dopo inserimento: " << std::to_string(player_2->get_ships_left());
+    std::cout << "\nNumero navi " << player_1->nickname() << " dopo inserimento: " << std::to_string(player_1->get_ships_left()) << std::endl;
+    std::cout << visual_merge_grid(player_1->attack_grid(), player_1->defense_map());
+    std::cout << "\nNumero navi " << player_2->nickname() << " dopo inserimento: " << std::to_string(player_2->get_ships_left()) << "\n"
+              << std::endl;
+    std::cout << visual_merge_grid(player_2->attack_grid(), player_2->defense_map());
 }
 
 void Game::add_player_ships(Player *p)
@@ -155,7 +169,16 @@ void Game::add_player_ships(Player *p)
         if (check)
         {
             nIronclad--;
-            std::cout << "Corazzata Aggiunta! Ne mancano " << std::to_string(nIronclad) << std::endl;
+            if (nIronclad > 0)
+            {
+                // std::cout << "Corazzata Aggiunta! Ne mancano " << std::to_string(nIronclad) << std::endl;
+                std::cout << ". Ne mancano " << std::to_string(nIronclad) << std::endl;
+            }
+            else
+            {
+                std::cout << ". Complimenti! Tutte le corazzate sono state aggiunte!\n"
+                          << std::endl;
+            }
         }
         else if (typeid(*p) == typeid(HumanPlayer))
         {
@@ -176,7 +199,16 @@ void Game::add_player_ships(Player *p)
         if (check)
         {
             nSupport--;
-            std::cout << "Nave di Supporto Aggiunta! Ne mancano " << std::to_string(nSupport) << std::endl;
+            if (nSupport > 0)
+            {
+                // std::cout << "Nave di Supporto Aggiunta! Ne mancano " << std::to_string(nSupport) << std::endl;
+                std::cout << ". Ne mancano " << std::to_string(nSupport) << std::endl;
+            }
+            else
+            {
+                std::cout << ". Complimenti! Tutte le Navi di Supporto sono state aggiunte!\n"
+                          << std::endl;
+            }
         }
         else if (typeid(*p) == typeid(HumanPlayer))
         {
@@ -196,7 +228,16 @@ void Game::add_player_ships(Player *p)
         if (check)
         {
             nSubmarine--;
-            std::cout << "Sottomarino Aggiunto! Ne mancano " << std::to_string(nSubmarine) << std::endl;
+            if (nSubmarine > 0)
+            {
+                // std::cout << "Sottomarino Aggiunto! Ne mancano " << std::to_string(nSubmarine) << std::endl;
+                std::cout << ". Ne mancano " << std::to_string(nSubmarine) << std::endl;
+            }
+            else
+            {
+                std::cout << ". Complimenti! Tutti sottomarini sono stati aggiunti!\n"
+                          << std::endl;
+            }
         }
         else if (typeid(*p) == typeid(HumanPlayer))
         {

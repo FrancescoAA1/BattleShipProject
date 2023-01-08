@@ -9,6 +9,18 @@ spostare i metodi che vanno in Utility nella apposita raccolta di metodi
 
 3) Funzionalità di replay
 
+Importante!
+
+4) Action di Submarine.cpp
+Non Sempre il vettore di attackUnit ottenuto come parametro ha kSide*kSide unit. Ad esempio, se si effettua la scansione a partire dalla posizione
+d'angolo della mappa A1, il vettore avrà 9 celle. Quindi il minimo di unità nel vettore sono parte alta di kSide*parte alta di kSide. Va quindi sistemato il controllo.
+
+5) Bug nella rappresentazione (o forse nei metodi della mappa stessa di agigunta navi). Le navi risultano sovrapposte nella defense map.
+
+6) Bug nell'attackGrid (o nel passaggio del riferimento alla nave che chiama il to_string). L'attackgrid risulta sempre vuota.
+
+7) Segmentation fault lanciato da mosse del tipo D2 D2, cioè con target e origine identiche.
+
 // COSE FATTE ==========================================================================================================
 1) scrivere main
 2) metodi mancanti: metodo che data una posizione generata casualmente 
