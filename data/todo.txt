@@ -16,10 +16,15 @@ Non Sempre il vettore di attackUnit ottenuto come parametro ha kSide*kSide unit.
 d'angolo della mappa A1, il vettore avrà 9 celle. Quindi il minimo di unità nel vettore sono parte alta di kSide*parte alta di kSide. Va quindi sistemato il controllo.
 
 5) Bug nella rappresentazione (o forse nei metodi della mappa stessa di agigunta navi). Le navi risultano sovrapposte nella defense map.
-
+//Aggiornamento: il sottomarino può essere messo ovunque (non importa se cella è occupata)
+//Segmentation Fault per coordinate come V3 V3 (potrebbe essere problema convert_to_position)
 6) Bug nell'attackGrid (o nel passaggio del riferimento alla nave che chiama il to_string). L'attackgrid risulta sempre vuota.
 
 7) Segmentation fault lanciato da mosse del tipo D2 D2, cioè con target e origine identiche.
+
+8) Errore inserendo riga vuota come mossa o aggiunta nave (da risolvere in Player.cpp nel prelievo dell'input)
+
+9)Le Coordinate per la corazzata C3 G7 lanciano Segmentation Fault
 
 // COSE FATTE ==========================================================================================================
 1) scrivere main

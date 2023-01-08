@@ -135,29 +135,29 @@ int main()
     // std::cout << "\nNumero navi dopo rimozione: " << r.get_ships_left();
 
     // tester Game CvC
-    Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, 3};
-    g.add();
+    // Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, 3};
+    // g.add();
 
-    while (g.get_rounds() > 0 && !g.Win())
-    {
-        g.playRound();
-        std::cout << "\nRound finito\n\n" << std::endl;
-        g.round_terminated();
-    }
-    std::cout << "Game Over";
-
-    // //tester Game PvC
-    // Game g1{"GiocatoreX", "GiocatoreY", GameMode::PlayerVsComputer, 6};
-    // std::cout << "Battaglia Navale - Inizio Partita" << std::endl;
-    // g1.add();
-
-    // while (g1.get_rounds() > 0 && !g1.Win())
+    // while (g.get_rounds() > 0 && !g.Win())
     // {
-    //     g1.playRound();
-    //     std::cout << "Round finito" << std::endl;
-    //     g1.round_terminated();
+    //     g.playRound();
+    //     std::cout << "\nRound finito\n\n" << std::endl;
+    //     g.round_terminated();
     // }
     // std::cout << "Game Over";
+
+    // //tester Game PvC
+    Game g1{"GiocatoreX", "GiocatoreY", GameMode::PlayerVsComputer, 6};
+    std::cout << "Battaglia Navale - Inizio Partita" << std::endl;
+    g1.add();
+
+    while (g1.get_rounds() > 0 && !g1.Win())
+    {
+        g1.playRound();
+        std::cout << "Round finito" << std::endl;
+        g1.round_terminated();
+    }
+    std::cout << "Game Over";
 
     return 0;
 }
