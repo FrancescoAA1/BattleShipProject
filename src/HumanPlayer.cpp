@@ -24,9 +24,9 @@ Move HumanPlayer::get_move(const std::string &cmd)
     }
     else
     {
-        // divisione della stringa in due parti (il delimitatore è lo spazio)
-        int pos;
-        try
+        std::string space = " ";
+
+        if (cmd.find(space) != std::string::npos)
         {
             pos = cmd.find_first_of(' ');
         }
