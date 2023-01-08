@@ -22,60 +22,58 @@ Move HumanPlayer::get_move(const std::string &cmd)
     }
     else
     {
-        // divisione della stringa in due parti (il delimitatore è lo spazio)
-        int pos;
-        try
+        std::string space = " ";
+
+        if (cmd.find(space) != std::string::npos)
         {
-            pos = cmd.find_first_of(' ');
-        }
-        catch (const std::out_of_range& e)
-        {
-            return m;
-        }
+            // divisione della stringa in due parti (il delimitatore è lo spazio)
+            int pos = cmd.find_first_of(' ');
 
-        std::cout << std::to_string(pos) << std::endl;
-         std::string first_pair = cmd.substr(0, pos);
-         std::string second_pair = cmd.substr(pos + 1);
+            std::cout << std::to_string(pos) << std::endl;
+            std::string first_pair = cmd.substr(0, pos);
+            std::string second_pair = cmd.substr(pos + 1);
 
-        try
-        {
-            // per ogni coppia di coordinate viene restituita una posizione
-            origin = convert_to_position(first_pair);
-            target = convert_to_position(second_pair);
-
-            // viene indivuata la nave che compie l'azione
-            Ship *ship_cmd = get_ship(origin);
-
-            if (ship_cmd)
+            try
             {
-                // distinzione del tipo di mossa a seconda della taglia della nave restituita
-                // NOTA: sarebbe opportuno usare delle costanti
-                int size = ship_cmd->size();
+                // per ogni coppia di coordinate viene restituita una posizione
+                origin = convert_to_position(first_pair);
+                target = convert_to_position(second_pair);
 
-                // distinzione del tipo di mossa a seconda della taglia della nave restituita
-                // NOTA: sarebbe opportuno usare delle costanti
-                if (size == 5)
+                // viene indivuata la nave che compie l'azione
+                Ship *ship_cmd = get_ship(origin);
+
+                if (ship_cmd)
                 {
-                    return {origin, target, MoveType::attack};
-                }
-                else if (size == 3)
-                {
-                    return {origin, target, MoveType::moveAndFix};
+                    // distinzione del tipo di mossa a seconda della taglia della nave restituita
+                    // NOTA: sarebbe opportuno usare delle costanti
+                    int size = ship_cmd->size();
+
+                    // distinzione del tipo di mossa a seconda della taglia della nave restituita
+                    // NOTA: sarebbe opportuno usare delle costanti
+                    if (size == 5)
+                    {
+                        return {origin, target, MoveType::attack};
+                    }
+                    else if (size == 3)
+                    {
+                        return {origin, target, MoveType::moveAndFix};
+                    }
+                    else
+                    {
+                        return {origin, target, MoveType::moveAndDiscover};
+                    }
                 }
                 else
                 {
-                    return {origin, target, MoveType::moveAndDiscover};
+                    return {origin, target, MoveType::invalid};
                 }
             }
-            else
+            catch (InvalidPosition)
             {
                 return {origin, target, MoveType::invalid};
             }
         }
-        catch (InvalidPosition)
-        {
-            return {origin, target, MoveType::invalid};
-        }
+        return {origin, target, MoveType::invalid};
     }
 }
 

@@ -66,9 +66,12 @@ void Game::play_single_turn(Player *p)
         // se la modalità è pc, il giocatore umano è tenuto ad inserire la propria mossa
         if (mode == GameMode::PlayerVsComputer)
         {
-            std::cout << "\n"
-                      << p->nickname() << " Inserisci una mossa ";
-            getline(std::cin, cmd_player_1);
+            if (typeid(HumanPlayer) == typeid(*p))
+            {
+                std::cout << "\n"
+                          << p->nickname() << " Inserisci una mossa ";
+                getline(std::cin, cmd_player_1);
+            }
         }
         // se il giocatore è un computer, la funzione get_move ignora
         // la stringa vuota passata come parametro e restituisce una mossa valida
