@@ -135,16 +135,16 @@ int main()
     // std::cout << "\nNumero navi dopo rimozione: " << r.get_ships_left();
 
     // tester Game CvC
-    // Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, 3};
-    // g.add();
+    Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, 3};
+    g.add();
 
-    // while (g.get_rounds() > 0 && !g.Win())
-    // {
-    //     g.playRound();
-    //     std::cout << "\nRound finito\n\n" << std::endl;
-    //     g.round_terminated();
-    // }
-    // std::cout << "Game Over";
+    while (g.get_rounds() > 0 && !g.Win())
+    {
+        g.playRound();
+        std::cout << "\nRound finito\n\n" << std::endl;
+        g.round_terminated();
+    }
+    std::cout << "Game Over";
 
     // // //tester Game PvC
     /*     Game g1{"GiocatoreX", "GiocatoreY", GameMode::PlayerVsComputer, 6};
@@ -159,19 +159,19 @@ int main()
         }
         std::cout << "Game Over"; */
 
-    HumanPlayer h1 = HumanPlayer("Nome");
-    h1.add_ships("K3 K5", 3);
-    h1.add_ships("K3 K3", 1);
-    h1.add_ships("A1 A5", 5);
-    h1.add_ships("B2 B2", 1);
-    h1.add_ships("E2 I2", 5);
+    // HumanPlayer h1 = HumanPlayer("Nome");
+    // h1.add_ships("K3 K5", 3);
+    // h1.add_ships("K3 K3", 1);
+    // h1.add_ships("A1 A5", 5);
+    // h1.add_ships("B2 B2", 1);
+    // h1.add_ships("E2 I2", 5);
 
-    // h
-    h1.defense_map().move_ship(Position{10, 3}, Position{10, 3});
-    std::cout << h1.defense_map().move_ship(Position{10, 3}, Position{0,4}) << std::endl;
-    std::cout << h1.defense_map().move_ship(Position{1, 1}, Position{0, 2}) << std::endl;
-    std::cout << h1.defense_map().move_ship(Position{6, 1}, Position{10, 1}) << std::endl;
-    std::cout << h1.defense_map();
+    // // h
+    // h1.defense_map().move_ship(Position{10, 3}, Position{10, 3});
+    // std::cout << h1.defense_map().move_ship(Position{10, 3}, Position{0,4}) << std::endl;
+    // std::cout << h1.defense_map().move_ship(Position{1, 1}, Position{0, 2}) << std::endl;
+    // std::cout << h1.defense_map().move_ship(Position{6, 1}, Position{10, 1}) << std::endl;
+    // std::cout << h1.defense_map();
 
     // HumanPlayer h1 = HumanPlayer("Prova");
     // std::cout << h1.convert_to_position("C3");

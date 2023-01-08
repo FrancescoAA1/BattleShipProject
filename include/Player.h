@@ -15,10 +15,6 @@
 class Player
 {
 public:
-    // Eccezione che viene lanciata se la posizione di origine non è presente nel vettore di navi
-    class InvalidPosition : public std::exception
-    {
-    };
 
     // funzione virtuale pura di cui effettuare l'override nelle classi derivate
     // a partire da un comando ricava la mossa che verrà effettuata dalla nave
