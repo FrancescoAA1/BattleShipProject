@@ -2,6 +2,8 @@
 #define BATTLESHIPPROJECT_SUPPORTSHIP_H_
 
 #include "Ship.h"
+#include "Utility.h"
+#include <ostream>
 
 class SupportShip : public Ship
 {

@@ -2,6 +2,7 @@
 #define BATTLESHIPPROJECT_SUBMARINE_H_
 
 #include "Ship.h"
+#include "Utility.h"
 
 class Submarine : public Ship
 {

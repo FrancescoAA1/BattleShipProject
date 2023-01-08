@@ -2,6 +2,7 @@
 #define BATTLESHIPPROJECT_IRONCLAD_H_
 
 #include "Ship.h"
+#include "Utility.h"
 
 class Ironclad : public Ship 
 {

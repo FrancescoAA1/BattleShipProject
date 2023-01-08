@@ -65,3 +65,26 @@ std::string convert_to_visual_position(const Position& position)
 
     return result; 
 }
+
+
+int get_random(int range)
+{
+    static int counter = 0;
+    int temp = 0;
+    
+    if(counter % 2 == 0)
+    {
+        std::srand(time(NULL));
+        temp = (std::rand() + counter) % range;
+    }
+
+    else
+    {
+        std::srand(1);
+        temp = (std::rand() + counter) % range;
+    }
+
+
+    counter++;
+    return temp;
+}
