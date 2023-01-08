@@ -147,23 +147,31 @@ int main()
     // std::cout << "Game Over";
 
     // // //tester Game PvC
-    Game g1{"GiocatoreX", "GiocatoreY", GameMode::PlayerVsComputer, 6};
-    std::cout << "Battaglia Navale - Inizio Partita" << std::endl;
-    g1.add();
+    /*     Game g1{"GiocatoreX", "GiocatoreY", GameMode::PlayerVsComputer, 6};
+        std::cout << "Battaglia Navale - Inizio Partita" << std::endl;
+        g1.add();
 
-    while (g1.get_rounds() > 0 && !g1.Win())
-    {
-        g1.playRound();
-        std::cout << "Round finito" << std::endl;
-        g1.round_terminated();
-    }
-    std::cout << "Game Over"; 
+        while (g1.get_rounds() > 0 && !g1.Win())
+        {
+            g1.playRound();
+            std::cout << "Round finito" << std::endl;
+            g1.round_terminated();
+        }
+        std::cout << "Game Over"; */
 
-    // HumanPlayer h1 = HumanPlayer("Nome");
-    // h1.add_ships("K3 K3", 1);
-    // // h
-    // h1.defense_map().move_ship(Position{10,2}, Position{10,2}); 
-    // std::cout << h1.defense_map();
+    HumanPlayer h1 = HumanPlayer("Nome");
+    h1.add_ships("K3 K5", 3);
+    h1.add_ships("K3 K3", 1);
+    h1.add_ships("A1 A5", 5);
+    h1.add_ships("B2 B2", 1);
+    h1.add_ships("E2 I2", 5);
+
+    // h
+    h1.defense_map().move_ship(Position{10, 3}, Position{10, 3});
+    std::cout << h1.defense_map().move_ship(Position{10, 3}, Position{0,4}) << std::endl;
+    std::cout << h1.defense_map().move_ship(Position{1, 1}, Position{0, 2}) << std::endl;
+    std::cout << h1.defense_map().move_ship(Position{6, 1}, Position{10, 1}) << std::endl;
+    std::cout << h1.defense_map();
 
     // HumanPlayer h1 = HumanPlayer("Prova");
     // std::cout << h1.convert_to_position("C3");

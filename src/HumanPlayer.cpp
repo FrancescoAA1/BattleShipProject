@@ -1,5 +1,7 @@
 #include "../include/HumanPlayer.h"
+#include "../include/Utility.h"
 #include <iostream>
+
 Move HumanPlayer::get_move(const std::string &cmd)
 {
     // creazione di due posizioni con il costruttore di default

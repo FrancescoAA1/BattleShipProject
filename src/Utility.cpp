@@ -46,27 +46,6 @@ std::vector<std::string> splitstr(std::string str, std::string delim)
     return out; 
 }
 
-// funzione che permette di convertire una posizione in una stringa che la rappresneta per al mappa
-std::string convert_to_visual_position(const Position& position)
-{
-    // sommo 1 alla colonna e converto in lettera l'ascissa
-    std::string result = ""; 
-
-    char column = kDefaultCapitalAscii + position.Y(); 
-
-    if(column == 'J')
-        column = 'M'; 
-    if(column == 'K')
-        column = 'N'; 
-
-    result.append(1, column); 
-
-    result+= position.X() + 1; 
-
-    return result; 
-}
-
-
 int get_random(int range)
 {
     static int counter = 0;
@@ -87,4 +66,60 @@ int get_random(int range)
 
     counter++;
     return temp;
+}
+
+Position convert_to_position(const std::string &coordinate)
+{
+    Position pos{};
+
+    try
+    {
+        // sottrazione del valore ASCII di 'A' al primo carattere della stringa
+        // conversione da char ad int
+        int x = coordinate[0] - kDefaultCapitalAscii;
+
+        // conversione da stringa ad intero dell'ultima parte della coppia di coordinate (numero)
+        // stoi lancia std::invalid_argument exception se la sottostringa non è un numero
+        // ATTENZIONE (da verificare in fase di debug) potrebbe essere necessario controllare che numero di cifre
+        // di y corrisponda alla lunghezza della sottostringa;
+        int y = std::stoi(coordinate.substr(1, coordinate.size() - 1)) - 1;
+
+        // controllo che x e y siano nel range delle dimensioni delle due mappe
+        // NOTA: sarebbe opportuno poter accedere alle costanti di dimensione della mappa
+        if (x >= 0 && x <= 11 && y >= 0 && y <= 11)
+        {
+            pos = Position(x, y);
+            return pos;
+        }
+        else
+        {
+            // se una delle due cooridnate non è valida, viene ritornata posizione non valida
+            pos.make_absolute_invalid();
+            return pos;
+        }
+    }
+    catch (std::invalid_argument)
+    {
+        pos.make_absolute_invalid();
+        return pos;
+    }
+}
+
+std::string convert_to_command(const Position &position)
+{
+    if (position.X() >= 0 && position.X() <= 11 && position.Y() >= 0 && position.Y() <= 11)
+    {
+
+        // conversione esplicita da int ad a char (sicura) della coordinata X della posizione
+        // stringa formata dal carattere a cui viene sommato il valore ASCII di "A"
+        std::string letter(1, (char)position.X() + kDefaultCapitalAscii);
+
+        // conversione da int a string della coordinata Y della posizione
+        std::string number = std::to_string(position.Y() + 1);
+
+        // concatenazione delle due stringhe contenenti le coordinate in formato (A1)
+        std::string coordinate = letter + number;
+        return coordinate;
+    }
+    else return ""; 
 }

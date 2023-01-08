@@ -1,4 +1,5 @@
 #include "../include/Player.h"
+#include "../include/Utility.h"
 #include <iostream>
 
 Player::Player(const std::string &nickname)
@@ -69,84 +70,6 @@ void Player::handle_response(std::vector<AttackUnit> units, const Move &m)
     Ship *ship = get_ship(m.origin());
     //IL GIOCATORE FA ESEGUIRE L'AZIONE ALLA NAVE INCARICATA
     ship->action(m.target(), units);
-}
-
-bool Player::check_for_graphic_cmd(Move &m)
-{
-    /*
-    if (m.movetype() == MoveType::clearMap)
-    {
-        // da implementare
-        AttackGrid().clear_area();
-        m.makeInvalid();
-    }
-    else if (m.movetype() == MoveType::showMap)
-    {
-        // da implementare
-        // std::cout << player_2->defenseMap();
-        // std::cout << player_2->attackMap();
-        m.makeInvalid();
-    }
-*/
-    // se si arriva qui qualcosa è andato storto
-    return m.movetype() == MoveType::clearMap || m.movetype() == MoveType::showMap;
-}
-
-Position Player::convert_to_position(const std::string &coordinate)
-{
-    Position pos{};
-
-    try
-    {
-        // sottrazione del valore ASCII di 'A' al primo carattere della stringa
-        // conversione da char ad int
-        int x = coordinate[0] - kDefaultCapitalAscii;
-
-        // conversione da stringa ad intero dell'ultima parte della coppia di coordinate (numero)
-        // stoi lancia std::invalid_argument exception se la sottostringa non è un numero
-        // ATTENZIONE (da verificare in fase di debug) potrebbe essere necessario controllare che numero di cifre
-        // di y corrisponda alla lunghezza della sottostringa;
-        int y = std::stoi(coordinate.substr(1, coordinate.size() - 1)) - 1;
-
-        // controllo che x e y siano nel range delle dimensioni delle due mappe
-        // NOTA: sarebbe opportuno poter accedere alle costanti di dimensione della mappa
-        if (x >= 0 && x <= 11 && y >= 0 && y <= 11)
-        {
-            pos = Position(x, y);
-            return pos;
-        }
-        else
-        {
-            // se una delle due cooridnate non è valida, viene ritornata posizione non valida
-            pos.make_absolute_invalid();
-            return pos;
-        }
-    }
-    catch (std::invalid_argument)
-    {
-        pos.make_absolute_invalid();
-        return pos;
-    }
-}
-
-std::string Player::convert_to_command(const Position &position)
-{
-    if (position.X() >= 0 && position.X() <= 11 && position.Y() >= 0 && position.Y() <= 11)
-    {
-
-        // conversione esplicita da int ad a char (sicura) della coordinata X della posizione
-        // stringa formata dal carattere a cui viene sommato il valore ASCII di "A"
-        std::string letter(1, (char)position.X() + kDefaultCapitalAscii);
-
-        // conversione da int a string della coordinata Y della posizione
-        std::string number = std::to_string(position.Y() + 1);
-
-        // concatenazione delle due stringhe contenenti le coordinate in formato (A1)
-        std::string coordinate = letter + number;
-        return coordinate;
-    }
-
-    throw InvalidPosition{};
 }
 
 Ship *Player::get_ship(const Position origin)

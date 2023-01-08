@@ -31,13 +31,6 @@ public:
     // Restituisce true se la nave è stata aggiunta, altrimenti false
     virtual bool add_ships(const std::string &cmd, int size) = 0;
 
-    // funzione che converte una coppia di coordinate (quindi una delle due parti dell'intero comando)
-    // in una posizione
-    Position convert_to_position(const std::string &coordinate);
-
-    // funzione che converte una posizione in una delle due parti del comando
-    std::string convert_to_command(const Position &position);
-
     // data una posizione di origine, la funzione restituisce un puntatore alla nave
     // avente come centro la posizione specificata. Se tale nave non esiste
     // la funzione ritorna nullptr
@@ -55,11 +48,6 @@ public:
 
     // funzione che gestisce la ricezione di attackunits dal giocatore avversario
     void handle_response(std::vector<AttackUnit> units, const Move &m);
-
-    // funzione che verifica se il comando scelto dal giocatore
-    // è un comando per visualizzare la mappa o pulirla
-    // ed esegue eventualmente tale azione
-    bool check_for_graphic_cmd(Move &m);
 
     // metodi getter
     std::string nickname() { return nickname_; }

@@ -81,7 +81,7 @@ void Game::play_single_turn(Player *p)
         m = p->get_move(cmd_player_1);
 
         // controllo comandi AA AA e YY YY //fallo anche eseguire
-        if (p->check_for_graphic_cmd(m))
+        if (m.check_for_graphic_cmd())
         {
             if (m.movetype() == MoveType::clearMap)
             {
@@ -96,7 +96,7 @@ void Game::play_single_turn(Player *p)
         // nei casi menzionati sopra la mossa non è valida ai fini del turno
         if (m.movetype() != MoveType::invalid)
         {
-            std::cout << "Mossa Effettuata: " << p->convert_to_command(m.origin()) << " " << p->convert_to_command(m.target()) << "\n"
+            std::cout << "Mossa Effettuata: " << convert_to_command(m.origin()) << " " << convert_to_command(m.target()) << "\n"
                       << std::endl;
             std::vector<AttackUnit> units = p->execute_move(m.target(), m.movetype());
             p->handle_response(units, m);
