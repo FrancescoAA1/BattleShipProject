@@ -37,8 +37,6 @@ class Move
     //rende non valida una mossa invalidandone le posizioni e cambiando il tipo di mossa
     void makeInvalid();
 
-    // verifica se è una mossa di aggiornamento grafico 
-    bool check_for_graphic_cmd(); 
 
     // converte a stringa la mossa
     std::string to_string() const; 
