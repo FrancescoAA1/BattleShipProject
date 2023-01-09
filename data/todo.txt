@@ -1,12 +1,5 @@
 // TO DO 
 
-metodo per scambiare i riferimenti dei player in modo casuale (per decidere chi inizia la partita)
--->da creare nel header player.h e implementare in player.cpp
-
-convertire a unique pointer i puntatori a nave della collezione in player
-
-
-
 3) Funzionalità di replay
 
 
@@ -68,3 +61,8 @@ Vedi algoritmo presente in test_components
 
 
 10) Quando l'azione della nave fallisce è necessario che il player se ne accorga e richeda l'inserrimento di un'altra mossa
+
+metodo per scambiare i riferimenti dei player in modo casuale (per decidere chi inizia la partita)
+-->da creare nel header player.h e implementare in player.cpp
+
+convertire a unique pointer i puntatori a nave della collezione in player
