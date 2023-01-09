@@ -37,7 +37,7 @@ public:
     std::vector<AttackUnit> execute_move(const Position &target, const MoveType &type);
 
     // funzione che gestisce la ricezione di attackunits dal giocatore avversario
-    void handle_response(std::vector<AttackUnit> units, const Move &m);
+    bool handle_response(std::vector<AttackUnit> units, const Move &m);
 
     // metodi getter
     std::string nickname() { return nickname_; }

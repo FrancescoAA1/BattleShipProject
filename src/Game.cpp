@@ -81,16 +81,17 @@ void Game::play_single_turn(Player *p)
         m = p->get_move(cmd_player_1);
 
         // controllo comandi AA AA e YY YY //fallo anche eseguire
-        if (m.check_for_graphic_cmd())
+
+        if (m.movetype() == MoveType::clearMap)
         {
-            if (m.movetype() == MoveType::clearMap)
-            {
-                // da implementare
-            }
-            else if (m.movetype() == MoveType::showMap)
-            {
-                std::cout << visual_merge_grid(p->attack_grid(), p->defense_map());
-            }
+            p->attack_grid().clear_area();
+            std::cout << visual_merge_grid(p->attack_grid(), p->defense_map());
+            m.set_movetype(MoveType::invalid);
+        }
+        else if (m.movetype() == MoveType::showMap)
+        {
+            std::cout << visual_merge_grid(p->attack_grid(), p->defense_map());
+            m.set_movetype(MoveType::invalid);
         }
 
         // nei casi menzionati sopra la mossa non è valida ai fini del turno
@@ -99,7 +100,12 @@ void Game::play_single_turn(Player *p)
             std::cout << "Mossa Effettuata: " << convert_to_command(m.origin()) << " " << convert_to_command(m.target()) << "\n"
                       << std::endl;
             std::vector<AttackUnit> units = p->execute_move(m.target(), m.movetype());
-            p->handle_response(units, m);
+            bool action_done = p->handle_response(units, m);
+
+            if(!action_done)
+            {
+                m.set_movetype(MoveType::invalid);
+            }
 
             // if(mode == GameMode::ComputerVsComputer)
             // {

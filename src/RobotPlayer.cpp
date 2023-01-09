@@ -62,15 +62,15 @@ int RobotPlayer::get_random_index(int size)
 Position RobotPlayer::get_random_pos()
 {
     srand(time(NULL));
-    int x = abs(std::rand() % 12);
-    int y = abs(std::rand() % 12);
+    int x = abs(std::rand() % defense_map_.kWidth);
+    int y = abs(std::rand() % defense_map_.kHeight);
     return Position(x, y);
 }
 
 Position RobotPlayer::get_random_pos(const Position &origin, int size)
 {
     srand(time(NULL));
-    if (size > 12 / 2 + 1)
+    if (size > defense_map_.kHeight / 2 + 1)
         return origin;
 
     bool done = false;

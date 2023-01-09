@@ -32,8 +32,3 @@ std::string Move::to_string() const
     else return convert_to_command(origin_) + " " + convert_to_command(target_); 
 
 }
-
-bool Move::check_for_graphic_cmd()
-{
-    return move_ == MoveType::clearMap ||move_ == MoveType::showMap;
-}

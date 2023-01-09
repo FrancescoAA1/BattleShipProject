@@ -64,12 +64,12 @@ std::vector<AttackUnit> Player::execute_move(const Position &target, const MoveT
     return units;
 }
 
-void Player::handle_response(std::vector<AttackUnit> units, const Move &m)
+bool Player::handle_response(std::vector<AttackUnit> units, const Move &m)
 {
     //LA NAVE INCARICATA DI COMPIERE L'AZIONE VIENE TROVATA
     Ship *ship = get_ship(m.origin());
     //IL GIOCATORE FA ESEGUIRE L'AZIONE ALLA NAVE INCARICATA
-    ship->action(m.target(), units);
+    return ship->action(m.target(), units);
 }
 
 Ship *Player::get_ship(const Position origin)
