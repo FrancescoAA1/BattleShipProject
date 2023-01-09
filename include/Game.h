@@ -27,6 +27,9 @@ class Game
 
     void add();
 
+    //funzione che stabilisce il giocatore che inizia la partita
+    void first_player();
+
     int get_rounds() {return numberOfRounds;}
     int round_terminated(){return numberOfRounds--;}
 

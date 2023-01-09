@@ -8,7 +8,7 @@ Player::Player(const std::string &nickname)
     attack_grid_ = AttackGrid();
     defense_map_ = DefenseMap();
     // il vector di navi è inizialmente vuoto perchè vengono aggiunte con push_back
-    ship_list = std::vector<Ship *>(0);
+    ship_list = std::vector<std::shared_ptr<Ship>>(0);
 }
 
 // metodi privati
@@ -29,7 +29,7 @@ AttackUnit Player::receive_attack(const Position &target)
     if (!p.is_absolute_invalid())
     {
         //controllo se è presente una nave nella posizione restituita da receive shot
-        Ship *ship_attacked = get_ship(p);
+        std::shared_ptr<Ship> ship_attacked = get_ship(p);
 
         if (ship_attacked)
         {
@@ -67,15 +67,15 @@ std::vector<AttackUnit> Player::execute_move(const Position &target, const MoveT
 bool Player::handle_response(std::vector<AttackUnit> units, const Move &m)
 {
     //LA NAVE INCARICATA DI COMPIERE L'AZIONE VIENE TROVATA
-    Ship *ship = get_ship(m.origin());
+    std::shared_ptr<Ship> ship = get_ship(m.origin());
     //IL GIOCATORE FA ESEGUIRE L'AZIONE ALLA NAVE INCARICATA
     return ship->action(m.target(), units);
 }
 
-Ship *Player::get_ship(const Position origin)
+std::shared_ptr<Ship> Player::get_ship(const Position origin)
 {
     // ricerca del puntatore alla nave avente come centro la posizione di origine
-    auto it = std::find_if(ship_list.begin(), ship_list.end(), [origin](Ship *ship) -> bool
+    auto it = std::find_if(ship_list.begin(), ship_list.end(), [origin](std::shared_ptr<Ship> ship) -> bool
                            { return (ship->centre() == origin); });
 
     // se l'iteratore ritornato dall'algoritmo STL punta all'ultimo elemento del vettore di navi
@@ -118,12 +118,12 @@ int get_size(const Position &bow, const Position &stern)
 
 Player::~Player()
 {
-    Ship *pointer;
+    std::shared_ptr<Ship> pointer;
     // dealloco tutta la memoria adelle navi
     for (int i = 0; i < ship_list.size(); i++)
     {
         pointer = ship_list[i];
-        delete pointer;
+        //delete pointer;
     }
 
     pointer = nullptr;

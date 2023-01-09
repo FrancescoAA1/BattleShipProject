@@ -31,6 +31,20 @@ Game::Game()
 {
 }
 
+void Game::first_player()
+{
+    Player* temp;
+    srand(time(NULL));
+    int rand_starter = std::rand() % 2;
+
+    if(rand_starter == 1)
+    {
+        temp = player_1;
+        player_1 = player_2;
+        player_2 = temp;
+    }
+}
+
 void Game::playRound()
 {
     // primo giocatore esegue il proprio turno

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 #include <algorithm>
 #include "DefenseMap.h"
 #include "AttackGrid.h"
@@ -17,14 +18,14 @@ class Player
 public:
     virtual Move get_move(const std::string &cmd) = 0;
 
-    //funzione che permette di aggiungere una nave alla lista di navi secondo 
-    //le specifiche indicate dal comando e dalla taglia
-    //restituisce true se l'inserimento è andato a buon fine, false altrimenti
+    // funzione che permette di aggiungere una nave alla lista di navi secondo
+    // le specifiche indicate dal comando e dalla taglia
+    // restituisce true se l'inserimento è andato a buon fine, false altrimenti
     virtual bool add_ships(const std::string &cmd, int size) = 0;
 
     // avente come centro la posizione specificata. Se tale nave non esiste
     // la funzione ritorna nullptr
-    Ship *get_ship(const Position origin);
+    std::shared_ptr<Ship> get_ship(const Position origin);
 
     // funzione che ritorna un vettore di attackUnit per l' operazione del sottomarino
     std::vector<AttackUnit> retrieve_unit(const Position &target);
@@ -45,8 +46,7 @@ public:
     DefenseMap &defense_map() { return defense_map_; }
     int get_ships_left() { return ship_list.size(); }
 
-    virtual ~Player(); 
-
+    virtual ~Player();
 
 protected:
     // costruttore dato il nome del giocatore
@@ -61,8 +61,8 @@ protected:
     // mappa di difesa del giocatore
     DefenseMap defense_map_;
 
-    // vector di puntatori ad una nave
-    std::vector<Ship *> ship_list;
+    // vector di puntatori ad una na
+    std::vector<std::shared_ptr<Ship>> ship_list;
 
 private:
     // costante utile per le conversioni da comando a posizione e viceversa

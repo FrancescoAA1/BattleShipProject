@@ -1,6 +1,8 @@
 #include "../include/RobotPlayer.h"
 #include "../include/Utility.h"
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 // il robot inventa la mossa per cui la stringa passata come parametro sarà vuota
 Move RobotPlayer::get_move(const std::string &move)
@@ -10,7 +12,7 @@ Move RobotPlayer::get_move(const std::string &move)
     Move m;
 
     int size_list = ship_list.size();
-    Ship *ship_cmd;
+    std::shared_ptr<Ship> ship_cmd;
 
     //se esiste almeno una nave nella lista, ne viene prelevata una in modo casuale
     if (size_list > 0)
@@ -55,12 +57,14 @@ Move RobotPlayer::get_move(const std::string &move)
 
 int RobotPlayer::get_random_index(int size)
 {
+    std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
     srand(time(NULL));
     return rand() % size;
 }
 
 Position RobotPlayer::get_random_pos()
 {
+    std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
     srand(time(NULL));
     int x = abs(std::rand() % defense_map_.kWidth);
     int y = abs(std::rand() % defense_map_.kHeight);
@@ -147,19 +151,19 @@ bool RobotPlayer::add_ships(const std::string &cmd, int size)
     {
         if (size == Ironclad::kSize)
         {
-            Ironclad *ship = new Ironclad{d, p, defense_map_, attack_grid_};
+            std::shared_ptr<Ironclad> ship(new Ironclad{d, p, defense_map_, attack_grid_});
             ship_list.push_back(ship);
             std::cout << "Corazzata Aggiunta in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern);
         }
         else if (size == SupportShip::kSize)
         {
-            SupportShip *ship = new SupportShip{d, p, defense_map_, attack_grid_};
+            std::shared_ptr<SupportShip> ship(new SupportShip{d, p, defense_map_, attack_grid_});
             ship_list.push_back(ship);
             std::cout << "Nave di Supporto Aggiunta in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern);
         }
         else
         {
-            Submarine *ship = new Submarine{p, defense_map_, attack_grid_};
+            std::shared_ptr<Submarine> ship(new Submarine{p, defense_map_, attack_grid_});
             ship_list.push_back(ship);
             std::cout << "Sottomarino Aggiunto in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern);
         }

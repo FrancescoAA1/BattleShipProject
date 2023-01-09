@@ -43,7 +43,7 @@ Move HumanPlayer::get_move(const std::string &cmd)
             return {origin, target, MoveType::invalid};
 
         // viene indivuata la nave che compie l'azione
-        Ship *ship_cmd = get_ship(origin);
+        std::shared_ptr<Ship> ship_cmd = get_ship(origin);
 
         if (ship_cmd)
         {
@@ -109,17 +109,17 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size)
                 Position p = (bow + stern) / 2;
                 if (size == Ironclad::kSize)
                 {
-                    Ironclad *ship = new Ironclad{d, p, defense_map_, attack_grid_};
+                    std::shared_ptr<Ironclad> ship(new Ironclad{d, p, defense_map_, attack_grid_});
                     ship_list.push_back(ship);
                 }
                 else if (size == SupportShip::kSize)
                 {
-                    SupportShip *ship = new SupportShip{d, p, defense_map_, attack_grid_};
+                   std::shared_ptr<SupportShip> ship(new SupportShip{d, p, defense_map_, attack_grid_});
                     ship_list.push_back(ship);
                 }
                 else
                 {
-                    Submarine *ship = new Submarine{p, defense_map_, attack_grid_};
+                    std::shared_ptr<Submarine> ship(new Submarine{p, defense_map_, attack_grid_});
                     ship_list.push_back(ship);
                 }
             }
