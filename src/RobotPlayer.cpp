@@ -64,10 +64,10 @@ int RobotPlayer::get_random_index(int size)
 
 Position RobotPlayer::get_random_pos()
 {
-    std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
-    srand(time(NULL));
-    int x = abs(std::rand() % defense_map_.kWidth);
-    int y = abs(std::rand() % defense_map_.kHeight);
+    //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
+    //srand(time(NULL));
+    int x = abs(get_random(defense_map_.kWidth));
+    int y = abs(get_random(defense_map_.kHeight));
     return Position(x, y);
 }
 
@@ -86,7 +86,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
     // nel caso la posizione ottenuta randomicamente non vada bene ne cerco un'altra finché non è valida
     while (!done)
     {
-        int x = abs(std::rand() % 4);
+        int x = abs(get_random(4));
         if (x == 0)
         {
             int y = origin.Y() + size - 1;
