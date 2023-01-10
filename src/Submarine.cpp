@@ -11,7 +11,7 @@
     if(data.size() < kSide*kSide) return false;
 
     //sposto il sottomarino
-    if(defense_map().move_ship(this->centre(), target))
+    if(defense_map_.move_ship(this->centre(), target))
     {
         int counter = 0;
         //data è un vettore che salva una matrice kSide * kSide salvata per righe
@@ -42,7 +42,7 @@ bool Submarine::action(const Position &target, const std::vector<AttackUnit> &da
         return false;
     }
 
-    bool b = defense_map().move_ship(this->centre(), target);
+    bool b = defense_map_.move_ship(this->centre(), target);
     // sposto il sottomarino
     if (b)
     {

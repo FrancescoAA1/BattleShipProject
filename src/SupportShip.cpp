@@ -10,7 +10,7 @@
 //viene comunque ritornato un booleano che conferma che la mossa è stata effettuata
 /*bool SupportShip::action(const Position& target, const std::vector<AttackUnit>& data) 
 {
-    if(defense_map().move_ship(this->centre(), target))
+    if(defense_map_.move_ship(this->centre(), target))
     {
         last_fixed_ship = defense_map_.discovers_neighbors(target, kSide);
         
@@ -31,7 +31,7 @@
 
 bool SupportShip::action(const Position& target, const std::vector<AttackUnit>& data) 
 {
-    if(defense_map().move_ship(this->centre(), target))
+    if(defense_map_.move_ship(this->centre(), target))
     {
         last_fixed_ship = defense_map_.discovers_neighbors(target, kSide);
         
