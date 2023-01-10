@@ -57,7 +57,7 @@ Move RobotPlayer::get_move(const std::string &move)
 
 Position RobotPlayer::get_random_pos()
 {
-    //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
+    std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
     //srand(time(NULL));
     int x = abs(get_random(defense_map_.kWidth));
     int y = abs(get_random(defense_map_.kHeight));

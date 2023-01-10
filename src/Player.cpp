@@ -69,7 +69,14 @@ bool Player::handle_response(std::vector<AttackUnit> units, const Move &m)
     //LA NAVE INCARICATA DI COMPIERE L'AZIONE VIENE TROVATA
     std::shared_ptr<Ship> ship = get_ship(m.origin());
     //IL GIOCATORE FA ESEGUIRE L'AZIONE ALLA NAVE INCARICATA
-    return ship->action(m.target(), units);
+    bool action_done =  ship->action(m.target(), units);
+
+    if(action_done && (m.movetype() == MoveType::moveAndFix || m.movetype() == MoveType::moveAndDiscover))
+    {
+        ship->set_center(m.target());
+    }
+    
+    return action_done;
 }
 
 std::shared_ptr<Ship> Player::get_ship(const Position origin)
