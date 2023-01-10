@@ -33,11 +33,11 @@ Game::Game()
 
 void Game::first_player()
 {
-    Player* temp;
+    Player *temp;
     srand(time(NULL));
     int rand_starter = std::rand() % 2;
 
-    if(rand_starter == 1)
+    if (rand_starter == 1)
     {
         temp = player_1;
         player_1 = player_2;
@@ -50,7 +50,7 @@ void Game::playRound()
     // primo giocatore esegue il proprio turno
     std::cout << "\n"
               << player_1->nickname() << " inizia il proprio turno.\n";
-    play_single_turn(player_1);
+    play_single_turn(player_1, player_2);
     std::cout << "\n"
               << player_1->nickname() << " Ha terminato il proprio turno.\n";
 
@@ -60,13 +60,13 @@ void Game::playRound()
         // secondo giocatore esegue il proprio turno
         std::cout << "\n"
                   << player_2->nickname() << " inizia il proprio turno.\n";
-        play_single_turn(player_2);
+        play_single_turn(player_2, player_1);
         std::cout << "\n"
                   << player_2->nickname() << " Ha terminato il proprio turno.\n";
     }
 }
 
-void Game::play_single_turn(Player *p)
+void Game::play_single_turn(Player *p, Player *opp)
 {
     std::string cmd_player_1;
 
@@ -113,12 +113,16 @@ void Game::play_single_turn(Player *p)
         {
             std::cout << "Mossa Effettuata: " << convert_to_command(m.origin()) << " " << convert_to_command(m.target()) << "\n"
                       << std::endl;
-            std::vector<AttackUnit> units = p->execute_move(m.target(), m.movetype());
+            std::vector<AttackUnit> units = opp->execute_move(m.target(), m.movetype());
             bool action_done = p->handle_response(units, m);
 
-            if(!action_done)
+            if (!action_done)
             {
                 m.set_movetype(MoveType::invalid);
+            }
+            else
+            {
+                std::cout << visual_merge_grid(p->attack_grid(), p->defense_map());
             }
 
             // if(mode == GameMode::ComputerVsComputer)

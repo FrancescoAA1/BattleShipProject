@@ -136,7 +136,7 @@ int main()
     // std::cout << "\nNumero navi dopo rimozione: " << r.get_ships_left();
 
     // tester Game CvC
-    // Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, 200};
+    // Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, 10100};
     // g.first_player();
     // g.add();
 
@@ -149,7 +149,7 @@ int main()
     // std::cout << "Game Over";
 
     // // //tester Game PvC
-    Game g1{"GiocatoreX", "GiocatoreY", GameMode::PlayerVsComputer, 6};
+    Game g1{"GiocatoreX", "GiocatoreY", GameMode::PlayerVsComputer, 1000};
     std::cout << "Battaglia Navale - Inizio Partita" << std::endl;
     g1.first_player();
     g1.add();

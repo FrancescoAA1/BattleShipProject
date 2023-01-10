@@ -22,14 +22,12 @@ bool Ironclad::action(const Position& target, const std::vector<AttackUnit>& dat
     {
         bool b = attack_grid_.shot_position(target, data[0]);
         std::cout << "La corazzata con centro " << this->centre() << " ha eseguito una mossa; esito del colpo: " << b << std::endl;
-        std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
         return b;
     }
 
     else 
     {
         std::cout << "La corazzata con centro " << this->centre() << " ha provato ad esguire una mossa ma il vettore di dati passato non era abbastanza lungo" << std::endl;
-        std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
         return false;
     }
 }

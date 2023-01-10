@@ -41,19 +41,16 @@ bool SupportShip::action(const Position& target, const std::vector<AttackUnit>& 
             if(!defense_map_.fix_ship(last_fixed_ship[i]))
             {
                 std::cout << "La nave di supporto con centro " << this->centre() << " ha eseguito l'azione con esito 0 perché l'azione di cura sulla nave di centro " << last_fixed_ship[i] << " non era valida\n";
-                std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
                 return false;
             }
         } 
         
         std::cout << "La nave di supporto con centro " << this->centre() << " ha eseguito l'azione con esito 1 e ha curato " << last_fixed_ship.size() << " navi\n";
-        std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
         return true;
     }
 
     //se arrivo qui significa che il movimento non era valido
     std::cout << "La nave di supporto con centro " << this->centre() << " ha eseguito l'azione con esito 0 perché il movimento non era consentito\n"; 
-    std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
     return false;    
     
 }

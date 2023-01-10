@@ -357,7 +357,8 @@ bool DefenseMap::move_ship(const Position &target_origin, const Position &target
             // determino di quanto si è spostata su se stessa. Questo è già l'offset da sommare nella corretta direzione
             Position off = target_destination - target_origin;
             // se l'offset è zero ho finito, non devo cancellare più nulla
-            if(off.X() == 0 && off.Y() == 0) return true; 
+            if (off.X() == 0 && off.Y() == 0)
+                return true;
             // se la direzione è verticale allora mi sposto verso l'alto o basso dal centro nuovo
             // se la direzione è orizzontale allora mi sposto verso destra o sinistra dal centro nuovo
             // basta solo sottrarre l'offset
@@ -433,10 +434,18 @@ std::pair<Position, AttackUnit> DefenseMap::receive_shot(const Position &target_
 {
     Position center_block{};
     // controllo se la posizione è valida e se lo è verifico se continene una posizione occupata e non colpita
-    if (check_position(target_destination) && defense_map_[target_destination.Y()][target_destination.X()].status() == DefenseStatus::taken)
+    if (check_position(target_destination) && defense_map_[target_destination.Y()][target_destination.X()].status() != DefenseStatus::empty)
     {
-        defense_map_[target_destination.Y()][target_destination.X()].set_status(DefenseStatus::hit);
-        center_block = defense_map_[target_destination.Y()][target_destination.X()].block_center();
+        //se la nave è già stata colpita viene ritornato il blocco centrale non valido
+        if (defense_map_[target_destination.Y()][target_destination.X()].status() == DefenseStatus::taken)
+        {
+            defense_map_[target_destination.Y()][target_destination.X()].set_status(DefenseStatus::hit);
+            center_block = defense_map_[target_destination.Y()][target_destination.X()].block_center();
+        }
+        else
+        {
+            center_block.make_absolute_invalid();
+        }
 
         return {center_block, AttackUnit::full_and_hit};
     }

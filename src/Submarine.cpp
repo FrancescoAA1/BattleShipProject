@@ -68,7 +68,6 @@ bool Submarine::action(const Position &target, const std::vector<AttackUnit> &da
         }
 
         std::cout << "Il sottomarino con centro " << this->centre() << " ha eseguito l'azione con esito 1\n";
-        std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
         return true;
     }
 

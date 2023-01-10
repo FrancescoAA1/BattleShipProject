@@ -19,9 +19,6 @@ class RobotPlayer : public Player
 
     private:
 
-    //funzione che restituisce un indice casuale compreso tra 0 e la dimensione del vettore di navi
-    int get_random_index(int size);
-
     //funzione che restituisce una posizione casuale
     Position get_random_pos();
     

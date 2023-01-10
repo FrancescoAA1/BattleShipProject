@@ -17,7 +17,7 @@ Move RobotPlayer::get_move(const std::string &move)
     //se esiste almeno una nave nella lista, ne viene prelevata una in modo casuale
     if (size_list > 0)
     {
-        ship_cmd = ship_list.at(get_random_index(ship_list.size()));
+        ship_cmd = ship_list.at(get_random(ship_list.size()));
     }
     else
     {
@@ -55,25 +55,16 @@ Move RobotPlayer::get_move(const std::string &move)
     }
 }
 
-int RobotPlayer::get_random_index(int size)
-{
-    std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
-    srand(time(NULL));
-    return rand() % size;
-}
-
 Position RobotPlayer::get_random_pos()
 {
-    std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
-    srand(time(NULL));
-    int x = abs(std::rand() % defense_map_.kWidth);
-    int y = abs(std::rand() % defense_map_.kHeight);
+    //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
+    int x = get_random(defense_map_.kWidth);
+    int y = get_random(defense_map_.kHeight);
     return Position(x, y);
 }
 
 Position RobotPlayer::get_random_pos(const Position &origin, int size)
 {
-    srand(time(NULL));
     if (size > defense_map_.kHeight / 2 + 1)
         return origin;
 
@@ -86,7 +77,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
     // nel caso la posizione ottenuta randomicamente non vada bene ne cerco un'altra finché non è valida
     while (!done)
     {
-        int x = abs(std::rand() % 4);
+        int x = abs(get_random(4));
         if (x == 0)
         {
             int y = origin.Y() + size - 1;

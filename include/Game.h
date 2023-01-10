@@ -46,7 +46,7 @@ class Game
     static constexpr int kSubmarine = 2;
 
     void add_player_ships(Player* p);
-    void play_single_turn(Player* p);
+    void play_single_turn(Player* p, Player *opponent);
 
 
     //numero di turni 
