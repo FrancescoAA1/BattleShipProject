@@ -87,7 +87,7 @@ Position convert_to_position(const std::string &coordinate)
 
         // controllo che x e y siano nel range delle dimensioni delle due mappe
         // NOTA: sarebbe opportuno poter accedere alle costanti di dimensione della mappa
-        if (x >= 0 && x <= 11 && y >= 0 && y <= 11)
+        if (x >= 0 && x <= DefenseMap::kWidth && y >= 0 && y <= DefenseMap::kHeight)
         {
             pos = Position(x, y);
             return pos;

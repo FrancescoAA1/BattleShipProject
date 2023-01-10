@@ -2,6 +2,21 @@
 
 3) Funzionalità di replay
 
+Bug negli attacchi eccetera 
+
+digitando il
+comando BB BB possono essere cancellati tutti i caratteri relativi a colpi andati a segno (X),
+oppure con il comando CC CC si possono cancellare tutti i colpi a vuoto (O).
+
+Q14. Nel caso una nave con un segmento già colpito si muova e venga rilevata da un
+sonar nella nuova posizione, il segmento colpito, nel campo d'attacco del giocatore che
+ha lanciato il sonar, viene visualizzato con una 'X' (facendo capire quindi che la nave
+rilevata era quella colpita in precedenza) o viene visualizzato con una 'Y' (come se fosse
+una normale rilevazione del sonar)?
+A14. In questo caso la nave rilevata dal sonar verrà visualizzata con il segmento colpito. In altre
+parole, il sonar ritorna la posizione e lo stato corrente delle nave.
+2
+
 
 // COSE FATTE ==========================================================================================================
 1) scrivere main
@@ -66,3 +81,4 @@ metodo per scambiare i riferimenti dei player in modo casuale (per decidere chi 
 -->da creare nel header player.h e implementare in player.cpp
 
 convertire a unique pointer i puntatori a nave della collezione in player
+
