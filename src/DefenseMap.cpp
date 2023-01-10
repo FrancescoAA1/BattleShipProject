@@ -436,7 +436,7 @@ std::pair<Position, AttackUnit> DefenseMap::receive_shot(const Position &target_
     // controllo se la posizione è valida e se lo è verifico se continene una posizione occupata e non colpita
     if (check_position(target_destination) && defense_map_[target_destination.Y()][target_destination.X()].status() != DefenseStatus::empty)
     {
-        //se la nave è già stata colpita viene ritornato il blocco centrale non valido
+        // se la nave è già stata colpita viene ritornato il blocco centrale non valido
         if (defense_map_[target_destination.Y()][target_destination.X()].status() == DefenseStatus::taken)
         {
             defense_map_[target_destination.Y()][target_destination.X()].set_status(DefenseStatus::hit);
@@ -595,8 +595,9 @@ bool DefenseMap::fix_ship(const Position &target_origin)
 // funzione che scopre tutte le navi in un'area dimxdim a partire del centro specificato come target
 // ritona un'area che rappresenta una matrice dimxdim scritta per righe
 // l'intero serve a specificare il lato di dimensione per l'area
-// se l'area non rientra nella matrice ne fa l'intersezione
+// se l'area non riesntra nella matrice ne fa l'intersezione
 // se l'area contiene la matrice ritorna tutta la matrice
+// se la nave ha una cella colpita ritorna X atrimenti Y
 std::vector<AttackUnit> DefenseMap::spot_area(const Position &target_origin, int side) const
 {
     std::vector<AttackUnit> discovered_position{};
@@ -614,8 +615,9 @@ std::vector<AttackUnit> DefenseMap::spot_area(const Position &target_origin, int
             {
                 if (defense_map_[start.Y()][start.X()].status() == DefenseStatus::empty)
                     discovered_position.push_back(AttackUnit::unknown);
-                else
+                else if(defense_map_[start.Y()][start.X()].status() == DefenseStatus::taken)
                     discovered_position.push_back(AttackUnit::spotted);
+                else discovered_position.push_back(AttackUnit::full_and_hit); // se la nave è colpita ritorno la X
             }
             start.set_x(start.X() + 1);
         }

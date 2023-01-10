@@ -121,3 +121,35 @@ std::ostream &operator<<(std::ostream &data_stream, const AttackGrid &attack_gri
 {
     return data_stream << attack_grid.to_string();
 }
+
+// funzione che pulisce dalla matrice tutte le caselle impostate ad X
+void AttackGrid::clear_all_full_and_hit()
+{
+    // imposto tutte le celle con carettere X a empty
+    for (int i = 0; i < kHeight; i++)
+    {
+        for (int j = 0; j < kWidth; j++)
+        {
+            if (attack_grid_[i][j] == AttackUnit::full_and_hit)
+            {
+                attack_grid_[i][j] = AttackUnit::unknown;
+            }
+        }
+    }
+}
+
+// funzione che pulisce dalla matrice tutte le caselle impostate ad O
+void AttackGrid::clear_all_full_and_empty()
+{
+    // imposto tutte le celle con carettere O a empty
+    for (int i = 0; i < kHeight; i++)
+    {
+        for (int j = 0; j < kWidth; j++)
+        {
+            if (attack_grid_[i][j] == AttackUnit::empty_and_hit)
+            {
+                attack_grid_[i][j] = AttackUnit::unknown;
+            }
+        }
+    }
+}

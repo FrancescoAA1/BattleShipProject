@@ -7,15 +7,49 @@
 
 class Replay
 {
+
 public:
+    class InvalidOperation : std::exception
+    {
+    };
     // costruttore che accetta come parametro il nome del file di log:
     // se la classe viene creata per leggere da file aprirà file_name in lettura
     // altrimenti rappresneta il nome del file di log in cui scrivere
     Replay(std::string file_name);
 
+    // funzione per impostare i due giocatori (scritti nell'ordine di parametro)
+    // e il numero massimo di mosse che rappresentano l'header file da scrivere
+    void record_header(std::string player1, std::string player2, int num_rounds);
+
     // funzione che permette di registrare una mossa nello storico
     // player_name è il nome del giocatore che l'ha effettuata
-    void record_move(std::string player_name, const Move &move);
+    void record_move(const Move &move);
+
+    // funzione che carica in memoria (nel buffer_) il file di log con cui è stato
+    // costruito l'oggetto
+    bool open_log();
+
+    // funzione che permette di ottenere il primo giocatore se si apre un file
+    // di log e lo si vuole leggere
+    // lancia eccezione se il file non è ancora stato caricato
+    std::string get_first_player_name();
+
+    // funzione che permette di ottenere il secondo giocatore se si apre un file
+    // di log e lo si vuole leggere
+    // lancia eccezione se il file non è ancora stato caricato
+    std::string get_second_player_name();
+
+    // funzione che permette di ottenere il # di round se si apre un file
+    // di log e lo si vuole leggere
+    // lancia eccezione se il file non è ancora stato caricato
+    int get_number_of_rounds();
+
+    // verifica se è disponibile una mossa nel data buffer
+    bool has_next();
+
+    // funzione che permette di ottenere la possima mossa dello stream del data buffer
+    // ritona un astringa da convertire a mossa
+    std::string next();
 
     // funzione che permette di salvare su file tutto lo sotrico registrato
     // ritorna true se il log è stato scritto -> il file che crea è quello che ha nome specificato
@@ -28,11 +62,16 @@ private:
     // se il file è già presente lo elimina e ne crea uno nuovo
     std::string file_name_;
     // vettore in cui salvo tutto lo sotrico per poi farne il flush su file
-    std::vector<std::string> recording_;
+    std::vector<std::string> buffer_;
+    int currentTransaction; 
 
     // AREA DELLE CONSTANTI
     static constexpr char kMarker = ' ';
     static constexpr char kLineMarker = '\n';
+    static constexpr int kFirstPlayerPosition = 0;
+    static constexpr int kSecondPlayerPosition = 1;
+    static constexpr int kNumRoundsPosition = 2;
+    static constexpr int kStartRounds = 3; 
 };
 
 // La presente classe ha lo scopo registrare tutte le mosse effettuate in una partita e salvarle in un file di log

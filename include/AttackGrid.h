@@ -38,6 +38,12 @@ class AttackGrid
     // funzione che pulisce tutte le caselle nella matrice 
     void clear_area(); 
 
+    // funzione che pulisce dalla matrice tutte le caselle impostate ad X
+    void clear_all_full_and_hit(); 
+
+    // funzione che pulisce dalla matrice tutte le caselle impostate ad O
+    void clear_all_full_and_empty(); 
+
     // funzione che scrive in una stringa la mappa 
     std::string to_string() const; 
     // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)

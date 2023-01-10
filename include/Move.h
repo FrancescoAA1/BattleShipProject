@@ -11,7 +11,9 @@ enum MoveType{
     moveAndFix, //spostamento e cura (nave di supporto)
     moveAndDiscover, //spostamento ed ispezione (sottomarino)
     showMap, //stampa delle mappe del giocatore (con posizione target e origine poste a null)
-    clearMap //pulizia della mappa
+    clearMap, //pulizia della mappa
+    clearEmptyHit,
+    clearFullHit
 };
 
 class Move
