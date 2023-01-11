@@ -88,5 +88,6 @@ private:
 // La presente classe ha lo scopo registrare tutte le mosse effettuate in una partita e salvarle in un file di log
 // Inoltre viene progettata oltre che per scrivere lo storico di una partita anche per leggerlo e mostrare a video
 // o su file il "replay" di essa
+// L aclasse crea il log nella sottodirecory log della corrente. La crea se non esiste
 
 #endif

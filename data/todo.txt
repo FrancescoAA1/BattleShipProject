@@ -108,3 +108,5 @@ metodo numero massimo di round
 hasNext
 next
 ==================================================================================
+
+Implementare file wrapper per fare la scrittura di un replay su file: lo usa la classe game 

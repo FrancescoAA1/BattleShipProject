@@ -1,5 +1,6 @@
 #include "../include/Replay.h"
 #include <fstream>
+#include <stdio.h>
 
 // costruttore che accetta come parametro il nome del file di log:
 // se la classe viene creata per leggere da file aprirà file_name in lettura
@@ -39,6 +40,7 @@ void Replay::record_move(const Move &move)
 // funzione che permette di salvare su file tutto lo storico registrato
 // ritorna true se il log è stato scritto -> il file che crea è quello che ha nome specificato
 // nel costruttore
+// false se il processo non è andato a buon fine
 bool Replay::flush_recording()
 {
     // se lo storico di registrazioni è vuoto allora ritorno false
@@ -52,7 +54,10 @@ bool Replay::flush_recording()
 
         for (int i = 0; i < buffer_.size(); i++)
         {
-            file << buffer_[i] << kLineMarker;
+            // se è l'ultimo non metto il \n
+            if( i == buffer_.size() - 1)
+                file << buffer_[i];
+            else file << buffer_[i] << kLineMarker; 
         }
 
         file.close();
@@ -79,7 +84,7 @@ bool Replay::open_log()
         buffer_ = std::vector<std::string>();
 
     std::ifstream file;
-     // apro il file e leggo tutte le righe caricandole nel buffer
+    // apro il file e leggo tutte le righe caricandole nel buffer
     try
     {
         file = std::ifstream(file_name_);
@@ -89,10 +94,9 @@ bool Replay::open_log()
         {
             buffer_.push_back(tmp);
         }
-       
 
         file.close();
-        // preparo il cursore sulle mosse 
+        // preparo il cursore sulle mosse
         currentTransaction = kStartRounds;
         return true;
     }
@@ -134,16 +138,16 @@ std::string Replay::get_second_player_name()
 int Replay::get_number_of_rounds()
 {
     // se il buffer è vuoto allora il file non è stato caricato o è invalido
-    if (buffer_.size() < kSecondPlayerPosition + 1)
+    if (buffer_.size() < kNumRoundsPosition + 1)
         throw InvalidOperation();
 
-    return std::stoi(buffer_[kSecondPlayerPosition]);
+    return std::stoi(buffer_[kNumRoundsPosition]);
 }
 
 // verifica se è disponibile una mossa nel data buffer
 bool Replay::has_next()
 {
-    return currentTransaction == buffer_.size() - 1;
+    return currentTransaction < buffer_.size();
 }
 
 // funzione che ritorna il numero di mosse rimanenti nel buffer
@@ -169,6 +173,6 @@ std::string Replay::next()
 // già in precedenza
 Replay::~Replay()
 {
-    if (!recorded)
+    if (!recorded && !buffer_.empty())
         flush_recording();
 }

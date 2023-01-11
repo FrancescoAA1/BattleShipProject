@@ -19,7 +19,8 @@ add_library(HumanPlayer src/HumanPlayer.cpp)
 add_library(Move src/Move.cpp)
 add_library(Game src/Game.cpp)
 add_library(Replay src/Replay.cpp)
+add_library(FileWriter src/FileWriter.cpp)
 
-add_executable(${PROJECT_NAME} src/test_players.cpp)
+add_executable(${PROJECT_NAME} src/test_components.cpp)
 
-target_link_libraries(${PROJECT_NAME} Replay Game RobotPlayer HumanPlayer Ironclad SupportShip Submarine Player Ship Utility AttackGrid DefenseMap DefenseUnit Move Position)
+target_link_libraries(${PROJECT_NAME} FileWriter Replay Game RobotPlayer HumanPlayer Ironclad SupportShip Submarine Player Ship Utility AttackGrid DefenseMap DefenseUnit Move Position)
