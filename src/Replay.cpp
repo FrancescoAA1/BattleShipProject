@@ -1,12 +1,14 @@
 #include "../include/Replay.h"
 #include <fstream>
-#include <stdio.h>
+#include <iostream>
 
 // costruttore che accetta come parametro il nome del file di log:
 // se la classe viene creata per leggere da file aprirà file_name in lettura
 // altrimenti rappresneta il nome del file di log in cui scrivere
 Replay::Replay(std::string file_name)
 {
+    // creo la directory dei log...se c'è già non succede nulla
+    fs::create_directory(kDirname); 
     // inizializzo le variabili di classe
     file_name_ = file_name;
     buffer_ = std::vector<std::string>();
@@ -50,7 +52,7 @@ bool Replay::flush_recording()
     // altrimenti scrivo tutti gli elementi di recording_
     try
     {
-        file = std::ofstream(file_name_);
+        file = std::ofstream(kDirname +"/"+file_name_);
 
         for (int i = 0; i < buffer_.size(); i++)
         {
@@ -87,7 +89,7 @@ bool Replay::open_log()
     // apro il file e leggo tutte le righe caricandole nel buffer
     try
     {
-        file = std::ifstream(file_name_);
+        file = std::ifstream(kDirname+"/"+file_name_);
         std::string tmp;
 
         while (getline(file, tmp))

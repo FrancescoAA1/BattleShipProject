@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.84)
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO  -O2)
 project(battaglia_navale)
 
 include_directories(include)

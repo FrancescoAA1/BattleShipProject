@@ -1,6 +1,6 @@
 // TO DO 
 
-Implementare lettura comandi BB BB e CC CC in Game e anceh XX XX per attivare visualizzazione mappe
+Implementare lettura comandi BB BB e CC CC in Game e anche XX XX per attivare visualizzazione mappe
 
 ==================================================================================
 Usare in Game Funzionalità di replay 
@@ -9,7 +9,6 @@ Usare in Game Funzionalità di replay
 se la modalità è replay non viene invocato il metodo di scambio dei riferimenti 
 Fare in Game costruttore per il replay 
 ==================================================================================
-
 
 // COSE FATTE =======================================================================================
 1) scrivere main
