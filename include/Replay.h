@@ -44,6 +44,9 @@ public:
     // lancia eccezione se il file non è ancora stato caricato
     int get_number_of_rounds();
 
+    // funzione che ritorna il numero di mosse rimanenti nel buffer
+    int get_remaining_rounds(); 
+
     // verifica se è disponibile una mossa nel data buffer
     bool has_next();
 
@@ -56,6 +59,11 @@ public:
     // nel costruttore
     bool flush_recording();
 
+    // distruttore che involca il flush se non è stato effettuato 
+    // già in precedenza 
+    ~Replay();
+
+
 private:
     // variabile che salva il nome del file da creare
     // essa contiene il path completo e se non esplicitamente indicato crea il file nella direcotry corrente
@@ -63,7 +71,10 @@ private:
     std::string file_name_;
     // vettore in cui salvo tutto lo sotrico per poi farne il flush su file
     std::vector<std::string> buffer_;
-    int currentTransaction; 
+    // prossima mossa da leggere
+    int currentTransaction;
+    // flag per il flush in distruzione
+    bool recorded; 
 
     // AREA DELLE CONSTANTI
     static constexpr char kMarker = ' ';
@@ -71,7 +82,7 @@ private:
     static constexpr int kFirstPlayerPosition = 0;
     static constexpr int kSecondPlayerPosition = 1;
     static constexpr int kNumRoundsPosition = 2;
-    static constexpr int kStartRounds = 3; 
+    static constexpr int kStartRounds = 3;
 };
 
 // La presente classe ha lo scopo registrare tutte le mosse effettuate in una partita e salvarle in un file di log
