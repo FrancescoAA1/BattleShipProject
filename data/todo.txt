@@ -1,24 +1,13 @@
 // TO DO 
 
-Implementare lettura comandi BB BB e CC CC in Game 
+Implementare lettura comandi BB BB e CC CC in Game e anceh XX XX per attivare visualizzazione mappe
 
 ==================================================================================
-3) Funzionalità di replay:
+Usare in Game Funzionalità di replay 
 
-per convenzione il primo scritto è quello che parte
+
 se la modalità è replay non viene invocato il metodo di scambio dei riferimenti 
 Fare in Game costruttore per il replay 
-
-inizio i due nomi dei player (2righe)
-numero massimo di round (opz.)
-
-tutte le mosse 
-
-metodo per prelevare primo giocatore
-metodo per prelevare secondo giocatore
-metodo numero massimo di round 
-hasNext
-next
 ==================================================================================
 
 
@@ -99,3 +88,23 @@ rilevata era quella colpita in precedenza) o viene visualizzato con una 'Y' (com
 una normale rilevazione del sonar)?
 A14. In questo caso la nave rilevata dal sonar verrà visualizzata con il segmento colpito. In altre
 parole, il sonar ritorna la posizione e lo stato corrente delle nave.
+
+==================================================================================
+3) Funzionalità di replay in game
+
+
+se la modalità è replay non viene invocato il metodo di scambio dei riferimenti 
+Fare in Game costruttore per il replay 
+
+inizio i due nomi dei player (2righe)
+[per convenzione il primo scritto è quello che parte]
+numero massimo di round (opz.)
+
+tutte le mosse 
+
+metodo per prelevare primo giocatore
+metodo per prelevare secondo giocatore
+metodo numero massimo di round 
+hasNext
+next
+==================================================================================
