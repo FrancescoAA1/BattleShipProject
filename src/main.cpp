@@ -44,6 +44,7 @@ int main(int argc, char **argv)
             // scrittura su file del replay
             std::string file_name = argv[2];
             match = Game(file_name);
+            
         }
         else if (argc == 3)
         {
@@ -63,11 +64,11 @@ int main(int argc, char **argv)
                 std::cout << "Inserisci numero massimo di mosse";
                 int nRounds;
                 std::cin >> nRounds;
-                match = Game(name, "Player2", GameMode::PlayerVsComputer, nRounds);
+                match = Game(name, "Player2", GameMode::PlayerVsComputer, nRounds, "Partita");
             }
             else if (strcmp(argv[1], "cc") == 0)
             {
-                match = Game("Player1", "Player2", GameMode::ComputerVsComputer, Game::kRoundsComputer);
+                match = Game("Player1", "Player2", GameMode::ComputerVsComputer, Game::kRoundsComputer, "Partita");
             }
         }
 
