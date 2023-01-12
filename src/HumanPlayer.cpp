@@ -127,19 +127,16 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size, FileWriter &fw)
                 {
                     std::shared_ptr<Ironclad> ship(new Ironclad{d, p, defense_map_, attack_grid_});
                     ship_list.push_back(ship);
-                    std::cout << "Corazzata Aggiunta in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern);
                 }
                 else if (size == SupportShip::kSize)
                 {
                     std::shared_ptr<SupportShip> ship(new SupportShip{d, p, defense_map_, attack_grid_});
                     ship_list.push_back(ship);
-                    std::cout << "Nave di Supporto Aggiunta in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern);
                 }
                 else
                 {
                     std::shared_ptr<Submarine> ship(new Submarine{p, defense_map_, attack_grid_});
                     ship_list.push_back(ship);
-                    std::cout << "Sottomarino Aggiunto in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern);
                 }
             }
             else

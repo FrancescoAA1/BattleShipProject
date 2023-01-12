@@ -59,33 +59,33 @@ int main(int argc, char **argv)
             {
 
                 std::string name;
-                std::cout << "Inserisci nome";
+                std::cout << "Inserisci nome: ";
                 std::cin >> name;
 
-                std::cout << "Inserisci numero massimo di mosse";
+                std::cout << "Inserisci numero massimo di mosse: ";
                 int nRounds;
                 std::cin >> nRounds;
 
                 std::string file_name;
-                std::cout << "Inserisci nome del file di log";
+                std::cout << "Inserisci nome del file di log: ";
                 std::cin >> file_name;
 
-                Game g{name, "Player2", GameMode::PlayerVsComputer, nRounds, file_name};
+                Game g{name, "Luca", GameMode::PlayerVsComputer, nRounds, file_name};
                 g.play_game();
             }
 
             //partita computer vs computer
             else if (strcmp(argv[1], "cc") == 0)
             {
-                std::cout << "Inserisci numero massimo di mosse";
+                std::cout << "Inserisci numero massimo di mosse: ";
                 int nRounds;
                 std::cin >> nRounds;
 
                 std::string file_name;
-                std::cout << "Inserisci nome del file di log";
+                std::cout << "Inserisci nome del file di log: ";
                 std::cin >> file_name;
 
-                Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, nRounds, "Partita.txt"};
+                Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, nRounds, file_name};
                 g.play_game();
             }
         }

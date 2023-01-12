@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMode mode_, int nRounds, const std::string &file_name)
 {
@@ -36,7 +38,7 @@ Game::Game(const std::string &file)
     // apertura del file di log da cui effettuare lettura
     replay = Replay(file);
     replay.open_log();
-    mode = GameMode::ReplayMode;
+    mode = GameMode::PrintReplay;
 
     // settaggio dei parametri per la partita
     // tramite i dati presenti nel file di log
@@ -51,7 +53,7 @@ Game::Game(const std::string &file, const std::string &output)
     // apertura del file di log da cui effettuare lettura
     replay = Replay(file);
     replay.open_log();
-    mode = GameMode::ReplayMode;
+    mode = GameMode::WriteReplay;
 
     // settaggio dei parametri per la partita
     // tramite i dati presenti nel file di log
@@ -81,24 +83,38 @@ void Game::first_player()
     fw.write_line(std::to_string(numberOfRounds));
 }
 
+void Game::handleOutput(const std::string &state)
+{
+    if (mode == GameMode::WriteReplay)
+        fw.write_line(state);
+    else
+        std::cout << state;
+}
+
 void Game::playRound()
 {
     // primo giocatore esegue il proprio turno
-    std::cout << "\n"
-              << player_1->nickname() << " inizia il proprio turno.\n";
+    std::string state = "\n" + player_1->nickname() + " inizia il proprio turno.\n";
+
+    handleOutput(state);
+
     play_single_turn(player_1, player_2);
-    std::cout << "\n"
-              << player_1->nickname() << " Ha terminato il proprio turno.\n";
+    state = "\n" + player_1->nickname() + " ha terminato il proprio turno.\n";
+
+    handleOutput(state);
 
     // se il primo giocatore non ha vinto, si continua a giocare
     if (!Win())
     {
         // secondo giocatore esegue il proprio turno
-        std::cout << "\n"
-                  << player_2->nickname() << " inizia il proprio turno.\n";
+        std::string state = "\n" + player_2->nickname() + " inizia il proprio turno.\n";
+
+        handleOutput(state);
+
         play_single_turn(player_2, player_1);
-        std::cout << "\n"
-                  << player_2->nickname() << " Ha terminato il proprio turno.\n";
+        state = "\n" + player_2->nickname() + " ha terminato il proprio turno.\n";
+
+        handleOutput(state);
     }
 }
 
@@ -123,11 +139,15 @@ void Game::play_single_turn(Player *p, Player *opp)
                 getline(std::cin, cmd_player_1);
             }
         }
-        if (mode == GameMode::ReplayMode)
+        if (mode == GameMode::PrintReplay || mode == GameMode::WriteReplay)
         {
             if (replay.has_next())
             {
                 cmd_player_1 = replay.next();
+            }
+            if (mode == GameMode::PrintReplay)
+            {
+                std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
             }
         }
         // se il giocatore è un computer, la funzione get_move ignora
@@ -137,7 +157,7 @@ void Game::play_single_turn(Player *p, Player *opp)
         // passato come parametro, e restituendo una mossa
         m = p->get_move(cmd_player_1);
 
-        // controllo comandi AA AA e YY YY //fallo anche eseguire
+        // controllo comandi AA AA
 
         bool invalid_move = p->check_graphic_cmd(m);
 
@@ -153,22 +173,20 @@ void Game::play_single_turn(Player *p, Player *opp)
             else
             {
                 std::string note = "Mossa Effettuata: " + convert_to_command(m.origin()) + " " + convert_to_command(m.target()) + "\n";
-                if (mode == GameMode::ReplayMode)
-                {
-                    fw.write_line(note);
-                }
-                else
-                {
-                    std::cout << note;
-                }
-                // da commentare
+
+                handleOutput(note);
+
                 fw.write_line(m.to_string());
-                if (mode == GameMode::ReplayMode)
+
+                if (mode == GameMode::WriteReplay)
                 {
                     fw.write_line(visual_merge_grid(p->attack_grid(), p->defense_map()));
                 }
-                std::cout
-                    << visual_merge_grid(p->attack_grid(), p->defense_map());
+                else
+                {
+                    std::cout
+                        << visual_merge_grid(p->attack_grid(), p->defense_map());
+                }
             }
         }
 
@@ -177,7 +195,7 @@ void Game::play_single_turn(Player *p, Player *opp)
 
 void Game::play_game()
 {
-    if (mode != GameMode::ReplayMode)
+    if (mode != GameMode::PrintReplay || mode == GameMode::WriteReplay)
     {
         first_player();
     }
@@ -190,7 +208,7 @@ void Game::play_game()
     }
     if (fw.flush_recording())
     {
-        std::cout << "File di log Salvato";
+        std::cout << "\nFile di log Salvato Correttamente";
     }
 }
 
@@ -199,13 +217,15 @@ bool Game::Win()
     // se a player1 non rimangono navi, player2 ha vinto
     if (player_1->get_ships_left() == 0)
     {
-        std::cout << player_2->nickname() + "ha vinto!";
+        std::string winner = player_2->nickname() + "ha vinto!";
+        handleOutput(winner);
         return true;
     }
     // se a player2 non rimangono navi, player1 ha vinto
     else if (player_2->get_ships_left() == 0)
     {
-        std::cout << player_1->nickname() + "ha vinto!";
+        std::string winner = player_1->nickname() + "ha vinto!";
+        handleOutput(winner);
         return true;
     }
     // nessuno ha ancora vinto
@@ -214,13 +234,14 @@ bool Game::Win()
 
 void Game::add()
 {
-    std::cout << "\n"
-              << player_1->nickname() << " Inizia Ad Aggiungere le tue NAVI!" << std::endl;
+
+    std::string message = "\n" + player_1->nickname() + " Inizia Ad Aggiungere le tue NAVI!\n";
+    handleOutput(message);
     // Aggiunta delle navi da parte del primo giocatore
     add_player_ships(player_1);
 
-    std::cout << "\n"
-              << player_2->nickname() << " Inizia Ad Aggiungere le tue NAVI!" << std::endl;
+    message = "\n" + player_2->nickname() + " Inizia Ad Aggiungere le tue NAVI!\n";
+    handleOutput(message);
     // Aggiunta delle navi da parte del seconda giocatore
     add_player_ships(player_2);
 }
@@ -235,36 +256,44 @@ void Game::add_player_ships(Player *p)
     std::string cmd_add;
     bool check;
 
+    std::string message;
+
     // per ogni tipo di nave, vengono aggiunte alla lista tante navi quante sono quelle definite dalle relative costanti
     while (nIronclad > 0)
     {
         // se l'input è effettuato da un giocatore umano, quest'ultimo deve inserire le coordinate delle navi
         // in caso di giocatore computer, le coordinate vengono generate randomicamente
-        if (mode != GameMode::ReplayMode && typeid(*p) == typeid(HumanPlayer))
+        if (mode != GameMode::PrintReplay && mode != GameMode::WriteReplay && typeid(*p) == typeid(HumanPlayer))
         {
-            std::cout << "\n"
-                      << p->nickname() + " inserisci le coordinate della CORAZZATA\n";
+            std::cout << "\n" + p->nickname() + " Inserisci le coordinate della Corazzata! ";
+
             getline(std::cin, cmd_add);
         }
-        if (mode == GameMode::ReplayMode)
+        if (mode == GameMode::PrintReplay || mode == GameMode::WriteReplay)
         {
             if (replay.has_next())
             {
                 cmd_add = replay.next();
             }
+            if (mode == GameMode::PrintReplay)
+            {
+                std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
+            }
         }
+
         check = p->add_ships(cmd_add, 5, fw);
         if (check)
         {
             nIronclad--;
             if (nIronclad > 0)
             {
-                std::cout << "Ne mancano " << std::to_string(nIronclad) << std::endl;
+                message = "Corazzata Aggiunta! Ne mancano " + std::to_string(nIronclad) + "\n";
+                handleOutput(message);
             }
             else
             {
-                std::cout << "Complimenti! Tutte le corazzate sono state aggiunte!\n"
-                          << std::endl;
+                message = "Complimenti! Tutte le corazzate sono state aggiunte!\n\n";
+                handleOutput(message);
             }
         }
         else if (typeid(*p) == typeid(HumanPlayer))
@@ -276,17 +305,21 @@ void Game::add_player_ships(Player *p)
 
     while (nSupport > 0)
     {
-        if (mode != GameMode::ReplayMode && typeid(*p) == typeid(HumanPlayer))
+        if (mode != GameMode::PrintReplay && mode != GameMode::WriteReplay && typeid(*p) == typeid(HumanPlayer))
         {
-            std::cout << "\n"
-                      << p->nickname() + " inserisci le coordinate della NAVE DI SUPPORTO\n";
+            message = "\n" + p->nickname() + " Inserisci le coordinate della Nave di Supporto! ";
+            handleOutput(message);
             getline(std::cin, cmd_add);
         }
-        if (mode == GameMode::ReplayMode)
+        if (mode == GameMode::PrintReplay || mode == GameMode::WriteReplay)
         {
             if (replay.has_next())
             {
                 cmd_add = replay.next();
+            }
+            if (mode == GameMode::PrintReplay)
+            {
+                std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
             }
         }
         check = p->add_ships(cmd_add, 3, fw);
@@ -295,12 +328,13 @@ void Game::add_player_ships(Player *p)
             nSupport--;
             if (nSupport > 0)
             {
-                std::cout << "Ne mancano " << std::to_string(nSupport) << std::endl;
+                message = "Nave di Supporto Aggiunta! Ne mancano " + std::to_string(nSupport) + "\n";
+                handleOutput(message);
             }
             else
             {
-                std::cout << "Complimenti! Tutte le Navi di Supporto sono state aggiunte!\n"
-                          << std::endl;
+                message = "Complimenti! Tutte le navi di supporto sono state aggiunte!\n\n";
+                handleOutput(message);
             }
         }
         else if (typeid(*p) == typeid(HumanPlayer))
@@ -311,17 +345,21 @@ void Game::add_player_ships(Player *p)
 
     while (nSubmarine > 0)
     {
-        if (mode != GameMode::ReplayMode && typeid(*p) == typeid(HumanPlayer))
+        if (mode != GameMode::PrintReplay && mode != GameMode::WriteReplay && typeid(*p) == typeid(HumanPlayer))
         {
-            std::cout << "\n"
-                      << p->nickname() + " inserisci le coordinate del SOTTOMARINO\n";
+            std::cout << "\n" + p->nickname() + " Inserisci le coordinate del Sottomarino! ";
+
             getline(std::cin, cmd_add);
         }
-        if (mode == GameMode::ReplayMode)
+        if (mode == GameMode::PrintReplay || mode == GameMode::WriteReplay)
         {
             if (replay.has_next())
             {
                 cmd_add = replay.next();
+            }
+            if (mode == GameMode::PrintReplay)
+            {
+                std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
             }
         }
         check = p->add_ships(cmd_add, 1, fw);
@@ -331,12 +369,13 @@ void Game::add_player_ships(Player *p)
 
             if (nSubmarine > 0)
             {
-                std::cout << "Ne mancano " << std::to_string(nSubmarine) << std::endl;
+                message = "Sottomarino Aggiunto! Ne mancano " + std::to_string(nSubmarine) + "\n";
+                handleOutput(message);
             }
             else
             {
-                std::cout << "Complimenti! Tutti sottomarini sono stati aggiunti!\n"
-                          << std::endl;
+                message = "Complimenti! Tutti i sottomarini sono stati aggiunti!\n";
+                handleOutput(message);
             }
         }
         else if (typeid(*p) == typeid(HumanPlayer))
