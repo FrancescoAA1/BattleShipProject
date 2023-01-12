@@ -61,7 +61,7 @@ Game::Game(const std::string &file, const std::string &output)
     player_2 = new HumanPlayer(replay.get_second_player_name());
     numberOfRounds = replay.get_number_of_rounds();
 
-    // file in cui effettura la scrittura
+    // file in cui effettua la scrittura
     fw = FileWriter(output);
 }
 

@@ -1,6 +1,6 @@
 // TO DO 
 
-Implementare lettura comandi BB BB e CC CC in Game e anche XX XX per attivare visualizzazione mappe
+Implementare lettura comandi  XX XX per attivare visualizzazione mappe
 
 ==================================================================================
 Usare in Game Funzionalità di replay 

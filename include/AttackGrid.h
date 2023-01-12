@@ -60,7 +60,7 @@ class AttackGrid
     // rappresenta la mappa da usare per l'attacco
     AttackUnit attack_grid_[kHeight][kWidth];  
 
-    // ATTACK GRID: è un aclasse che rappresenta una mappa di attacco e fornisce i metodi per individuare 
+    // ATTACK GRID: è una classe che rappresenta una mappa di attacco e fornisce i metodi per individuare 
     // e aggiornare lo stato delle caselle. Viene usata dalle navi per le funzioni di attacco e discover 
     // del sottomarino. 
 
