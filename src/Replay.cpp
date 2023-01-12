@@ -8,7 +8,7 @@
 Replay::Replay(std::string file_name)
 {
     // creo la directory dei log...se c'è già non succede nulla
-    fs::create_directory(kDirname); 
+    //fs::create_directory(kDirname); 
     // inizializzo le variabili di classe
     file_name_ = file_name;
     buffer_ = std::vector<std::string>();

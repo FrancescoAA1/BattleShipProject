@@ -5,7 +5,7 @@
 #include "Utility.h"
 #include <vector>
 #include <filesystem>
-namespace fs = std::__fs::filesystem;
+//namespace fs = std::__fs::filesystem;
 
 class Replay
 {
@@ -18,6 +18,8 @@ public:
     // se la classe viene creata per leggere da file aprirà file_name in lettura
     // altrimenti rappresneta il nome del file di log in cui scrivere
     Replay(std::string file_name);
+
+    Replay();
 
     // funzione per impostare i due giocatori (scritti nell'ordine di parametro)
     // e il numero massimo di mosse che rappresentano l'header file da scrivere
