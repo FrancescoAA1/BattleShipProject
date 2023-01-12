@@ -1,5 +1,6 @@
 #include "../include/Game.h"
 #include "../include/Utility.h"
+#include "../include/Replay.h"
 #include <iostream>
 
 Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMode mode_, int nRounds)
@@ -29,12 +30,13 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
 
 Game::Game(const std::string& file)
 {
-    replay = Replay(file);
+    
     numberOfRounds = replay.get_number_of_rounds();
 }
 
 Game::Game()
 {
+
 }
 
 void Game::first_player()
