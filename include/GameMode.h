@@ -5,7 +5,8 @@
 enum GameMode
 {
     PlayerVsComputer,
-    ComputerVsComputer
+    ComputerVsComputer,
+    ReplayMode
 };
 
 #endif

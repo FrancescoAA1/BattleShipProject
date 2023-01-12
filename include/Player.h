@@ -40,6 +40,10 @@ public:
     // funzione che gestisce la ricezione di attackunits dal giocatore avversario
     bool handle_response(std::vector<AttackUnit> units, const Move &m);
 
+    // funzione che controlla se l'utente ha inserito comandi di visualizzazione mappa. In caso positivo, tale comando viene
+    //eseguito. Ritorna true se il comando era di tipo grafico, false altrimenti
+    bool check_graphic_cmd(const Move &m);
+
     // metodi getter
     std::string nickname() { return nickname_; }
     AttackGrid &attack_grid() { return attack_grid_; }
