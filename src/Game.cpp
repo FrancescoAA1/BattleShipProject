@@ -15,7 +15,7 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
         player_1 = new HumanPlayer(nickname_1);
         // player_1 = &p;
     }
-    else if (mode == GameMode::ComputerVsComputer)
+    else if (mode == GameMode::ComputerVsComputer || mode == GameMode::ReplayMode)
     {
         // in modalità ComputerVsComputer entrambi i giocatori sono computer
         player_1 = new RobotPlayer(nickname_1);
@@ -25,6 +25,12 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
     // in entrambe le modalità, uno dei due giocatori è un computer
     player_2 = new RobotPlayer(nickname_2);
     // player_2 = &p;
+}
+
+Game::Game(const std::string& file)
+{
+    replay = Replay(file);
+    numberOfRounds = replay.get_number_of_rounds();
 }
 
 Game::Game()
@@ -96,20 +102,9 @@ void Game::play_single_turn(Player *p, Player *opp)
 
         // controllo comandi AA AA e YY YY //fallo anche eseguire
 
-        if (m.movetype() == MoveType::clearMap)
-        {
-            p->attack_grid().clear_area();
-            std::cout << visual_merge_grid(p->attack_grid(), p->defense_map());
-            m.set_movetype(MoveType::invalid);
-        }
-        else if (m.movetype() == MoveType::showMap)
-        {
-            std::cout << visual_merge_grid(p->attack_grid(), p->defense_map());
-            m.set_movetype(MoveType::invalid);
-        }
+        bool invalid_move = p->check_graphic_cmd(m);
 
-        // nei casi menzionati sopra la mossa non è valida ai fini del turno
-        if (m.movetype() != MoveType::invalid)
+        if (!invalid_move)
         {
             std::cout << "Mossa Effettuata: " << convert_to_command(m.origin()) << " " << convert_to_command(m.target()) << "\n"
                       << std::endl;
@@ -122,16 +117,27 @@ void Game::play_single_turn(Player *p, Player *opp)
             }
             else
             {
+                // da commentare
                 std::cout << visual_merge_grid(p->attack_grid(), p->defense_map());
             }
-
-            // if(mode == GameMode::ComputerVsComputer)
-            // {
-            //  std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
-            // }
         }
 
     } while (m.movetype() == MoveType::invalid);
+}
+
+void Game::play_game()
+{
+    add();
+    if (mode != GameMode::ReplayMode)
+    {
+        first_player();
+    }
+
+    while (get_rounds() > 0 && Win())
+    {
+        playRound();
+        round_terminated();
+    }
 }
 
 bool Game::Win()

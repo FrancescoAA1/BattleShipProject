@@ -21,20 +21,20 @@ std::vector<AttackUnit> Player::retrieve_unit(const Position &target)
 // metodi privati
 AttackUnit Player::receive_attack(const Position &target)
 {
-    //la mappa del giocatore che riceva la mossa viene aggiornata
+    // la mappa del giocatore che riceva la mossa viene aggiornata
     std::pair<Position, AttackUnit> shot_info = defense_map_.receive_shot(target);
-    //posizione da analizzare
+    // posizione da analizzare
     Position p = shot_info.first;
 
     if (!p.is_absolute_invalid())
     {
-        //controllo se è presente una nave nella posizione restituita da receive shot
+        // controllo se è presente una nave nella posizione restituita da receive shot
         std::shared_ptr<Ship> ship_attacked = get_ship(p);
 
         if (ship_attacked)
         {
             bool sunk = ship_attacked->hit();
-            //se la nave è stata affondata, viene rimossa dalla lista delle navi
+            // se la nave è stata affondata, viene rimossa dalla lista delle navi
             if (sunk)
             {
                 std::cout << "Nave Affondata!";
@@ -66,16 +66,17 @@ std::vector<AttackUnit> Player::execute_move(const Position &target, const MoveT
 
 bool Player::handle_response(std::vector<AttackUnit> units, const Move &m)
 {
-    //LA NAVE INCARICATA DI COMPIERE L'AZIONE VIENE TROVATA
+    // LA NAVE INCARICATA DI COMPIERE L'AZIONE VIENE TROVATA
     std::shared_ptr<Ship> ship = get_ship(m.origin());
-    //IL GIOCATORE FA ESEGUIRE L'AZIONE ALLA NAVE INCARICATA
-    bool action_done =  ship->action(m.target(), units);
+    // IL GIOCATORE FA ESEGUIRE L'AZIONE ALLA NAVE INCARICATA
+    bool action_done = ship->action(m.target(), units);
 
-    if(action_done && (m.movetype() == MoveType::moveAndFix || m.movetype() == MoveType::moveAndDiscover))
+    //DA FARE COMPIERE ALLA NAVE
+    if (action_done && (m.movetype() == MoveType::moveAndFix || m.movetype() == MoveType::moveAndDiscover))
     {
         ship->set_center(m.target());
     }
-    
+
     return action_done;
 }
 
@@ -97,6 +98,39 @@ std::shared_ptr<Ship> Player::get_ship(const Position origin)
     {
         return nullptr;
     }
+}
+
+bool Player::check_graphic_cmd(const Move &m)
+{
+    if (m.movetype() != MoveType::invalid)
+    {
+        if (m.movetype() == MoveType::clearMap) // AA AA
+        {
+            this->attack_grid().clear_area();
+        }
+        else if (m.movetype() == MoveType::showMap) // YY YY
+        {
+        }
+        else if (m.movetype() == MoveType::clearFullHit) // BB BB
+        {
+            this->attack_grid().clear_all_full_and_hit();
+        }
+        else if (m.movetype() == MoveType::clearEmptyHit) // CC CC
+        {
+            this->attack_grid().clear_all_full_and_empty();
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return true;
+    }
+
+    std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
+    return true;
 }
 
 // fornisce la direzione della nave da inserire
@@ -130,7 +164,7 @@ Player::~Player()
     for (int i = 0; i < ship_list.size(); i++)
     {
         pointer = ship_list[i];
-        //delete pointer;
+        // delete pointer;
     }
 
     pointer = nullptr;

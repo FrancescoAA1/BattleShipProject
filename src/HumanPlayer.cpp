@@ -20,6 +20,16 @@ Move HumanPlayer::get_move(const std::string &cmd)
         m.set_movetype(MoveType::clearMap);
         return m;
     }
+    else if (cmd == "BB BB")
+    {
+        m.set_movetype(MoveType::clearFullHit);
+        return m;
+    }
+    else if (cmd == "CC CC")
+    {
+        m.set_movetype(MoveType::clearEmptyHit);
+        return m;
+    }
     else
     {
         // divisione della stringa in due parti (il delimitatore è lo spazio)
@@ -115,7 +125,7 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size)
                 }
                 else if (size == SupportShip::kSize)
                 {
-                   std::shared_ptr<SupportShip> ship(new SupportShip{d, p, defense_map_, attack_grid_});
+                    std::shared_ptr<SupportShip> ship(new SupportShip{d, p, defense_map_, attack_grid_});
                     ship_list.push_back(ship);
                     std::cout << "Nave di Supporto Aggiunta in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern);
                 }

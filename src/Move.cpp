@@ -29,6 +29,10 @@ std::string Move::to_string() const
         return "AA AA"; 
     else if(move_ == MoveType::clearMap)
         return "YY YY"; 
+    else if(move_ == MoveType::clearFullHit)
+        return "BB BB";
+    else if(move_ == MoveType::clearEmptyHit)
+        return "CC CC";
     else return convert_to_command(origin_) + " " + convert_to_command(target_); 
 
 }

@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "RobotPlayer.h"
 #include "HumanPlayer.h"
+#include "Replay.h"
 
 class Game
 {
@@ -16,6 +17,8 @@ class Game
 
     //costruttore che accetta i nomi dei due giocatori, la modalità di gioco e il numero di round
     Game(const std::string& nickname_1, const std::string& nickname_2, GameMode mode, int nRounds);
+
+    Game(const std::string& filename);
 
     Game();
 
@@ -30,6 +33,8 @@ class Game
     //funzione che stabilisce il giocatore che inizia la partita
     void first_player();
 
+    void play_game();
+
     int get_rounds() {return numberOfRounds;}
     int round_terminated(){return numberOfRounds--;}
 
@@ -40,6 +45,7 @@ class Game
     //puntatori ai due player
     Player* player_1;
     Player* player_2;
+    Replay replay;
 
     static constexpr int kIronclad = 3;
     static constexpr int kSupportShip = 3;
