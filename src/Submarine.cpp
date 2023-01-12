@@ -6,45 +6,18 @@
 // Un vettore di AttackUnit, che contiene la porzione di mappa nemica che è stata ispezionata
 //
 // i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
-/*bool Submarine::action(const Position& target, const std::vector<AttackUnit>& data)
-{
-    if(data.size() < kSide*kSide) return false;
 
-    //sposto il sottomarino
-    if(defense_map_.move_ship(this->centre(), target))
-    {
-        int counter = 0;
-        //data è un vettore che salva una matrice kSide * kSide salvata per righe
-        for(int i = -kSide/2; i <= kSide/2; i++)
-        {
-            for(int j = -kSide/2; j <= kSide/2; j++)
-            {
-
-                if(data[counter++] == AttackUnit::spotted) attack_grid_.spot_position(target + Position(j, i));
-            }
-        }
-
-        return true;
-    }
-
-    //se arrivo qui significa che il movimento non era consentito
-    return false;
-
-
-}*/
-
-// metodo per il debug
 bool Submarine::action(const Position &target, const std::vector<AttackUnit> &data)
 {
     if (data.empty())
     {
-        std::cout << "Il sottomarino con centro " << this->centre() << " ha provato a eseguire l'azione ma il vettore di dati passato era vuoto (" << data.size() << ")\n";
+
         return false;
     }
 
-    bool b = defense_map_.move_ship(this->centre(), target);
+    bool allowed = defense_map_.move_ship(this->centre(), target);
     // sposto il sottomarino
-    if (b)
+    if (allowed)
     {
 
         Position start = centre() - Position{kSide / 2, kSide / 2};
@@ -67,11 +40,9 @@ bool Submarine::action(const Position &target, const std::vector<AttackUnit> &da
             start.set_x(centre().X() - (kSide/2));
         }
 
-        std::cout << "Il sottomarino con centro " << this->centre() << " ha eseguito l'azione con esito 1\n";
         return true;
     }
 
     // se arrivo qui significa che il movimento non era consentito
-    std::cout << "Il sottomarino con centro " << this->centre() << " ha eseguito l'azione con esito 0, poiché il movimento verso " << target << " non era consentito";
     return false;
 }

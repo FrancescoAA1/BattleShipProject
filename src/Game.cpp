@@ -33,28 +33,34 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
 
 Game::Game(const std::string &file)
 {
+    // apertura del file di log da cui effettuare lettura
     replay = Replay(file);
     replay.open_log();
     mode = GameMode::ReplayMode;
+
+    // settaggio dei parametri per la partita
+    // tramite i dati presenti nel file di log
     player_1 = new HumanPlayer(replay.get_first_player_name());
     player_2 = new HumanPlayer(replay.get_second_player_name());
     numberOfRounds = replay.get_number_of_rounds();
 }
 
+// ATTENZIONE! RIDUCIBILE
 Game::Game(const std::string &file, const std::string &output)
 {
+    // apertura del file di log da cui effettuare lettura
     replay = Replay(file);
     replay.open_log();
     mode = GameMode::ReplayMode;
+
+    // settaggio dei parametri per la partita
+    // tramite i dati presenti nel file di log
     player_1 = new HumanPlayer(replay.get_first_player_name());
     player_2 = new HumanPlayer(replay.get_second_player_name());
     numberOfRounds = replay.get_number_of_rounds();
-    fw = FileWriter(output);
-}
 
-Game::Game()
-{
-    fw = FileWriter("xx");
+    // file in cui effettura la scrittura
+    fw = FileWriter(output);
 }
 
 void Game::first_player()
@@ -137,15 +143,6 @@ void Game::play_single_turn(Player *p, Player *opp)
 
         if (!invalid_move)
         {
-            std::string note = "Mossa Effettuata: " + convert_to_command(m.origin()) + " " + convert_to_command(m.target()) + "\n";
-            if (mode == GameMode::ReplayMode)
-            {
-                fw.write_line(note);
-            }
-            else
-            {
-                std::cout << note;
-            }
             std::vector<AttackUnit> units = opp->execute_move(m.target(), m.movetype());
             bool action_done = p->handle_response(units, m);
 
@@ -155,6 +152,15 @@ void Game::play_single_turn(Player *p, Player *opp)
             }
             else
             {
+                std::string note = "Mossa Effettuata: " + convert_to_command(m.origin()) + " " + convert_to_command(m.target()) + "\n";
+                if (mode == GameMode::ReplayMode)
+                {
+                    fw.write_line(note);
+                }
+                else
+                {
+                    std::cout << note;
+                }
                 // da commentare
                 fw.write_line(m.to_string());
                 if (mode == GameMode::ReplayMode)
@@ -184,7 +190,7 @@ void Game::play_game()
     }
     if (fw.flush_recording())
     {
-        std::cout << "FIle Scritto";
+        std::cout << "File di log Salvato";
     }
 }
 

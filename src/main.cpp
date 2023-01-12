@@ -23,14 +23,11 @@ int main()
 int main(int argc, char **argv)
 {
 
-    // 1) Controllo del numero di parametri
-    // Se sono più di due, si tratta di una funzionalità di replay (da implementare)
-    // Se sono due ossia "./main" e "pc" (o "cc")
-    // 2)Creazione di un oggetto di classe Game (vanno forniti due nickname,
-    //  modalità giocata, numero di turni)
-    // 2.1) Scelta casuale del giocatore che inizia
-    // 3) Scelta delle navi --> viene invocato il metodo add(Player& p)
-    // 4) FIntanto che uno dei due giocatori non vince continua a giocare round
+    // Controllo del numero di parametri
+    // Se sono più di due, si tratta di una funzionalità di replay
+    // Se sono due si tratta invece di una partita PlayerVsComputer
+    // oppure ComputerVsComputer
+
     if (argc > 4 || argc < 2)
     {
         return 0;
@@ -40,38 +37,55 @@ int main(int argc, char **argv)
         if (argc == 4)
         {
 
-            // scrittura su file del replay
+            // scrittura su file del replay su un altro file
             std::string file_name = argv[2];
             std::string output = argv[3];
-            Game g{
-                file_name, output};
+
+            Game g{file_name, output};
             g.play_game();
         }
         else if (argc == 3)
         {
-            // stampa a video del replay
+            // stampa a video del file del replay
             std::string file_name = argv[2];
+
             Game g{file_name};
             g.play_game();
         }
         else if (argc == 2)
         {
-
+            //partita player vs computer
             if (strcmp(argv[1], "pc") == 0)
             {
 
                 std::string name;
                 std::cout << "Inserisci nome";
                 std::cin >> name;
+
                 std::cout << "Inserisci numero massimo di mosse";
                 int nRounds;
                 std::cin >> nRounds;
-                Game g{name, "Player2", GameMode::PlayerVsComputer, nRounds, "PartitaPC.txt"};
+
+                std::string file_name;
+                std::cout << "Inserisci nome del file di log";
+                std::cin >> file_name;
+
+                Game g{name, "Player2", GameMode::PlayerVsComputer, nRounds, file_name};
                 g.play_game();
             }
+
+            //partita computer vs computer
             else if (strcmp(argv[1], "cc") == 0)
             {
-                Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, 1, "Partita.txt"};
+                std::cout << "Inserisci numero massimo di mosse";
+                int nRounds;
+                std::cin >> nRounds;
+
+                std::string file_name;
+                std::cout << "Inserisci nome del file di log";
+                std::cin >> file_name;
+
+                Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, nRounds, "Partita.txt"};
                 g.play_game();
             }
         }

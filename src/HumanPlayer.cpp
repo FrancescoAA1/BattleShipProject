@@ -107,8 +107,11 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size, FileWriter &fw)
         return false;
     }
 
+    // controllo che entrambe le posizioni siano valide
     if (!(bow.is_absolute_invalid() || stern.is_absolute_invalid()))
     {
+        // controllo che la taglia della nave da inserire
+        // sia uguale a quella deducibile dalle coordinate fornite
         int c_size = get_size(bow, stern);
         if (c_size == size)
         {
@@ -117,6 +120,9 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size, FileWriter &fw)
 
                 Direction d = get_direction(bow, stern);
                 Position p = (bow + stern) / 2;
+
+                // a seconda della taglia distinguo il tipo di nave
+                //  aggiunta del puntatore alla nave al vector di navi
                 if (size == Ironclad::kSize)
                 {
                     std::shared_ptr<Ironclad> ship(new Ironclad{d, p, defense_map_, attack_grid_});
@@ -151,6 +157,8 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size, FileWriter &fw)
         return false;
     }
 
+    // la mossa di aggiunta nave
+    // viene inserita nel file di log
     fw.write_line(cmd);
     return true;
 }

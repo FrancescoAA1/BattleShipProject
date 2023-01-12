@@ -1,7 +1,7 @@
 #ifndef BATTLESHIPPROJECT_REPLAYTYPE_H_
 #define BATTLESHIPPROJECT_REPLAYTYPE_H_
 
-//enumeratore che definisce la direzione di una nave (orizzontale o verticale)
+//enumeratore che definisce il tipo di replay
 enum ReplayType
 {
     Print,

@@ -11,21 +11,22 @@ Player::Player(const std::string &nickname)
     ship_list = std::vector<std::shared_ptr<Ship>>(0);
 }
 
-// metodi privati
 std::vector<AttackUnit> Player::retrieve_unit(const Position &target)
 {
+    // il giocatore avversario restituisce un vettore di attackUnit che indicano
+    // le navi presenti nella zona 5x5 a partire dal centro passato come parametro
     std::vector<AttackUnit> att = defense_map_.spot_area(target, 5);
     return att;
 }
 
-// metodi privati
 AttackUnit Player::receive_attack(const Position &target)
 {
-    // la mappa del giocatore che riceva la mossa viene aggiornata
+    // la mappa del giocatore che riceva l'attacco della corazzata nemica viene aggiornata
     std::pair<Position, AttackUnit> shot_info = defense_map_.receive_shot(target);
     // posizione da analizzare
     Position p = shot_info.first;
 
+    // controllo che la posizione sia valida
     if (!p.is_absolute_invalid())
     {
         // controllo se è presente una nave nella posizione restituita da receive shot
@@ -34,17 +35,17 @@ AttackUnit Player::receive_attack(const Position &target)
         if (ship_attacked)
         {
             bool sunk = ship_attacked->hit();
-            // se la nave è stata affondata, viene rimossa dalla lista delle navi
+
+            // se la nave è stata affondata, viene rimossa dalla lista delle navi e conseguentemente
+            // dalla mappa
             if (sunk)
             {
-                std::cout << "Nave Affondata!";
                 ship_list.erase(std::remove(ship_list.begin(), ship_list.end(), ship_attacked), ship_list.end());
-
                 defense_map_.remove_ship(p);
             }
         }
     }
-
+    // il giocatore avversario restituisce lo stato della cella appena colpita
     return shot_info.second;
 }
 
@@ -52,28 +53,34 @@ std::vector<AttackUnit> Player::execute_move(const Position &target, const MoveT
 {
     std::vector<AttackUnit> units;
 
+    // se la mossa è effettuata da una corazzata
     if (type == MoveType::attack)
     {
         units = {receive_attack(target)};
     }
+    // se la mossa è effettuata da un sonar
     else if (type == MoveType::moveAndDiscover)
     {
         units = {retrieve_unit(target)};
     }
 
+    //nel caso di mossa effettuata da nave di supporto, il vettore di attackUnit 
+    //è giustamente vuota, perchè la mossa non interessa il giocatore avversario
     return units;
 }
 
 bool Player::handle_response(std::vector<AttackUnit> units, const Move &m)
 {
-    // LA NAVE INCARICATA DI COMPIERE L'AZIONE VIENE TROVATA
+    // la nave incaricata di compiere l'azione viene trovata
     std::shared_ptr<Ship> ship = get_ship(m.origin());
-    // IL GIOCATORE FA ESEGUIRE L'AZIONE ALLA NAVE INCARICATA
+    // il giocatore fa eseguire l'azione alla nace incaricata
     bool action_done = ship->action(m.target(), units);
 
-    //DA FARE COMPIERE ALLA NAVE
+    // DA FARE COMPIERE ALLA NAVE
     if (action_done && (m.movetype() == MoveType::moveAndFix || m.movetype() == MoveType::moveAndDiscover))
     {
+        //dopo che lo spostamento è avvenuto con successo 
+        //il centro della nave viene spostato
         ship->set_center(m.target());
     }
 
@@ -129,6 +136,7 @@ bool Player::check_graphic_cmd(const Move &m)
         return true;
     }
 
+    //qualunque sia il comando grafico scelto, è necessario stampare la mappa
     std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
     return true;
 }

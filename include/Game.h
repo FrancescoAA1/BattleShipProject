@@ -20,11 +20,11 @@ class Game
     //costruttore che accetta i nomi dei due giocatori, la modalità di gioco e il numero di round
     Game(const std::string& nickname_1, const std::string& nickname_2, GameMode mode, int nRounds, const std::string& file_name);
 
+    //costruttore per la funzionalità di replay con stampa a video
     Game(const std::string& filename);
 
+    //costruttore per la funzionalità di replay con scrittura su file
     Game(const std::string& filename, const std::string& output);
-
-    Game();
 
     //funzione che simula un turno di gioco
     void playRound();
@@ -32,11 +32,13 @@ class Game
     //funzione che attesta se uno dei due giocatori ha vinto la partita
     bool Win();
 
+    //funzione che gesitisce l'aggiunta delle navi da entrambi i giocatori
     void add();
 
     //funzione che stabilisce il giocatore che inizia la partita
     void first_player();
 
+    //funzione che gioca un'intera partita
     void play_game();
 
     int get_rounds() {return numberOfRounds;}
