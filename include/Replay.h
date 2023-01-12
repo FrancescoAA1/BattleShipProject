@@ -89,7 +89,7 @@ private:
     static constexpr int kStartRounds = 3;
     // costante per il nome della cartella da creare nella directory corrente
     // se non già presente
-    const std::string kDirname = "log"; 
+    //const std::string kDirname = "log"; 
 };
 
 // La presente classe ha lo scopo registrare tutte le mosse effettuate in una partita e salvarle in un file di log

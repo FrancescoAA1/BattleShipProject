@@ -9,6 +9,13 @@ FileWriter::FileWriter(std::string file_name)
     buffer_ = std::vector<std::string>();
 }
 
+FileWriter::FileWriter()
+{
+    file_name_ = "Prova";
+    recorded = false;
+    buffer_ = std::vector<std::string>();
+}
+
 // funzione che permette di scrivere nel buffer una stringa
 void FileWriter::write_line(std::string line)
 {

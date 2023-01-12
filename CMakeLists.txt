@@ -24,4 +24,4 @@ add_library(FileWriter src/FileWriter.cpp)
 
 add_executable(${PROJECT_NAME} src/test_players.cpp)
 
-target_link_libraries(${PROJECT_NAME} FileWriter Replay Game RobotPlayer HumanPlayer Ironclad SupportShip Submarine Player Ship AttackGrid DefenseMap DefenseUnit Move Utility Position)
+target_link_libraries(${PROJECT_NAME} Game FileWriter Replay RobotPlayer HumanPlayer Ironclad SupportShip Submarine Player Ship AttackGrid DefenseMap DefenseUnit Move Utility Position)

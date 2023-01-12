@@ -11,6 +11,8 @@ public:
     // costruttore che accetta come parametro il nome del file dove scrivere:
     FileWriter(std::string file_name);
 
+    FileWriter();
+
     // funzione che permette di scrivere nel buffer una stringa
     void write_line(std::string line);
 

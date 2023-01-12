@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "RobotPlayer.h"
 #include "HumanPlayer.h"
+#include "FileWriter.h"
 #include "Replay.h"
 
 class Game
@@ -16,7 +17,7 @@ class Game
     static constexpr int kRoundsComputer = 10;
 
     //costruttore che accetta i nomi dei due giocatori, la modalità di gioco e il numero di round
-    Game(const std::string& nickname_1, const std::string& nickname_2, GameMode mode, int nRounds);
+    Game(const std::string& nickname_1, const std::string& nickname_2, GameMode mode, int nRounds, const std::string& file_name);
 
     Game(const std::string& filename);
 
@@ -46,6 +47,7 @@ class Game
     Player* player_1;
     Player* player_2;
     Replay replay;
+    FileWriter fw;
 
     static constexpr int kIronclad = 3;
     static constexpr int kSupportShip = 3;
