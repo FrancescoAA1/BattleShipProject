@@ -8,7 +8,7 @@
 Replay::Replay(std::string file_name)
 {
     // creo la directory dei log...se c'è già non succede nulla
-    fs::create_directory(kDirname); 
+    //fs::create_directory(kDirname);
     // inizializzo le variabili di classe
     file_name_ = file_name;
     buffer_ = std::vector<std::string>();
@@ -52,14 +52,15 @@ bool Replay::flush_recording()
     // altrimenti scrivo tutti gli elementi di recording_
     try
     {
-        file = std::ofstream(kDirname +"/"+file_name_);
-
+        //file = std::ofstream(kDirname + "/" + file_name_);
+        file = std::ofstream(kDirname + "/" + file_name_);
         for (int i = 0; i < buffer_.size(); i++)
         {
             // se è l'ultimo non metto il \n
-            if( i == buffer_.size() - 1)
+            if (i == buffer_.size() - 1)
                 file << buffer_[i];
-            else file << buffer_[i] << kLineMarker; 
+            else
+                file << buffer_[i] << kLineMarker;
         }
 
         file.close();
@@ -89,7 +90,8 @@ bool Replay::open_log()
     // apro il file e leggo tutte le righe caricandole nel buffer
     try
     {
-        file = std::ifstream(kDirname+"/"+file_name_);
+        // file = std::ifstream(kDirname+"/"+file_name_);
+        file = std::ifstream(file_name_);
         std::string tmp;
 
         while (getline(file, tmp))
