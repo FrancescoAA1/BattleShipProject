@@ -256,15 +256,14 @@ void Game::add_player_ships(Player *p)
         check = p->add_ships(cmd_add, 5, fw);
         if (check)
         {
-            std::cout << "aggiunta";
             nIronclad--;
             if (nIronclad > 0)
             {
-                std::cout << "Corazzata Aggiunta! Ne mancano " << std::to_string(nIronclad) << std::endl;
+                std::cout << "Ne mancano " << std::to_string(nIronclad) << std::endl;
             }
             else
             {
-                std::cout << ". Complimenti! Tutte le corazzate sono state aggiunte!\n"
+                std::cout << "Complimenti! Tutte le corazzate sono state aggiunte!\n"
                           << std::endl;
             }
         }
@@ -293,11 +292,10 @@ void Game::add_player_ships(Player *p)
         check = p->add_ships(cmd_add, 3, fw);
         if (check)
         {
-            std::cout << "aggiunta";
             nSupport--;
             if (nSupport > 0)
             {
-                std::cout << "Nave di Supporto Aggiunta! Ne mancano " << std::to_string(nSupport) << std::endl;
+                std::cout << "Ne mancano " << std::to_string(nSupport) << std::endl;
             }
             else
             {
@@ -329,12 +327,11 @@ void Game::add_player_ships(Player *p)
         check = p->add_ships(cmd_add, 1, fw);
         if (check)
         {
-            std::cout << "aggiunta";
             nSubmarine--;
 
             if (nSubmarine > 0)
             {
-                std::cout << "Sottomarino Aggiunto! Ne mancano " << std::to_string(nSubmarine) << std::endl;
+                std::cout << "Ne mancano " << std::to_string(nSubmarine) << std::endl;
             }
             else
             {
