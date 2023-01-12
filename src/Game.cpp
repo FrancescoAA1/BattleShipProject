@@ -30,7 +30,7 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
 
 Game::Game(const std::string& file)
 {
-    
+    replay{file};
     numberOfRounds = replay.get_number_of_rounds();
 }
 
