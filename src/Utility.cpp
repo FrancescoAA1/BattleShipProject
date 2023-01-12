@@ -5,22 +5,22 @@
 std::string visual_merge_grid(const AttackGrid &attack_grid, const DefenseMap &defense_map)
 {
     // ottengo tutte le linee di cui sono composte le mappe splittandole sul carattere "a capo"
-    std::vector<std::string> line_d_map = splitstr(defense_map.to_string(), "\n"); 
-    std::vector<std::string> line_a_grid = splitstr(attack_grid.to_string(), "\n"); 
+    std::vector<std::string> line_d_map = splitstr(defense_map.to_string(), "\n");
+    std::vector<std::string> line_a_grid = splitstr(attack_grid.to_string(), "\n");
 
-    // ora faccio un merge linea per linea delle due 
-    std::string result = ""; 
-    int i = 0; 
-    int j = 0; 
+    // ora faccio un merge linea per linea delle due
+    std::string result = "";
+    int i = 0;
+    int j = 0;
 
     while (i < line_d_map.size() && j < line_a_grid.size())
     {
-        result+= line_d_map[i]; 
-        result+="        "; 
-        result+=line_a_grid[j]; 
-        result+="\n"; 
-        i++; 
-        j++; 
+        result += line_d_map[i];
+        result += "        ";
+        result += line_a_grid[j];
+        result += "\n";
+        i++;
+        j++;
     }
     return result;
 }
@@ -30,29 +30,29 @@ std::vector<std::string> splitstr(std::string str, std::string delim)
 {
     std::vector<std::string> out{};
     int start = 0;
-    // ricerco la posizione del primo delimitatore se presente 
+    // ricerco la posizione del primo delimitatore se presente
     int end = str.find(delim);
 
     while (end != -1)
     {
         // ho trovato un delimitatore
         // aggiungo la sottostringa al vettore fino a quel punto e procedo alla prossima ricerca
-        out.push_back(str.substr(start, end - start)); 
+        out.push_back(str.substr(start, end - start));
         start = end + delim.size();
         end = str.find(delim, start);
     }
-    // aggiungo l'ultimo 
+    // aggiungo l'ultimo
     out.push_back(str.substr(start, end - start));
 
-    return out; 
+    return out;
 }
 
 int get_random(int range)
 {
     static int counter = 0;
     int temp = 0;
-    
-    if(counter % 2 == 0)
+
+    if (counter % 2 == 0)
     {
         std::srand(time(NULL));
         temp = (std::rand() + counter) % range;
@@ -63,7 +63,6 @@ int get_random(int range)
         std::srand(1);
         temp = (std::rand() + counter) % range;
     }
-
 
     counter++;
     return temp;
@@ -77,7 +76,17 @@ Position convert_to_position(const std::string &coordinate)
     {
         // sottrazione del valore ASCII di 'A' al primo carattere della stringa
         // conversione da char ad int
-        int x = coordinate[0] - kDefaultCapitalAscii;
+        int x;
+        // se le colonne sono J o K allora non va bene e ritorno invalida
+        if (coordinate[0] == 'J' || coordinate[0] == 'K')
+        {
+            pos.make_absolute_invalid();
+            return pos;
+        }
+        if (coordinate[0] > 'J') // elimino le colonne j e k
+            x = coordinate[0] - kDefaultCapitalAscii - 2;
+        else
+            x = coordinate[0] - kDefaultCapitalAscii;
 
         // conversione da stringa ad intero dell'ultima parte della coppia di coordinate (numero)
         // stoi lancia std::invalid_argument exception se la sottostringa non è un numero
@@ -114,6 +123,8 @@ std::string convert_to_command(const Position &position)
         // conversione esplicita da int ad a char (sicura) della coordinata X della posizione
         // stringa formata dal carattere a cui viene sommato il valore ASCII di "A"
         std::string letter(1, (char)position.X() + kDefaultCapitalAscii);
+        if (letter[0] >= 'J')
+            letter[0] = letter[0] + 2;
 
         // conversione da int a string della coordinata Y della posizione
         std::string number = std::to_string(position.Y() + 1);
@@ -122,5 +133,6 @@ std::string convert_to_command(const Position &position)
         std::string coordinate = letter + number;
         return coordinate;
     }
-    else return ""; 
+    else
+        return "";
 }
