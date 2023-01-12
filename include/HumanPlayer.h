@@ -15,7 +15,7 @@ public:
     //funzione che permette di aggiungere una nave alla lista di navi secondo 
     //le specifiche indicate dal comando e dalla taglia
     //restituisce true se l'inserimento è andato a buon fine, false altrimenti
-    bool add_ships(const std::string &cmd, int size) override;
+    bool add_ships(const std::string &cmd, int size, FileWriter& fw) override;
 
 private:
 };

@@ -14,7 +14,7 @@ Move RobotPlayer::get_move(const std::string &move)
     int size_list = ship_list.size();
     std::shared_ptr<Ship> ship_cmd;
 
-    //se esiste almeno una nave nella lista, ne viene prelevata una in modo casuale
+    // se esiste almeno una nave nella lista, ne viene prelevata una in modo casuale
     if (size_list > 0)
     {
         ship_cmd = ship_list.at(get_random(ship_list.size()));
@@ -24,7 +24,7 @@ Move RobotPlayer::get_move(const std::string &move)
         ship_cmd = nullptr;
     }
 
-    //se la nave è stata prelevata, tale nave eseguirà l'azione
+    // se la nave è stata prelevata, tale nave eseguirà l'azione
     if (ship_cmd)
     {
         // posizione di origine corrisponde al centro della nave appena ottenuta
@@ -58,7 +58,7 @@ Move RobotPlayer::get_move(const std::string &move)
 Position RobotPlayer::get_random_pos()
 {
     std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
-    //srand(time(NULL));
+    // srand(time(NULL));
     int x = abs(get_random(defense_map_.kWidth));
     int y = abs(get_random(defense_map_.kHeight));
     return Position(x, y);
@@ -123,22 +123,22 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
     return origin;
 }
 
-bool RobotPlayer::add_ships(const std::string &cmd, int size)
+bool RobotPlayer::add_ships(const std::string &cmd, int size, FileWriter &fw)
 {
-    //vengono generate posizioni casuali di prua e poppa
+    // vengono generate posizioni casuali di prua e poppa
     Position bow = get_random_pos();
-    //la generazione della posizione di poppa è basata su quella della prua
+    // la generazione della posizione di poppa è basata su quella della prua
     Position stern = get_random_pos(bow, size);
 
-    //si controlla se la nave può essere inserita nella mappa
+    // si controlla se la nave può essere inserita nella mappa
     bool created = defense_map_.add_ship(bow, stern);
 
     Direction d = get_direction(bow, stern);
     Position p = (bow + stern) / 2;
 
-    //se l'inserimento è andato a buon fine, a seconda del tipo di nave,
-    //viene chiamato il relativo costruttore
-    //infine, la nave appena istanziata viene aggiunta alla lista di navi
+    // se l'inserimento è andato a buon fine, a seconda del tipo di nave,
+    // viene chiamato il relativo costruttore
+    // infine, la nave appena istanziata viene aggiunta alla lista di navi
     if (created)
     {
         if (size == Ironclad::kSize)
@@ -159,6 +159,10 @@ bool RobotPlayer::add_ships(const std::string &cmd, int size)
             ship_list.push_back(ship);
             std::cout << "Sottomarino Aggiunto in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern);
         }
+
+        std::string cmd_line = convert_to_command(bow) + " " + convert_to_command(stern);
+        fw.write_line(cmd_line);
+
         return true;
     }
     return false;

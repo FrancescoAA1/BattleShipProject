@@ -83,7 +83,7 @@ Move HumanPlayer::get_move(const std::string &cmd)
     }
 }
 
-bool HumanPlayer::add_ships(const std::string &cmd, int size)
+bool HumanPlayer::add_ships(const std::string &cmd, int size, FileWriter &fw)
 {
     Position bow{};
     Position stern{};
@@ -151,5 +151,6 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size)
         return false;
     }
 
+    fw.write_line(cmd);
     return true;
 }
