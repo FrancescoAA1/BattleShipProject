@@ -22,6 +22,6 @@ add_library(Game src/Game.cpp)
 add_library(Replay src/Replay.cpp)
 add_library(FileWriter src/FileWriter.cpp)
 
-add_executable(${PROJECT_NAME} src/test_players.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp)
 
 target_link_libraries(${PROJECT_NAME} Game FileWriter Replay RobotPlayer HumanPlayer Ironclad SupportShip Submarine Player Ship AttackGrid DefenseMap DefenseUnit Move Utility Position)

@@ -31,26 +31,28 @@ int main(int argc, char **argv)
     // 2.1) Scelta casuale del giocatore che inizia
     // 3) Scelta delle navi --> viene invocato il metodo add(Player& p)
     // 4) FIntanto che uno dei due giocatori non vince continua a giocare round
-    if (argc > 4)
+    if (argc > 4 || argc < 2)
     {
         return 0;
     }
     else
     {
-        Game match;
-
         if (argc == 4)
         {
+
             // scrittura su file del replay
             std::string file_name = argv[2];
-            match = Game(file_name);
-            
+            std::string output = argv[3];
+            Game g{
+                file_name, output};
+            g.play_game();
         }
         else if (argc == 3)
         {
             // stampa a video del replay
             std::string file_name = argv[2];
-            match = Game(file_name);
+            Game g{file_name};
+            g.play_game();
         }
         else if (argc == 2)
         {
@@ -64,15 +66,15 @@ int main(int argc, char **argv)
                 std::cout << "Inserisci numero massimo di mosse";
                 int nRounds;
                 std::cin >> nRounds;
-                match = Game(name, "Player2", GameMode::PlayerVsComputer, nRounds, "Partita");
+                Game g{name, "Player2", GameMode::PlayerVsComputer, nRounds, "PartitaPC.txt"};
+                g.play_game();
             }
             else if (strcmp(argv[1], "cc") == 0)
             {
-                match = Game("Player1", "Player2", GameMode::ComputerVsComputer, Game::kRoundsComputer, "Partita");
+                Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, 1, "Partita.txt"};
+                g.play_game();
             }
         }
-
-        match.play_game();
     }
 
     return 0;

@@ -1,5 +1,6 @@
 #include "../include/Game.h"
 #include "../include/Utility.h"
+
 #include <string>
 #include <iostream>
 
@@ -33,8 +34,22 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
 Game::Game(const std::string &file)
 {
     replay = Replay(file);
+    replay.open_log();
+    mode = GameMode::ReplayMode;
+    player_1 = new HumanPlayer(replay.get_first_player_name());
+    player_2 = new HumanPlayer(replay.get_second_player_name());
     numberOfRounds = replay.get_number_of_rounds();
-    fw = FileWriter("xx");
+}
+
+Game::Game(const std::string &file, const std::string &output)
+{
+    replay = Replay(file);
+    replay.open_log();
+    mode = GameMode::ReplayMode;
+    player_1 = new HumanPlayer(replay.get_first_player_name());
+    player_2 = new HumanPlayer(replay.get_second_player_name());
+    numberOfRounds = replay.get_number_of_rounds();
+    fw = FileWriter(output);
 }
 
 Game::Game()
@@ -102,6 +117,13 @@ void Game::play_single_turn(Player *p, Player *opp)
                 getline(std::cin, cmd_player_1);
             }
         }
+        if (mode == GameMode::ReplayMode)
+        {
+            if (replay.has_next())
+            {
+                cmd_player_1 = replay.next();
+            }
+        }
         // se il giocatore è un computer, la funzione get_move ignora
         // la stringa vuota passata come parametro e restituisce una mossa valida
 
@@ -115,7 +137,15 @@ void Game::play_single_turn(Player *p, Player *opp)
 
         if (!invalid_move)
         {
-            std::cout << "Mossa Effettuata: " << convert_to_command(m.origin()) << " " << convert_to_command(m.target()) << "\n";
+            std::string note = "Mossa Effettuata: " + convert_to_command(m.origin()) + " " + convert_to_command(m.target()) + "\n";
+            if (mode == GameMode::ReplayMode)
+            {
+                fw.write_line(note);
+            }
+            else
+            {
+                std::cout << note;
+            }
             std::vector<AttackUnit> units = opp->execute_move(m.target(), m.movetype());
             bool action_done = p->handle_response(units, m);
 
@@ -127,7 +157,12 @@ void Game::play_single_turn(Player *p, Player *opp)
             {
                 // da commentare
                 fw.write_line(m.to_string());
-                std::cout << visual_merge_grid(p->attack_grid(), p->defense_map());
+                if (mode == GameMode::ReplayMode)
+                {
+                    fw.write_line(visual_merge_grid(p->attack_grid(), p->defense_map()));
+                }
+                std::cout
+                    << visual_merge_grid(p->attack_grid(), p->defense_map());
             }
         }
 
@@ -199,15 +234,23 @@ void Game::add_player_ships(Player *p)
     {
         // se l'input è effettuato da un giocatore umano, quest'ultimo deve inserire le coordinate delle navi
         // in caso di giocatore computer, le coordinate vengono generate randomicamente
-        if (typeid(*p) == typeid(HumanPlayer))
+        if (mode != GameMode::ReplayMode && typeid(*p) == typeid(HumanPlayer))
         {
             std::cout << "\n"
                       << p->nickname() + " inserisci le coordinate della CORAZZATA\n";
             getline(std::cin, cmd_add);
         }
+        if (mode == GameMode::ReplayMode)
+        {
+            if (replay.has_next())
+            {
+                cmd_add = replay.next();
+            }
+        }
         check = p->add_ships(cmd_add, 5, fw);
         if (check)
         {
+            std::cout << "aggiunta";
             nIronclad--;
             if (nIronclad > 0)
             {
@@ -228,15 +271,23 @@ void Game::add_player_ships(Player *p)
 
     while (nSupport > 0)
     {
-        if (typeid(*p) == typeid(HumanPlayer))
+        if (mode != GameMode::ReplayMode && typeid(*p) == typeid(HumanPlayer))
         {
             std::cout << "\n"
                       << p->nickname() + " inserisci le coordinate della NAVE DI SUPPORTO\n";
             getline(std::cin, cmd_add);
         }
+        if (mode == GameMode::ReplayMode)
+        {
+            if (replay.has_next())
+            {
+                cmd_add = replay.next();
+            }
+        }
         check = p->add_ships(cmd_add, 3, fw);
         if (check)
         {
+            std::cout << "aggiunta";
             nSupport--;
             if (nSupport > 0)
             {
@@ -256,15 +307,23 @@ void Game::add_player_ships(Player *p)
 
     while (nSubmarine > 0)
     {
-        if (typeid(*p) == typeid(HumanPlayer))
+        if (mode != GameMode::ReplayMode && typeid(*p) == typeid(HumanPlayer))
         {
             std::cout << "\n"
                       << p->nickname() + " inserisci le coordinate del SOTTOMARINO\n";
             getline(std::cin, cmd_add);
         }
+        if (mode == GameMode::ReplayMode)
+        {
+            if (replay.has_next())
+            {
+                cmd_add = replay.next();
+            }
+        }
         check = p->add_ships(cmd_add, 1, fw);
         if (check)
         {
+            std::cout << "aggiunta";
             nSubmarine--;
 
             if (nSubmarine > 0)

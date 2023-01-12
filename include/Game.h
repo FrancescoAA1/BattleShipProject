@@ -9,6 +9,7 @@
 #include "HumanPlayer.h"
 #include "FileWriter.h"
 #include "Replay.h"
+#include "ReplayType.h"
 
 class Game
 {
@@ -20,6 +21,8 @@ class Game
     Game(const std::string& nickname_1, const std::string& nickname_2, GameMode mode, int nRounds, const std::string& file_name);
 
     Game(const std::string& filename);
+
+    Game(const std::string& filename, const std::string& output);
 
     Game();
 
