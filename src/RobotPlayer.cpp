@@ -161,7 +161,7 @@ bool RobotPlayer::add_ships(const std::string &cmd, int size, FileWriter &fw)
         }
 
         std::string cmd_line = convert_to_command(bow) + " " + convert_to_command(stern);
-        fw.write_line(cmd_line);
+        //fw.write_line(cmd_line);
 
         return true;
     }
