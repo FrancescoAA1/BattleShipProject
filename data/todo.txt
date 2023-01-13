@@ -1,8 +1,14 @@
 // TO DO 
 
-Implementare lettura comandi  XX XX per attivare visualizzazione mappe
+Implementare lettura comandi XX XX per attivare visualizzazione mappe
+Sistemare colonne mappe
+Debug Sottomarino
+Passaggio a Unique Ptr
+Creare eseguibile a parte per il Replay
+File ReadMe
 
 ==================================================================================
+
 Usare in Game Funzionalità di replay 
 
 

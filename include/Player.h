@@ -21,7 +21,7 @@ public:
     // funzione che permette di aggiungere una nave alla lista di navi secondo
     // le specifiche indicate dal comando e dalla taglia
     // restituisce true se l'inserimento è andato a buon fine, false altrimenti
-    virtual bool add_ships(const std::string &cmd, int size) = 0;
+    virtual bool add_ships(std::string &cmd, int size) = 0;
 
     // avente come centro la posizione specificata. Se tale nave non esiste
     // la funzione ritorna nullptr

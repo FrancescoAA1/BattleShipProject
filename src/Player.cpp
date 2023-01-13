@@ -111,12 +111,9 @@ bool Player::check_graphic_cmd(const Move &m)
 {
     if (m.movetype() != MoveType::invalid)
     {
-        if (m.movetype() == MoveType::clearMap) // AA AA
+        if (m.movetype() == MoveType::clearSonared) // XX XX
         {
-            this->attack_grid().clear_area();
-        }
-        else if (m.movetype() == MoveType::showMap) // YY YY
-        {
+            //this->attack_grid().clear_sonared();
         }
         else if (m.movetype() == MoveType::clearFullHit) // BB BB
         {

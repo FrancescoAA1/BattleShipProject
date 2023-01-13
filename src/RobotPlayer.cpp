@@ -123,7 +123,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
     return origin;
 }
 
-bool RobotPlayer::add_ships(const std::string &cmd, int size)
+bool RobotPlayer::add_ships(std::string &cmd, int size)
 {
     // vengono generate posizioni casuali di prua e poppa
     Position bow = get_random_pos();
@@ -160,7 +160,7 @@ bool RobotPlayer::add_ships(const std::string &cmd, int size)
             std::cout << "Sottomarino Aggiunto in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern)<< ". ";
         }
 
-        std::string cmd_line = convert_to_command(bow) + " " + convert_to_command(stern);
+        cmd = convert_to_command(bow) + " " + convert_to_command(stern);
 
         return true;
     }
