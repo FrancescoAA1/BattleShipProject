@@ -1,20 +1,12 @@
 // TO DO 
 
-Implementare lettura comandi XX XX per attivare visualizzazione mappe
 Sistemare colonne mappe
 Debug Sottomarino
 Passaggio a Unique Ptr
 Creare eseguibile a parte per il Replay
 File ReadMe
+Possibile modifica di check for graphic
 
-==================================================================================
-
-Usare in Game Funzionalità di replay 
-
-
-se la modalità è replay non viene invocato il metodo di scambio dei riferimenti 
-Fare in Game costruttore per il replay 
-==================================================================================
 
 // COSE FATTE =======================================================================================
 1) scrivere main
@@ -115,3 +107,14 @@ next
 ==================================================================================
 
 Implementare file wrapper per fare la scrittura di un replay su file: lo usa la classe game 
+
+
+==================================================================================
+
+Usare in Game Funzionalità di replay 
+
+Implementare lettura comandi XX XX per attivare visualizzazione mappe
+
+se la modalità è replay non viene invocato il metodo di scambio dei riferimenti 
+Fare in Game costruttore per il replay 
+==================================================================================

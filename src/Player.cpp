@@ -64,8 +64,8 @@ std::vector<AttackUnit> Player::execute_move(const Position &target, const MoveT
         units = {retrieve_unit(target)};
     }
 
-    //nel caso di mossa effettuata da nave di supporto, il vettore di attackUnit 
-    //è giustamente vuota, perchè la mossa non interessa il giocatore avversario
+    // nel caso di mossa effettuata da nave di supporto, il vettore di attackUnit
+    // è giustamente vuota, perchè la mossa non interessa il giocatore avversario
     return units;
 }
 
@@ -79,8 +79,8 @@ bool Player::handle_response(std::vector<AttackUnit> units, const Move &m)
     // DA FARE COMPIERE ALLA NAVE
     if (action_done && (m.movetype() == MoveType::moveAndFix || m.movetype() == MoveType::moveAndDiscover))
     {
-        //dopo che lo spostamento è avvenuto con successo 
-        //il centro della nave viene spostato
+        // dopo che lo spostamento è avvenuto con successo
+        // il centro della nave viene spostato
         ship->set_center(m.target());
     }
 
@@ -111,17 +111,24 @@ bool Player::check_graphic_cmd(const Move &m)
 {
     if (m.movetype() != MoveType::invalid)
     {
-        if (m.movetype() == MoveType::clearSonared) // XX XX
+        if (m.movetype() == MoveType::clearSonared) // AA AA
         {
-            //this->attack_grid().clear_sonared();
+            this->attack_grid().clear_sonared();
+            std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
         }
         else if (m.movetype() == MoveType::clearFullHit) // BB BB
         {
             this->attack_grid().clear_all_full_and_hit();
+            std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
         }
         else if (m.movetype() == MoveType::clearEmptyHit) // CC CC
         {
             this->attack_grid().clear_all_full_and_empty();
+            std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
+        }
+        else if (m.movetype() == MoveType::showMap)
+        {
+            std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
         }
         else
         {
@@ -133,8 +140,7 @@ bool Player::check_graphic_cmd(const Move &m)
         return true;
     }
 
-    //qualunque sia il comando grafico scelto, è necessario stampare la mappa
-    std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
+    // qualunque sia il comando grafico scelto, è necessario stampare la mappa
     return true;
 }
 
