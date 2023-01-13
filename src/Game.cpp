@@ -30,7 +30,8 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
     player_2 = new RobotPlayer(nickname_2);
     // player_2 = &p;
 
-    fw = FileWriter(file_name);
+    //fw = FileWriter(file_name);
+    replay = Replay(file_name);
 }
 
 Game::Game(const std::string &file)
