@@ -10,14 +10,14 @@ Move HumanPlayer::get_move(const std::string &cmd)
     // prima di dividere la stringa nelle due coordinate
     // si controlla che la stringa corrisponda ad un comando di stampa delle due mappe
     // oppure ad un comando di pulizia della mappa
-    if (cmd == "AA AA")
+    if (cmd == "XX XX")
     {
         m.set_movetype(MoveType::showMap);
         return m;
     }
-    else if (cmd == "YY YY")
+    else if (cmd == "AA AA")
     {
-        m.set_movetype(MoveType::clearMap);
+        m.set_movetype(MoveType::clearSonared);
         return m;
     }
     else if (cmd == "BB BB")
@@ -83,7 +83,7 @@ Move HumanPlayer::get_move(const std::string &cmd)
     }
 }
 
-bool HumanPlayer::add_ships(const std::string &cmd, int size)
+bool HumanPlayer::add_ships(std::string &cmd, int size)
 {
     Position bow{};
     Position stern{};

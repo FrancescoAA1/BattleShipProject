@@ -26,9 +26,9 @@ void Move::makeInvalid()
 std::string Move::to_string() const
 {
     if(move_ == MoveType::showMap)
-        return "AA AA"; 
-    else if(move_ == MoveType::clearMap)
-        return "YY YY"; 
+        return "XX XX";  
+    else if (move_ == MoveType::clearSonared)
+        return "AA AA";
     else if(move_ == MoveType::clearFullHit)
         return "BB BB";
     else if(move_ == MoveType::clearEmptyHit)
