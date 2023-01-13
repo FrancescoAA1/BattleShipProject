@@ -79,9 +79,7 @@ void Game::first_player()
         player_2 = temp;
     }
 
-    fw.write_line(player_1->nickname());
-    fw.write_line(player_2->nickname());
-    fw.write_line(std::to_string(numberOfRounds));
+    replay.record_header(player_1->nickname(), player_2->nickname(), numberOfRounds); 
 }
 
 void Game::handleOutput(const std::string &state)
@@ -177,7 +175,7 @@ void Game::play_single_turn(Player *p, Player *opp)
 
                 handleOutput(note);
 
-                fw.write_line(m.to_string());
+                replay.record_move(m); 
 
                 if (mode == GameMode::WriteReplay)
                 {
@@ -196,7 +194,7 @@ void Game::play_single_turn(Player *p, Player *opp)
 
 void Game::play_game()
 {
-    if (mode != GameMode::PrintReplay || mode == GameMode::WriteReplay)
+    if (mode != GameMode::PrintReplay && mode != GameMode::WriteReplay)
     {
         first_player();
     }
@@ -282,7 +280,7 @@ void Game::add_player_ships(Player *p)
             }
         }
 
-        check = p->add_ships(cmd_add, 5, fw);
+        check = p->add_ships(cmd_add, Ironclad::kSize);
         if (check)
         {
             nIronclad--;
@@ -296,6 +294,8 @@ void Game::add_player_ships(Player *p)
                 message = "Complimenti! Tutte le corazzate sono state aggiunte!\n\n";
                 handleOutput(message);
             }
+            // registro il log
+            replay.record_move(cmd_add); 
         }
         else if (typeid(*p) == typeid(HumanPlayer))
         {
@@ -323,7 +323,7 @@ void Game::add_player_ships(Player *p)
                 std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
             }
         }
-        check = p->add_ships(cmd_add, 3, fw);
+        check = p->add_ships(cmd_add, SupportShip::kSize);
         if (check)
         {
             nSupport--;
@@ -337,6 +337,8 @@ void Game::add_player_ships(Player *p)
                 message = "Complimenti! Tutte le navi di supporto sono state aggiunte!\n\n";
                 handleOutput(message);
             }
+            // scrivo il log
+            replay.record_move(cmd_add); 
         }
         else if (typeid(*p) == typeid(HumanPlayer))
         {
@@ -363,7 +365,7 @@ void Game::add_player_ships(Player *p)
                 std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
             }
         }
-        check = p->add_ships(cmd_add, 1, fw);
+        check = p->add_ships(cmd_add, Submarine::kSize);
         if (check)
         {
             nSubmarine--;
@@ -378,6 +380,8 @@ void Game::add_player_ships(Player *p)
                 message = "Complimenti! Tutti i sottomarini sono stati aggiunti!\n";
                 handleOutput(message);
             }
+            // scrivo il log
+            replay.record_move(cmd_add); 
         }
         else if (typeid(*p) == typeid(HumanPlayer))
         {

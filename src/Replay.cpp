@@ -45,6 +45,16 @@ void Replay::record_move(const Move &move)
     buffer_.push_back(move.to_string());
 }
 
+// overload della funzione precedente che accetta una stringa
+void Replay::record_move(std::string move)
+{
+    // se non è ancopra stato scritto l'header allora lancio eccezione
+    if (buffer_.size() < 3)
+        throw InvalidOperation();
+
+    buffer_.push_back(move);
+}
+
 // funzione che permette di salvare su file tutto lo storico registrato
 // ritorna true se il log è stato scritto -> il file che crea è quello che ha nome specificato
 // nel costruttore

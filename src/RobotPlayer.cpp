@@ -123,7 +123,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
     return origin;
 }
 
-bool RobotPlayer::add_ships(const std::string &cmd, int size, FileWriter &fw)
+bool RobotPlayer::add_ships(const std::string &cmd, int size)
 {
     // vengono generate posizioni casuali di prua e poppa
     Position bow = get_random_pos();
@@ -161,7 +161,6 @@ bool RobotPlayer::add_ships(const std::string &cmd, int size, FileWriter &fw)
         }
 
         std::string cmd_line = convert_to_command(bow) + " " + convert_to_command(stern);
-        //fw.write_line(cmd_line);
 
         return true;
     }

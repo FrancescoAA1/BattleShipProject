@@ -14,7 +14,7 @@ public:
     // funzione che dato un comando restituisce una mossa
     Move get_move(const std::string &cmd) override;
 
-    bool add_ships(const std::string &cmd, int size, FileWriter &fw) override;
+    bool add_ships(const std::string &cmd, int size) override;
 
 private:
     // funzione che restituisce una posizione casuale

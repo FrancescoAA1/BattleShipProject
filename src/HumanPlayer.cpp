@@ -83,7 +83,7 @@ Move HumanPlayer::get_move(const std::string &cmd)
     }
 }
 
-bool HumanPlayer::add_ships(const std::string &cmd, int size, FileWriter &fw)
+bool HumanPlayer::add_ships(const std::string &cmd, int size)
 {
     Position bow{};
     Position stern{};
@@ -153,9 +153,5 @@ bool HumanPlayer::add_ships(const std::string &cmd, int size, FileWriter &fw)
     {
         return false;
     }
-
-    // la mossa di aggiunta nave
-    // viene inserita nel file di log
-    fw.write_line(cmd);
     return true;
 }
