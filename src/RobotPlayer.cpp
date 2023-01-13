@@ -55,6 +55,49 @@ Move RobotPlayer::get_move(const std::string &move)
     }
 }
 
+bool RobotPlayer::add_ships(std::string &cmd, int size)
+
+{
+    // vengono generate posizioni casuali di prua e poppa
+    Position bow = get_random_pos();
+    // la generazione della posizione di poppa è basata su quella della prua
+    Position stern = get_random_pos(bow, size);
+
+    // si controlla se la nave può essere inserita nella mappa
+    bool created = defense_map_.add_ship(bow, stern);
+
+    Direction d = get_direction(bow, stern);
+    Position p = (bow + stern) / 2;
+
+    // se l'inserimento è andato a buon fine, a seconda del tipo di nave,
+    // viene chiamato il relativo costruttore
+    // infine, la nave appena istanziata viene aggiunta alla lista di navi
+    if (created)
+    {
+        if (size == Ironclad::kSize)
+        {
+            std::shared_ptr<Ironclad> ship(new Ironclad{d, p, defense_map_, attack_grid_});
+            ship_list.push_back(ship);
+        }
+        else if (size == SupportShip::kSize)
+        {
+            std::shared_ptr<SupportShip> ship(new SupportShip{d, p, defense_map_, attack_grid_});
+            ship_list.push_back(ship);
+        }
+        else
+        {
+            std::shared_ptr<Submarine> ship(new Submarine{p, defense_map_, attack_grid_});
+            ship_list.push_back(ship);
+        }
+
+        // il comando di aggiunta della nave viene inserito nella stringa passta a come parametro (out)
+        cmd = convert_to_command(bow) + " " + convert_to_command(stern);
+
+        return true;
+    }
+    return false;
+}
+
 Position RobotPlayer::get_random_pos()
 {
     std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
@@ -121,48 +164,4 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
 
     // se si arriva a questo pezzo di codice c'è stato un errore quindi restituisco la cella di partenza
     return origin;
-}
-
-bool RobotPlayer::add_ships(std::string &cmd, int size)
-{
-    // vengono generate posizioni casuali di prua e poppa
-    Position bow = get_random_pos();
-    // la generazione della posizione di poppa è basata su quella della prua
-    Position stern = get_random_pos(bow, size);
-
-    // si controlla se la nave può essere inserita nella mappa
-    bool created = defense_map_.add_ship(bow, stern);
-
-    Direction d = get_direction(bow, stern);
-    Position p = (bow + stern) / 2;
-
-    // se l'inserimento è andato a buon fine, a seconda del tipo di nave,
-    // viene chiamato il relativo costruttore
-    // infine, la nave appena istanziata viene aggiunta alla lista di navi
-    if (created)
-    {
-        if (size == Ironclad::kSize)
-        {
-            std::shared_ptr<Ironclad> ship(new Ironclad{d, p, defense_map_, attack_grid_});
-            ship_list.push_back(ship);
-            std::cout << "Corazzata Aggiunta in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern) << ". ";
-        }
-        else if (size == SupportShip::kSize)
-        {
-            std::shared_ptr<SupportShip> ship(new SupportShip{d, p, defense_map_, attack_grid_});
-            ship_list.push_back(ship);
-            std::cout << "Nave di Supporto Aggiunta in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern)<< ". ";
-        }
-        else
-        {
-            std::shared_ptr<Submarine> ship(new Submarine{p, defense_map_, attack_grid_});
-            ship_list.push_back(ship);
-            std::cout << "Sottomarino Aggiunto in Con Comando " << convert_to_command(bow) << " " << convert_to_command(stern)<< ". ";
-        }
-
-        cmd = convert_to_command(bow) + " " + convert_to_command(stern);
-
-        return true;
-    }
-    return false;
 }

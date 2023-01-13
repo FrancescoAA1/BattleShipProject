@@ -13,8 +13,6 @@
 class Game
 {
 public:
-    static constexpr int kRoundsComputer = 10;
-
     // costruttore che accetta i nomi dei due giocatori, la modalità di gioco e il numero di round
     Game(const std::string &nickname_1, const std::string &nickname_2, GameMode mode, int nRounds, const std::string &file_name);
 
@@ -42,6 +40,11 @@ public:
     // funzione che simula un turno di gioco
     void play_single_turn(Player *p, Player *opponent);
 
+    // funzione che controlla se l'utente ha inserito comandi di visualizzazione mappa.
+    // In caso positivo, tale comando viene eseguito. Ritorna true se il comando era di
+    // tipo grafico, false altrimenti
+    bool check_graphic_cmd(Player* p, const Move &m);
+    
     // funzione che gestisca la stampa degli output (video/file)
     // a seconda della modalità di gioco
     void handleOutput(const std::string &str);
@@ -50,6 +53,7 @@ public:
     int round_terminated() { return numberOfRounds--; }
 
     // funzione che attesta se uno dei due giocatori ha vinto la partita
+    // ritorna true se uno dei due giocatori ha vinto, false altrimenti
     bool Win();
 
     // metodo getter
@@ -66,7 +70,7 @@ private:
     Replay replay;
     FileWriter fw;
 
-    //costanti (numero di navi all'inizio del gioco)
+    // costanti (numero di navi all'inizio del gioco)
     static constexpr int kIronclad = 3;
     static constexpr int kSupportShip = 3;
     static constexpr int kSubmarine = 2;

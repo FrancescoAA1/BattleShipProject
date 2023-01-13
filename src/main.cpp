@@ -7,7 +7,6 @@ int main(int argc, char **argv)
 {
 
     // Controllo del numero di parametri
-    // Se sono più di due, si tratta di una funzionalità di replay
     // Se sono due si tratta invece di una partita PlayerVsComputer
     // oppure ComputerVsComputer
 
@@ -30,6 +29,7 @@ int main(int argc, char **argv)
             std::cin >> file_name;
 
             Game g{name, "Luca", GameMode::PlayerVsComputer, nRounds, file_name};
+            //inizio partita
             g.play_game();
         }
 

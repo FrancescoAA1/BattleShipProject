@@ -11,6 +11,26 @@ Player::Player(const std::string &nickname)
     ship_list = std::vector<std::shared_ptr<Ship>>(0);
 }
 
+std::shared_ptr<Ship> Player::get_ship(const Position origin)
+{
+    // ricerca del puntatore alla nave avente come centro la posizione di origine
+    auto it = std::find_if(ship_list.begin(), ship_list.end(), [origin](std::shared_ptr<Ship> ship) -> bool
+                           { return (ship->centre() == origin); });
+
+    // se l'iteratore ritornato dall'algoritmo STL punta all'ultimo elemento del vettore di navi
+    // la nave non è stata trovata e viene ritornato nullptr, altrimenti si calcola l'indice
+    // del vettore in cui trova il puntatore e lo si restituisce.
+
+    if (it != ship_list.end())
+    {
+        return *it;
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
 std::vector<AttackUnit> Player::retrieve_unit(const Position &target)
 {
     // il giocatore avversario restituisce un vettore di attackUnit che indicano
@@ -85,63 +105,6 @@ bool Player::handle_response(std::vector<AttackUnit> units, const Move &m)
     }
 
     return action_done;
-}
-
-std::shared_ptr<Ship> Player::get_ship(const Position origin)
-{
-    // ricerca del puntatore alla nave avente come centro la posizione di origine
-    auto it = std::find_if(ship_list.begin(), ship_list.end(), [origin](std::shared_ptr<Ship> ship) -> bool
-                           { return (ship->centre() == origin); });
-
-    // se l'iteratore ritornato dall'algoritmo STL punta all'ultimo elemento del vettore di navi
-    // la nave non è stata trovata e viene ritornato nullptr, altrimenti si calcola l'indice
-    // del vettore in cui trova il puntatore e lo si restituisce.
-
-    if (it != ship_list.end())
-    {
-        return *it;
-    }
-    else
-    {
-        return nullptr;
-    }
-}
-
-bool Player::check_graphic_cmd(const Move &m)
-{
-    if (m.movetype() != MoveType::invalid)
-    {
-        if (m.movetype() == MoveType::clearSonared) // AA AA
-        {
-            this->attack_grid().clear_sonared();
-            std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
-        }
-        else if (m.movetype() == MoveType::clearFullHit) // BB BB
-        {
-            this->attack_grid().clear_all_full_and_hit();
-            std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
-        }
-        else if (m.movetype() == MoveType::clearEmptyHit) // CC CC
-        {
-            this->attack_grid().clear_all_full_and_empty();
-            std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
-        }
-        else if (m.movetype() == MoveType::showMap)
-        {
-            std::cout << visual_merge_grid(this->attack_grid(), this->defense_map());
-        }
-        else
-        {
-            return false;
-        }
-    }
-    else
-    {
-        return true;
-    }
-
-    // qualunque sia il comando grafico scelto, è necessario stampare la mappa
-    return true;
 }
 
 // fornisce la direzione della nave da inserire

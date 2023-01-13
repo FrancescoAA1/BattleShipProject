@@ -10,10 +10,10 @@ enum MoveType{
     attack, //attacco (corazzata)
     moveAndFix, //spostamento e cura (nave di supporto)
     moveAndDiscover, //spostamento ed ispezione (sottomarino)
-    showMap, //stampa delle mappe del giocatore (con posizione target e origine poste a null)
-    clearEmptyHit,
-    clearFullHit,
-    clearSonared
+    showMap, //stampa delle mappe del giocatore
+    clearEmptyHit, //rimozione dei simboli 'O' dalla mappa del giocatore
+    clearFullHit, //rimozione dei simboli 'X' dalla mappa del giocatore
+    clearSonared //rimozione dei simboli 'Y' dalla mappa del giocatore
 };
 
 class Move

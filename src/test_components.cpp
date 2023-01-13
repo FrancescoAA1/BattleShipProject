@@ -119,25 +119,25 @@ int main(void)
     // grid.shot_position(Position(11, 1), AttackUnit::full_and_hit);
     // grid.shot_position(Position(11, 2), AttackUnit::full_and_hit);
     // grid.shot_position(Position(11, 3), AttackUnit::full_and_hit);
-    FileWriter file("out.txt");
+    // FileWriter file("out.txt");
     // file.write_line("Ciao sono Mattia");
     // file.write_line("Test di scrittura");
     // file.write_line(visual_merge_grid(grid, def_map));
 
-    Replay repl("log.txt");
-    repl.record_header("Francesco Fanking", "Tomas Vovato", 30);
-    repl.record_move(Move{Position{0, 0}, Position{1, 1}, MoveType::moveAndDiscover});
-    repl.record_move(Move{Position{11, 11}, Position{3, 3}, MoveType::attack});
-    repl.record_move(Move{Position{0, 0}, Position{1, 1}, MoveType::clearMap});
-    repl.flush_recording(); 
-    repl.open_log();
-    file.write_line(repl.get_first_player_name());
-    file.write_line(repl.get_second_player_name());
-    file.write_line(std::to_string(repl.get_number_of_rounds()));
-    while (repl.has_next())
-    {
-       file.write_line(repl.next());
-    }
+    // Replay repl("log.txt");
+    // repl.record_header("Francesco Fanking", "Tomas Vovato", 30);
+    // repl.record_move(Move{Position{0, 0}, Position{1, 1}, MoveType::moveAndDiscover});
+    // repl.record_move(Move{Position{11, 11}, Position{3, 3}, MoveType::attack});
+    // repl.record_move(Move{Position{0, 0}, Position{1, 1}, MoveType::clearMap});
+    // repl.flush_recording();
+    // repl.open_log();
+    // file.write_line(repl.get_first_player_name());
+    // file.write_line(repl.get_second_player_name());
+    // file.write_line(std::to_string(repl.get_number_of_rounds()));
+    // while (repl.has_next())
+    // {
+    //    file.write_line(repl.next());
+    // }
 
     // std::cout << convert_to_position("A1") << std::endl;
     // std::cout << convert_to_position("A2") << std::endl;
@@ -166,6 +166,6 @@ int main(void)
     // std::cout << convert_to_command(Position{9, 11}) << std::endl;
     // std::cout << convert_to_command(Position{10, 11}) << std::endl;
     // std::cout << convert_to_command(Position{11, 11}) << std::endl;
-    
+
     return 0;
 }

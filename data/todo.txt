@@ -3,12 +3,14 @@
 Sistemare colonne mappe
 Debug Sottomarino
 Passaggio a Unique Ptr
-Creare eseguibile a parte per il Replay
 File ReadMe
 Possibile modifica di check for graphic
 
 
 // COSE FATTE =======================================================================================
+
+Creare eseguibile a parte per il Replay
+
 1) scrivere main
 2) metodi mancanti: metodo che data una posizione generata casualmente 
 ne genera una seconda con x oppyre y uguale (aggiunta nave robot) Metodo get_random_pos1 
