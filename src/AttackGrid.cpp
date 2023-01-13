@@ -153,3 +153,19 @@ void AttackGrid::clear_all_full_and_empty()
         }
     }
 }
+
+// funzione che pulisce dalla matrice tutte le caselle impostate ad Y
+void AttackGrid::clear_sonared()
+{
+    // imposto tutte le celle con carettere O a empty
+    for (int i = 0; i < kHeight; i++)
+    {
+        for (int j = 0; j < kWidth; j++)
+        {
+            if (attack_grid_[i][j] == AttackUnit::spotted)
+            {
+                attack_grid_[i][j] = AttackUnit::unknown;
+            }
+        }
+    }
+}
