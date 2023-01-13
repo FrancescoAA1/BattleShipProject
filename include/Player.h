@@ -23,33 +23,41 @@ public:
     // restituisce true se l'inserimento è andato a buon fine, false altrimenti
     virtual bool add_ships(std::string &cmd, int size) = 0;
 
-    // avente come centro la posizione specificata. Se tale nave non esiste
-    // la funzione ritorna nullptr
+    // Funzione che cerca nel vector di navi la nave avente come centro la
+    // posizione specificata. Se tale nave non esiste la funzione ritorna nullptr
     std::shared_ptr<Ship> get_ship(const Position origin);
 
     // funzione che ritorna un vettore di attackUnit per l' operazione del sottomarino
+    // ciascun elemento del vector rappresente una cella dell'area sondata dal
+    // sottomarino, con indicazioni sull'esito dell'operazione (nave sondata oppure no)
     std::vector<AttackUnit> retrieve_unit(const Position &target);
 
-    // funzione che identifica richiede l'aggiornamento della mappa di difesa e, nel caso di nave afffondata
-    // della lista delle navi
+    // funzione che richiede l'aggiornamento della mappa di difesa del giocatore che
+    // subisce una mossa in seguito ad un attacco di una corazzata nemica.
+    // Nel caso di nave afffondata, quest'ultima viene rimossa della lista delle navi
     AttackUnit receive_attack(const Position &target);
 
-    // funzione che richiede l'aggiornamento della mappa per il giocatore che riceve una data mossa
+    // funzione che, a seconda del tipo di mossa passata come parametro, invoca i metodi del
+    // corrispondenti, richiedendo l'aggiornamento della mappa per il giocatore che riceve una
+    // data mossa. Restituisce un vettore di attackUnit che indica lo stato delle celle
+    // interessate dalla mossa appena effettuata
     std::vector<AttackUnit> execute_move(const Position &target, const MoveType &type);
 
     // funzione che gestisce la ricezione di attackunits dal giocatore avversario
+    // ritorna true se l'azione della nave viene effettuata correttamente, false altrimenti
     bool handle_response(std::vector<AttackUnit> units, const Move &m);
 
-    // funzione che controlla se l'utente ha inserito comandi di visualizzazione mappa. In caso positivo, tale comando viene
-    //eseguito. Ritorna true se il comando era di tipo grafico, false altrimenti
-    bool check_graphic_cmd(const Move &m);
 
     // metodi getter
     std::string nickname() { return nickname_; }
+
     AttackGrid &attack_grid() { return attack_grid_; }
+
     DefenseMap &defense_map() { return defense_map_; }
+
     int get_ships_left() { return ship_list.size(); }
 
+    //distruttore
     virtual ~Player();
 
 protected:
@@ -65,7 +73,7 @@ protected:
     // mappa di difesa del giocatore
     DefenseMap defense_map_;
 
-    // vector di puntatori ad una na
+    // vector di puntatori ad una nave
     std::vector<std::shared_ptr<Ship>> ship_list;
 
 private:

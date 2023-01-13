@@ -136,8 +136,8 @@ int main()
     // std::cout << "\nNumero navi dopo rimozione: " << r.get_ships_left();
 
     // tester Game CvC
-    Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, 1, "Partita.txt"};
-    g.play_game();
+    // Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, 1, "Partita.txt"};
+    // g.play_game();
 
     // // //tester Game PvC
     // Game g1{"GiocatoreX", "GiocatoreY", GameMode::PlayerVsComputer, 5, "Partita"};
