@@ -154,7 +154,7 @@ bool DefenseMap::place_ship(Position init, Position end, const Position &new_cen
 // verifico se una posizione è valida: deve restare tra la larghezza e l'altezza delle matrici
 bool DefenseMap::check_position(const Position &position) const
 {
-    return (position.X() >= 0 && position.X() < kWidth && position.Y() >= 0 && position.X() < kHeight);
+    return (position.X() >= 0 && position.X() < kWidth && position.Y() >= 0 && position.Y() < kHeight);
 }
 
 // verifico se la coordinata di centro specificata può essere una posizione plausibile per una nave di lunghezza
@@ -615,9 +615,10 @@ std::vector<AttackUnit> DefenseMap::spot_area(const Position &target_origin, int
             {
                 if (defense_map_[start.Y()][start.X()].status() == DefenseStatus::empty)
                     discovered_position.push_back(AttackUnit::unknown);
-                else if(defense_map_[start.Y()][start.X()].status() == DefenseStatus::taken)
+                else if (defense_map_[start.Y()][start.X()].status() == DefenseStatus::taken)
                     discovered_position.push_back(AttackUnit::spotted);
-                else discovered_position.push_back(AttackUnit::full_and_hit); // se la nave è colpita ritorno la X
+                else
+                    discovered_position.push_back(AttackUnit::full_and_hit); // se la nave è colpita ritorno la X
             }
             start.set_x(start.X() + 1);
         }
@@ -772,7 +773,17 @@ std::string DefenseMap::to_string() const
 
     for (int i = 0; i < kHeight; i++)
     {
-        result.append(1, row_index);
+        if (row_index >= 'J')
+        {
+            row_index = row_index + 2;
+            result.append(1, row_index);
+            row_index=row_index-2;
+        }
+        else
+        {
+            result.append(1, row_index);
+        }
+
         result += " ";
         row_index++;
     }

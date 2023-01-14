@@ -4,8 +4,6 @@
 #include "Move.h"
 #include "Utility.h"
 #include <vector>
-// #include <filesystem>
-// namespace fs = std::__fs::filesystem;
 
 class Replay
 {
@@ -89,9 +87,7 @@ private:
     static constexpr int kSecondPlayerPosition = 1;
     static constexpr int kNumRoundsPosition = 2;
     static constexpr int kStartRounds = 3;
-    // costante per il nome della cartella da creare nella directory corrente
-    // se non già presente
-    // const std::string kDirname = "log";
+
 };
 
 // La presente classe ha lo scopo registrare tutte le mosse effettuate in una partita e salvarle in un file di log

@@ -1,11 +1,9 @@
 // TO DO 
 
-Sistemare colonne mappe
-Debug Sottomarino
 Passaggio a Unique Ptr
 File ReadMe
-Possibile modifica di check for graphic
 Comando XX XX termina il turno e controllo comandi speciali
+controlli di lettura file di testo
 
 
 // COSE FATTE =======================================================================================
@@ -121,3 +119,7 @@ Implementare lettura comandi XX XX per attivare visualizzazione mappe
 se la modalità è replay non viene invocato il metodo di scambio dei riferimenti 
 Fare in Game costruttore per il replay 
 ==================================================================================
+
+Debug Sottomarino
+Sistemare colonne mappe
+Possibile modifica di check for graphic

@@ -71,7 +71,17 @@ std::string AttackGrid::to_string() const
 
     for (int i = 0; i < kHeight; i++)
     {
-        result.append(1, row_index);
+        if (row_index >= 'J')
+        {
+            row_index = row_index + 2;
+            result.append(1, row_index);
+            row_index = row_index - 2;
+        }
+        else
+        {
+            result.append(1, row_index);
+        }
+
         result += " ";
         row_index++;
     }

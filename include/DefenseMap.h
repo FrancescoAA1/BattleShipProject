@@ -52,7 +52,7 @@ class DefenseMap
     // funzione che scopre tutte le navi in un'area dimxdim a partire del centro specificato come target
     // ritona un'area che rappresenta una matrice dimxdim scritta per righe
     // l'intero serve a specificare il lato di dimensione per l'area
-    // se l'area non riesntra nella matrice ne fa l'intersezione 
+    // se l'area non rientra nella matrice ne fa l'intersezione 
     // se l'area contiene la matrice ritorna tutta la matrice
     // se la nave ha una cella colpita ritorna X atrimenti Y  
     std::vector<AttackUnit> spot_area(const Position& target_origin, int side) const;  

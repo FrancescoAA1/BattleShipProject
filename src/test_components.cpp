@@ -3,6 +3,7 @@
 #include "../include/HumanPlayer.h"
 #include "../include/Replay.h"
 #include "../include/FileWriter.h"
+#include "../include/Submarine.h"
 #include <iostream>
 #include <vector>
 
@@ -166,6 +167,14 @@ int main(void)
     // std::cout << convert_to_command(Position{9, 11}) << std::endl;
     // std::cout << convert_to_command(Position{10, 11}) << std::endl;
     // std::cout << convert_to_command(Position{11, 11}) << std::endl;
+    // DefenseMap def{}; 
+    // def.add_ship(Position{5,11}, Position{9,11}); 
+    // def.add_ship(Position{2,11}, Position{2,11}); 
 
+    // AttackGrid att{}; 
+    // std::cout<<visual_merge_grid(att, def); 
+    
+    // std::vector<AttackUnit> list = def.spot_area(Position{2,11}, 3); 
+    // std::cout<<list.size(); 
     return 0;
 }
