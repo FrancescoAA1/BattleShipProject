@@ -5,6 +5,7 @@ Debug Sottomarino
 Passaggio a Unique Ptr
 File ReadMe
 Possibile modifica di check for graphic
+Comando XX XX termina il turno e controllo comandi speciali
 
 
 // COSE FATTE =======================================================================================

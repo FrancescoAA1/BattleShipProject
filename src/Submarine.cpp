@@ -9,7 +9,6 @@
 
 bool Submarine::action(const Position &target, const std::vector<AttackUnit> &data)
 {
-    for(int i = 0; i < data.size(); i++) std::cout << data[i] << std::endl;
     if (data.empty())
     {
 
@@ -17,7 +16,7 @@ bool Submarine::action(const Position &target, const std::vector<AttackUnit> &da
     }
 
     bool allowed = defense_map_.move_ship(this->centre(), target);
-    
+
     // sposto il sottomarino
     if (allowed)
     {
