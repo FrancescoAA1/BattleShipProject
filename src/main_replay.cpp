@@ -13,24 +13,36 @@ int main(int argc, char **argv)
     {
 
         // scrittura su file del replay su un altro file
-        //file da leggere
+        // file da leggere
         std::string file_name = argv[2];
-        //file su cui scrivere
+        // file su cui scrivere
         std::string output = argv[3];
-
-        Game g{file_name, output};
-        //inizio partita
-        g.play_game();
+        try
+        {
+            Game g{file_name, output};
+            // inizio partita
+            g.play_game();
+        }
+        catch (...)
+        {
+            std::cerr << "Errore durante la lettura del file: file di log corrotto o inesistente" << '\n';
+        }
     }
     else if (argc == 3)
     {
         // stampa a video del file del replay
-        //file da leggere
+        // file da leggere
         std::string file_name = argv[2];
-
-        Game g{file_name};
-        //inizio partita
-        g.play_game();
+        try
+        {
+            Game g{file_name};
+            // inizio partita
+            g.play_game();
+        }
+        catch (...)
+        {
+            std::cerr << "Errore durante la lettura del file: file di log corrotto o inesistente" << '\n';
+        }
     }
     else
     {

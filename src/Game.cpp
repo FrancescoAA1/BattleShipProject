@@ -58,7 +58,6 @@ Game::Game(const std::string &file, const std::string &output)
     player_1 = new HumanPlayer(replay.get_first_player_name());
     player_2 = new HumanPlayer(replay.get_second_player_name());
     numberOfRounds = replay.get_number_of_rounds();
-
     // file in cui effettua la scrittura
     fw = FileWriter(output);
 }
@@ -91,7 +90,7 @@ void Game::play_game()
     // nella cartella bin del progetto
     if (fw.flush_recording())
     {
-        std::cout << "\nFile di log Salvato Correttamente";
+        std::cout << "\nFile di log Salvato Correttamente" << std::endl;
     }
 }
 
@@ -171,6 +170,13 @@ void Game::add_player_ships(Player *p)
         }
         else if (typeid(*p) == typeid(HumanPlayer))
         {
+            if (mode == GameMode::PrintReplay || mode == GameMode::WriteReplay)
+            {
+                // questo caso non può accadere a meno che il file non sia corrotto
+                // quindi se sono in lettura da file di log (replay) lacnio eccezione in quanto
+                // il file è stato violato
+                throw Replay::IllegalFileLog();
+            }
             // solo il giocatore umano (e non il PC) deve essere notificato dell'errore
             std::cout << "Coordinate Non Valide" << std::endl;
         }
@@ -223,6 +229,13 @@ void Game::add_player_ships(Player *p)
         }
         else if (typeid(*p) == typeid(HumanPlayer))
         {
+            if (mode == GameMode::PrintReplay || mode == GameMode::WriteReplay)
+            {
+                // questo caso non può accadere a meno che il file non sia corrotto
+                // quindi se sono in lettura da file di log (replay) lacnio eccezione in quanto
+                // il file è stato violato
+                throw Replay::IllegalFileLog();
+            }
             std::cout << "Coordinate Non Valide" << std::endl;
         }
     }
@@ -276,6 +289,13 @@ void Game::add_player_ships(Player *p)
         }
         else if (typeid(*p) == typeid(HumanPlayer))
         {
+            if (mode == GameMode::PrintReplay || mode == GameMode::WriteReplay)
+            {
+                // questo caso non può accadere a meno che il file non sia corrotto
+                // quindi se sono in lettura da file di log (replay) lacnio eccezione in quanto
+                // il file è stato violato
+                throw Replay::IllegalFileLog();
+            }
             std::cout << "Coordinate Non Valide" << std::endl;
         }
     }

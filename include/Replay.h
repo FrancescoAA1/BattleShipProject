@@ -12,6 +12,9 @@ public:
     class InvalidOperation : std::exception
     {
     };
+    class IllegalFileLog : std::exception
+    {
+    };
     // costruttore che accetta come parametro il nome del file di log:
     // se la classe viene creata per leggere da file aprirà file_name in lettura
     // altrimenti rappresneta il nome del file di log in cui scrivere
@@ -87,7 +90,6 @@ private:
     static constexpr int kSecondPlayerPosition = 1;
     static constexpr int kNumRoundsPosition = 2;
     static constexpr int kStartRounds = 3;
-
 };
 
 // La presente classe ha lo scopo registrare tutte le mosse effettuate in una partita e salvarle in un file di log

@@ -22,29 +22,24 @@ bool Submarine::action(const Position &target, const std::vector<AttackUnit> &da
     {
         int counter = 0;
 
-        for(int y = -kSide/2; y <= kSide/2; y++)
+        for (int y = -kSide / 2; y <= kSide / 2; y++)
         {
-            for(int x = -kSide/2; x <= kSide/2; x++)
+            for (int x = -kSide / 2; x <= kSide / 2; x++)
             {
-                std::cout << counter;
-                //controllo se la posizione relativa nell'array rispetto al centro è valida, e se lo è procedo
-                //a controllare il contenuto del vettore, altrimenti skippo e vado avanti
+                // controllo se la posizione relativa nell'array rispetto al centro è valida, e se lo è procedo
+                // a controllare il contenuto del vettore, altrimenti skippo e vado avanti
                 Position t = Position(target.X() + x, target.Y() + y);
-                if(this->attack_grid_.check_position(t))
+                if (this->attack_grid_.check_position(t))
                 {
-                    if(data[counter] == AttackUnit::spotted) attack_grid_.spot_position(t);
+                    if (data[counter] == AttackUnit::spotted)
+                        attack_grid_.spot_position(t);
                     counter++;
                 }
-
             }
-            
         }
-        
-
         return true;
     }
 
     // se arrivo qui significa che il movimento non era consentito
-    std::cout << "movimento non consentito\n";
     return false;
 }
