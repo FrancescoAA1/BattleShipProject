@@ -9,6 +9,7 @@
 
 bool Submarine::action(const Position &target, const std::vector<AttackUnit> &data)
 {
+    for(int i = 0; i < data.size(); i++) std::cout << data[i] << std::endl;
     if (data.empty())
     {
 
@@ -16,33 +17,35 @@ bool Submarine::action(const Position &target, const std::vector<AttackUnit> &da
     }
 
     bool allowed = defense_map_.move_ship(this->centre(), target);
+    
     // sposto il sottomarino
     if (allowed)
     {
+        int counter = 0;
 
-        Position start = centre() - Position{kSide / 2, kSide / 2};
-        int count = 0;
-        // inserisco per ogni casella Y se piena o unknown se vuota
-        for (int i = 0; i < kSide; i++)
+        for(int y = -kSide/2; y <= kSide/2; y++)
         {
-            for (int j = 0; j < kSide; j++)
+            for(int x = -kSide/2; x <= kSide/2; x++)
             {
-                if (attack_grid_.check_position(start))
+                std::cout << counter;
+                //controllo se la posizione relativa nell'array rispetto al centro è valida, e se lo è procedo
+                //a controllare il contenuto del vettore, altrimenti skippo e vado avanti
+                Position t = Position(target.X() + x, target.Y() + y);
+                if(this->attack_grid_.check_position(t))
                 {
-                    if (count < data.size() && data[count] == AttackUnit::spotted)
-                        attack_grid_.spot_position(start);
-
-                    count++;
+                    if(data[counter] == AttackUnit::spotted) attack_grid_.spot_position(t);
+                    counter++;
                 }
-                start.set_x(start.X() + 1);
+
             }
-            start.set_y(start.Y() + 1);
-            start.set_x(centre().X() - (kSide/2));
+            
         }
+        
 
         return true;
     }
 
     // se arrivo qui significa che il movimento non era consentito
+    std::cout << "movimento non consentito\n";
     return false;
 }
