@@ -3,7 +3,6 @@
 Passaggio a Unique Ptr
 File ReadMe
 Comando XX XX termina il turno e controllo comandi speciali
-controlli di lettura file di testo
 
 
 // COSE FATTE =======================================================================================
@@ -123,3 +122,4 @@ Fare in Game costruttore per il replay
 Debug Sottomarino
 Sistemare colonne mappe
 Possibile modifica di check for graphic
+controlli di lettura file di testo
