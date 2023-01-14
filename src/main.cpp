@@ -18,18 +18,33 @@ int main(int argc, char **argv)
 
             std::string name;
             std::cout << "Inserisci nome: ";
-            std::cin >> name;
+            getline(std::cin, name);
 
             std::cout << "Inserisci numero massimo di mosse: ";
             int nRounds;
-            std::cin >> nRounds;
+            std::string line;
+
+            bool done = false;
+            while (!done)
+            {
+                try
+                {
+                    getline(std::cin, line);
+                    nRounds = std::stoi(line);
+                    done = true;
+                }
+                catch (std::invalid_argument &ex)
+                {
+                    std::cout << "Reinserisci numero massimo di mosse: ";
+                }
+            }
 
             std::string file_name;
             std::cout << "Inserisci nome del file di log: ";
-            std::cin >> file_name;
+            getline(std::cin, file_name);
 
             Game g{name, "Luca", GameMode::PlayerVsComputer, nRounds, file_name};
-            //inizio partita
+            // inizio partita
             g.play_game();
         }
 
@@ -38,11 +53,26 @@ int main(int argc, char **argv)
         {
             std::cout << "Inserisci numero massimo di mosse: ";
             int nRounds;
-            std::cin >> nRounds;
+            std::string line;
+
+            bool done = false;
+            while (!done)
+            {
+                try
+                {
+                    getline(std::cin, line);
+                    nRounds = std::stoi(line);
+                    done = true;
+                }
+                catch (std::invalid_argument &ex)
+                {
+                    std::cout << "Reinserisci numero massimo di mosse: ";
+                }
+            }
 
             std::string file_name;
             std::cout << "Inserisci nome del file di log: ";
-            std::cin >> file_name;
+            getline(std::cin, file_name);
 
             Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, nRounds, file_name};
             g.play_game();
