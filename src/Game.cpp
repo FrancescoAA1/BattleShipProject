@@ -170,7 +170,8 @@ void Game::add_player_ships(Player *p)
                 handleOutput(message);
             }
             // aggiungo il comando di aggiunta della nave al file di log
-            replay.record_move(cmd_add);
+            if (mode != GameMode::PrintReplay && mode != GameMode::WriteReplay)
+                replay.record_move(cmd_add);
         }
         else if (typeid(*p) == typeid(HumanPlayer))
         {
@@ -228,8 +229,9 @@ void Game::add_player_ships(Player *p)
                 message = "Nave di Supporto Aggiunta Con Comando " + cmd_add + "! Complimenti! Tutte le navi di supporto sono state aggiunte!\n\n";
                 handleOutput(message);
             }
-            // aggiorno il file di log
-            replay.record_move(cmd_add);
+            // aggiungo il comando di aggiunta della nave al file di log
+            if (mode != GameMode::PrintReplay && mode != GameMode::WriteReplay)
+                replay.record_move(cmd_add);
         }
         else if (typeid(*p) == typeid(HumanPlayer))
         {
@@ -288,8 +290,9 @@ void Game::add_player_ships(Player *p)
                 message = "Sottomarino Aggiunto Con Comando " + cmd_add + "! Complimenti! Tutti i sottomarini sono stati aggiunti!\n";
                 handleOutput(message);
             }
-            // aggiorno il file di log
-            replay.record_move(cmd_add);
+            // aggiungo il comando di aggiunta della nave al file di log
+            if (mode != GameMode::PrintReplay && mode != GameMode::WriteReplay)
+                replay.record_move(cmd_add);
         }
         else if (typeid(*p) == typeid(HumanPlayer))
         {
@@ -394,7 +397,7 @@ void Game::play_single_turn(Player *p, Player *opp)
             }
             if (mode == GameMode::PrintReplay)
             {
-                // aggiunta di una pausa per permettere all'untente la lettura dell'output
+                // aggiunta di una pausa per permettere all'utente la lettura dell'output
                 std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
             }
         }
@@ -408,7 +411,7 @@ void Game::play_single_turn(Player *p, Player *opp)
         // controllo comandi special (AA AA, BB BB, CC CC, XX XX)
         bool invalid_move = check_graphic_cmd(p, m);
 
-        //se il comando non è un comando speciale o non valido viene eseguita la mossa
+        // se il comando non è un comando speciale o non valido viene eseguita la mossa
         if (!invalid_move)
         {
             // si richiede al giocatore avversario di ritornare un vector di celle interessate
@@ -424,6 +427,14 @@ void Game::play_single_turn(Player *p, Player *opp)
             if (!action_done)
             {
                 m.set_movetype(MoveType::invalid);
+
+                if (mode == GameMode::PrintReplay || mode == GameMode::WriteReplay)
+                {
+                    // questo caso non può accadere a meno che il file non sia corrotto
+                    // quindi se sono in lettura da file di log (replay) lacnio eccezione in quanto
+                    // il file è stato violato
+                    throw Replay::IllegalFileLog();
+                }
             }
             else
             {
@@ -432,8 +443,9 @@ void Game::play_single_turn(Player *p, Player *opp)
                 // stampa notifica di mossa effettuata
                 handleOutput(note);
 
-                // aggiunge al file di log la mossa appena effettuata
-                replay.record_move(m);
+                // aggiungo il comando di aggiunta della nave al file di log
+                if (mode != GameMode::PrintReplay && mode != GameMode::WriteReplay)
+                    replay.record_move(m);
 
                 if (mode == GameMode::WriteReplay)
                 {
@@ -441,7 +453,7 @@ void Game::play_single_turn(Player *p, Player *opp)
                     // delle mappe del giocatore
                     fw.write_line(visual_merge_grid(p->attack_grid(), p->defense_map()));
                 }
-                else if(mode == GameMode::PrintReplay)
+                else if (mode == GameMode::PrintReplay)
                 {
                     std::cout
                         << visual_merge_grid(p->attack_grid(), p->defense_map());
@@ -452,6 +464,14 @@ void Game::play_single_turn(Player *p, Player *opp)
         //  il giocatore deve pertanto reinserire la mossa
         else
         {
+            if (mode == GameMode::PrintReplay || mode == GameMode::WriteReplay)
+            {
+                // questo caso non può accadere a meno che il file non sia corrotto
+                // quindi se sono in lettura da file di log (replay) lacnio eccezione in quanto
+                // il file è stato violato
+                throw Replay::IllegalFileLog();
+            }
+
             m.set_movetype(MoveType::invalid);
         }
 
