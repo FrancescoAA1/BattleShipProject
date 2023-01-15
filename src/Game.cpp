@@ -1,3 +1,4 @@
+//Author: Francesco Fantin
 #include "../include/Game.h"
 #include "../include/Utility.h"
 

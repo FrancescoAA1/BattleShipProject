@@ -1,3 +1,4 @@
+//Author: Enrico Disarò
 #ifndef BATTLESHIPPROJECT_SUBMARINE_H_
 #define BATTLESHIPPROJECT_SUBMARINE_H_
 

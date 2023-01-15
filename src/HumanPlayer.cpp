@@ -1,3 +1,4 @@
+//Author: Francesco Fantin
 #include "../include/HumanPlayer.h"
 
 Move HumanPlayer::get_move(const std::string &cmd)

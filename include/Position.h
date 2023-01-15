@@ -1,3 +1,4 @@
+//Author: Enrico Disarò
 #ifndef BATTLESHIPPROJECT_POSITION_H_
 #define BATTLESHIPPROJECT_POSITION_H_
 

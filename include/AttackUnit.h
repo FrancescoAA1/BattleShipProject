@@ -1,3 +1,4 @@
+//Author: Mattia Galassi 
 #ifndef BATTLESHIPPROJECT_ATTACKUNIT_H_
 #define BATTLESHIPPROJECT_ATTACKUNIT_H_
 

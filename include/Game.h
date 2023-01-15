@@ -1,3 +1,4 @@
+//Author: Francesco Fantin
 #ifndef BATTLESHIPPROJECT_GAME_H_
 #define BATTLESHIPPROJECT_GAME_H_
 

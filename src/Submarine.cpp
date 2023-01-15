@@ -1,3 +1,4 @@
+//Author: Enrico Disarò
 #include "Submarine.h"
 
 // Per eseguire la sua azione di spostamento e ispezione, il sottomarino ha bisogno dei seguenti dati:

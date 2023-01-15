@@ -1,3 +1,4 @@
+//Author: Mattia Galassi 
 #ifndef BATTLESHIPPROJECT_DEFENSEMAP_H_
 #define BATTLESHIPPROJECT_DEFENSEMAP_H_
 

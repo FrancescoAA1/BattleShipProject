@@ -1,3 +1,4 @@
+//Author: Francesco Fantin
 #ifndef BATTLESHIPPROJECT_HUMANPLAYER_H_
 #define BATTLESHIPPROJECT_HUMANPLAYER_H_
 

@@ -1,3 +1,4 @@
+//Author: Enrico Disarò
 #include "Ironclad.h"
 
 //Per eseguire la sua azione di attacco, la nave corazzata ha bisogno dei seguenti dati:

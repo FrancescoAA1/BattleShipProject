@@ -1,3 +1,4 @@
+//Author: Enrico Disarò
 #include "SupportShip.h"
 
 //Per eseguire la sua azione di spostamento e cura, la nave di supporto ha bisogno dei seguenti dati:

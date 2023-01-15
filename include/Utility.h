@@ -1,3 +1,4 @@
+//Author: Enrico Disarò
 #ifndef BATTLESHIPPROJECT_UTILITY_H_
 #define BATTLESHIPPROJECT_UTILITY_H_
 

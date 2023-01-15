@@ -1,3 +1,4 @@
+//Author: Mattia Galassi 
 #ifndef BATTLESHIPPROJECT_FILEWRITER_H_
 #define BATTLESHIPPROJECT_FILEWRITER_H_
 

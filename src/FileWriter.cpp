@@ -1,3 +1,4 @@
+//Author: Mattia Galassi
 #include "../include/FileWriter.h"
 #include <fstream>
 

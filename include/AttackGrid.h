@@ -1,3 +1,4 @@
+//Author: Mattia Galassi 
 #ifndef BATTLESHIPPROJECT_ATTACKGRID_H_
 #define BATTLESHIPPROJECT_ATTACKGRID_H_
 

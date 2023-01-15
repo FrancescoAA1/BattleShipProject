@@ -1,3 +1,4 @@
+//Author: Mattia Galassi
 #include "../include/DefenseMap.h"
 #include <algorithm>
 

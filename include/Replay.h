@@ -1,3 +1,4 @@
+//Author: Mattia Galassi
 #ifndef BATTLESHIPPROJECT_REPLAY_H_
 #define BATTLESHIPPROJECT_REPLAY_H_
 
