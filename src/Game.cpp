@@ -441,7 +441,7 @@ void Game::play_single_turn(Player *p, Player *opp)
                     // delle mappe del giocatore
                     fw.write_line(visual_merge_grid(p->attack_grid(), p->defense_map()));
                 }
-                else
+                else if(mode == GameMode::PrintReplay)
                 {
                     std::cout
                         << visual_merge_grid(p->attack_grid(), p->defense_map());
