@@ -43,7 +43,7 @@ int main(int argc, char **argv)
             std::cout << "Inserisci nome del file di log: ";
             getline(std::cin, file_name);
 
-            Game g{name, "Luca", GameMode::PlayerVsComputer, nRounds, file_name};
+            Game g{name, "ComputerX", GameMode::PlayerVsComputer, nRounds, file_name};
             // inizio partita
             g.play_game();
         }
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
             std::cout << "Inserisci nome del file di log: ";
             getline(std::cin, file_name);
 
-            Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, nRounds, file_name};
+            Game g{"ComputerX", "ComputerY", GameMode::ComputerVsComputer, nRounds, file_name};
             g.play_game();
         }
     }
