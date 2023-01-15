@@ -42,7 +42,7 @@ public:
 
     // funzione che controlla se l'utente ha inserito comandi di visualizzazione mappa.
     // In caso positivo, tale comando viene eseguito. Ritorna true se il comando era di
-    // tipo grafico, false altrimenti
+    // tipo grafico o se la mossa è da conseidare non valida ai fini del turno, false altrimenti
     bool check_graphic_cmd(Player* p, const Move &m);
     
     // funzione che gestisca la stampa degli output (video/file)

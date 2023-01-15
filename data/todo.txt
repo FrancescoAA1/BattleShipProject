@@ -2,10 +2,11 @@
 
 Passaggio a Unique Ptr
 File ReadMe
-Comando XX XX termina il turno e controllo comandi speciali
 
 
 // COSE FATTE =======================================================================================
+
+Comando XX XX termina il turno e controllo comandi speciali
 
 Creare eseguibile a parte per il Replay
 

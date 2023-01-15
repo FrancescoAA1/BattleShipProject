@@ -84,6 +84,10 @@ void Game::play_game()
         // decremento del numero di round
         round_terminated();
     }
+    if (mode != GameMode::WriteReplay)
+    {
+        std::cout << "\nGame Over";
+    }
 
     // avviene il salvataggio su file del buffer
     // in caso di successo, il file di log è disponibile
@@ -155,13 +159,13 @@ void Game::add_player_ships(Player *p)
             nIronclad--;
             if (nIronclad > 0)
             {
-                message = "Corazzata Aggiunta! Ne mancano " + std::to_string(nIronclad) + "\n";
+                message = "Corazzata Aggiunta Con Comando " + cmd_add + "! Ne mancano " + std::to_string(nIronclad) + "\n";
                 // stampa notifica
                 handleOutput(message);
             }
             else
             {
-                message = "Complimenti! Tutte le corazzate sono state aggiunte!\n\n";
+                message = "Corazzata Aggiunta Con Comando " + cmd_add + "! Complimenti! Tutte le corazzate sono state aggiunte!\n\n";
                 // stampa notifica
                 handleOutput(message);
             }
@@ -216,12 +220,12 @@ void Game::add_player_ships(Player *p)
             nSupport--;
             if (nSupport > 0)
             {
-                message = "Nave di Supporto Aggiunta! Ne mancano " + std::to_string(nSupport) + "\n";
+                message = "Nave di Supporto Aggiunta Con Comando " + cmd_add + "! Ne mancano " + std::to_string(nSupport) + "\n";
                 handleOutput(message);
             }
             else
             {
-                message = "Complimenti! Tutte le navi di supporto sono state aggiunte!\n\n";
+                message = "Nave di Supporto Aggiunta Con Comando " + cmd_add + "! Complimenti! Tutte le navi di supporto sono state aggiunte!\n\n";
                 handleOutput(message);
             }
             // aggiorno il file di log
@@ -276,12 +280,12 @@ void Game::add_player_ships(Player *p)
 
             if (nSubmarine > 0)
             {
-                message = "Sottomarino Aggiunto! Ne mancano " + std::to_string(nSubmarine) + "\n";
+                message = "Sottomarino Aggiunto Con Comando " + cmd_add + "!  Ne mancano " + std::to_string(nSubmarine) + "\n";
                 handleOutput(message);
             }
             else
             {
-                message = "Complimenti! Tutti i sottomarini sono stati aggiunti!\n";
+                message = "Sottomarino Aggiunto Con Comando " + cmd_add + "! Complimenti! Tutti i sottomarini sono stati aggiunti!\n";
                 handleOutput(message);
             }
             // aggiorno il file di log
@@ -404,8 +408,7 @@ void Game::play_single_turn(Player *p, Player *opp)
         // controllo comandi special (AA AA, BB BB, CC CC, XX XX)
         bool invalid_move = check_graphic_cmd(p, m);
 
-        // i comandi speciali non sono da considerarsi comandi validi
-        //  il giocatore deve pertanto reinserire la mossa
+        //se il comando non è un comando speciale o non valido viene eseguita la mossa
         if (!invalid_move)
         {
             // si richiede al giocatore avversario di ritornare un vector di celle interessate
@@ -445,6 +448,12 @@ void Game::play_single_turn(Player *p, Player *opp)
                 }
             }
         }
+        // i comandi speciali non sono da considerarsi comandi validi
+        //  il giocatore deve pertanto reinserire la mossa
+        else
+        {
+            m.set_movetype(MoveType::invalid);
+        }
 
     } while (m.movetype() == MoveType::invalid);
 }
@@ -454,7 +463,7 @@ bool Game::Win()
     // se a player1 non rimangono navi, player2 ha vinto
     if (player_1->get_ships_left() == 0)
     {
-        std::string winner = player_2->nickname() + "ha vinto!";
+        std::string winner = player_2->nickname() + " ha vinto!";
         // stampa notifica vincitore
         handleOutput(winner);
         return true;
@@ -462,7 +471,7 @@ bool Game::Win()
     // se a player2 non rimangono navi, player1 ha vinto
     else if (player_2->get_ships_left() == 0)
     {
-        std::string winner = player_1->nickname() + "ha vinto!";
+        std::string winner = player_1->nickname() + " ha vinto!";
         // stampa notifica vincitore
         handleOutput(winner);
         return true;
