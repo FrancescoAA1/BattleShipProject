@@ -4,10 +4,10 @@
 //enumeratore che definisce la tipologia di partita iniziata
 enum GameMode
 {
-    PlayerVsComputer,
-    ComputerVsComputer,
-    PrintReplay,
-    WriteReplay
+    PlayerVsComputer, //partita giocatore contro computer
+    ComputerVsComputer, //partita computer contro computer
+    PrintReplay, //modalità replay di stampa a video del file di log
+    WriteReplay //modalità replay di scrittura del log su file
 };
 
 #endif

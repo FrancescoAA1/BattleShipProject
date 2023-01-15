@@ -11,7 +11,7 @@ FileWriter::FileWriter(std::string file_name)
 
 FileWriter::FileWriter()
 {
-    file_name_ = "Prova";
+    file_name_ = ".txt";
     recorded = false;
     buffer_ = std::vector<std::string>();
 }

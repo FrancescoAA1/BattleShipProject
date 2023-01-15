@@ -25,6 +25,9 @@ std::string convert_to_command(const Position &position);
 // funzione per avere un numero random in modo un po' più randomico tra 0 e range - 1
 int get_random(int range);
 
-// costante utile per le conversioni da comando a posizione e viceversa
-static constexpr int kDefaultCapitalAscii = 65;
+// funzione che conta il numero di cifre di un numero
+int count_digits(int n);
+
+    // costante utile per le conversioni da comando a posizione e viceversa
+    static constexpr int kDefaultCapitalAscii = 65;
 #endif

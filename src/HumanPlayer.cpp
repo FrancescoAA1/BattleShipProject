@@ -1,5 +1,5 @@
 #include "../include/HumanPlayer.h"
-#include <iostream>
+
 Move HumanPlayer::get_move(const std::string &cmd)
 {
     // creazione di due posizioni con il costruttore di default
@@ -87,8 +87,6 @@ bool HumanPlayer::add_ships(std::string &cmd, int size)
 {
     Position bow{};
     Position stern{};
-
-    std::string space = " ";
 
     // divisione della stringa in due parti (il delimitatore è lo spazio)
     int pos = cmd.find_first_of(' ');

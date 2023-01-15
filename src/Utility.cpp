@@ -90,9 +90,16 @@ Position convert_to_position(const std::string &coordinate)
 
         // conversione da stringa ad intero dell'ultima parte della coppia di coordinate (numero)
         // stoi lancia std::invalid_argument exception se la sottostringa non è un numero
-        // ATTENZIONE (da verificare in fase di debug) potrebbe essere necessario controllare che numero di cifre
-        // di y corrisponda alla lunghezza della sottostringa;
-        int y = std::stoi(coordinate.substr(1, coordinate.size() - 1)) - 1;
+        std::string y_pos = coordinate.substr(1, coordinate.size() - 1);
+        int y = std::stoi(y_pos) - 1;
+
+        //controllo che le cifre del numero siano uguali in numero alla lunghezza della
+        //sottostringa precedentemente prelevata
+        if (count_digits(y) != y_pos.size())
+        {
+            pos.make_absolute_invalid();
+            return pos;
+        }
 
         // controllo che x e y siano nel range delle dimensioni delle due mappe
         // NOTA: sarebbe opportuno poter accedere alle costanti di dimensione della mappa
@@ -135,4 +142,11 @@ std::string convert_to_command(const Position &position)
     }
     else
         return "";
+}
+
+int count_digits(int n)
+{
+    if (n / 10 == 0)
+        return 1;
+    return 1 + count_digits(n / 10);
 }

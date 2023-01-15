@@ -1,5 +1,4 @@
 #include "SupportShip.h"
-#include <iostream>
 
 //Per eseguire la sua azione di spostamento e cura, la nave di supporto ha bisogno dei seguenti dati:
 //La posizione obiettivo dello spostamento, anche centro dell'area di cura

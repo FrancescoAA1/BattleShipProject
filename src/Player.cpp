@@ -1,6 +1,5 @@
 #include "../include/Player.h"
 #include "../include/Utility.h"
-#include <iostream>
 
 Player::Player(const std::string &nickname)
 {

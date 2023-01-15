@@ -1,5 +1,4 @@
 #include "Submarine.h"
-#include <iostream>
 
 // Per eseguire la sua azione di spostamento e ispezione, il sottomarino ha bisogno dei seguenti dati:
 // La posizione obiettivo dello spostamento, anche centro dell'area ispezionata
