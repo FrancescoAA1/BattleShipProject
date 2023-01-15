@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     // Controllo del numero di parametri
     // Se sono più tre o quattro, si tratta di una funzionalità di replay
 
-    if (argc == 4)
+    if (argc == 4 && strcmp(argv[1], "f") == 0)
     {
 
         // scrittura su file del replay su un altro file
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
             std::cerr << "Errore durante la lettura del file: file di log corrotto o inesistente" << '\n';
         }
     }
-    else if (argc == 3)
+    else if (argc == 3 && strcmp(argv[1], "v") == 0)
     {
         // stampa a video del file del replay
         // file da leggere
