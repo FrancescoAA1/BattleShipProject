@@ -39,6 +39,7 @@ int main(int argc, char **argv)
                     else
                     {
                         done = false;
+                        std::cout << "Reinserisci numero massimo di mosse: ";
                     }
                 }
                 catch (std::invalid_argument &ex)
@@ -77,6 +78,7 @@ int main(int argc, char **argv)
                     else
                     {
                         done = false;
+                        std::cout << "Reinserisci numero massimo di mosse: ";
                     }
                 }
                 catch (std::invalid_argument &ex)
