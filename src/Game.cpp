@@ -16,24 +16,20 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
     {
         // se la modalità di gioco è PlayerVsComputer uno dei due giocatori sarà umano
         Player* p1 = new HumanPlayer(nickname_1);
-        player_1 = std::make_unique<Player>(p1);
+        player_1 = std::unique_ptr<Player>(p1);
         p1 = nullptr; 
-
-        // player_1 = &p;
     }
     else if (mode == GameMode::ComputerVsComputer)
     {
         // in modalità ComputerVsComputer entrambi i giocatori sono computer
         Player* p1 = new RobotPlayer(nickname_1);
-        player_1 = std::make_unique<Player>(p1);
+        player_1 = std::unique_ptr<Player>(p1);
         p1 = nullptr; 
-        // player_1 = &p;
     }
 
     // in entrambe le modalità, uno dei due giocatori è un computer
     Player* p2 = new RobotPlayer(nickname_2);
-    // player_2 = &p;
-    player_2 = std::make_unique<Player>(p2);
+    player_2 = std::unique_ptr<Player>(p2);
     p2 = nullptr; 
     replay = Replay(file_name);
 }
@@ -50,8 +46,8 @@ Game::Game(const std::string &file)
     // tramite i dati presenti nel file di log
     Player* p1 = new HumanPlayer(replay.get_first_player_name());
     Player* p2 = new HumanPlayer(replay.get_second_player_name());
-    player_1 = std::make_unique<Player>(p1);
-    player_2 = std::make_unique<Player>(p2);
+    player_1 = std::unique_ptr<Player>(p1);
+    player_2 = std::unique_ptr<Player>(p2);
     p1 = nullptr; 
     p2 = nullptr; 
     numberOfRounds = replay.get_number_of_rounds();
@@ -68,11 +64,13 @@ Game::Game(const std::string &file, const std::string &output)
     // tramite i dati presenti nel file di log
     Player* p1 = new HumanPlayer(replay.get_first_player_name());
     Player* p2 = new HumanPlayer(replay.get_second_player_name());
-    player_1 = std::make_unique<Player>(p1);
-    player_2 = std::make_unique<Player>(p2);
+    player_1 = std::unique_ptr<Player>(p1);
+    player_2 = std::unique_ptr<Player>(p2);
     p1 = nullptr; 
     p2 = nullptr; 
+
     numberOfRounds = replay.get_number_of_rounds();
+
     // file in cui effettua la scrittura
     fw = FileWriter(output);
 }
@@ -231,7 +229,7 @@ void Game::add_player_ships(std::unique_ptr<Player>& p)
 
         // aggiunta di nave di supporto
         check = p->add_ships(cmd_add, SupportShip::kSize);
-        std::cout<<check<<std::endl; 
+
         if (check)
         {
             nSupport--;
@@ -339,8 +337,8 @@ void Game::first_player()
     {
         temp1 = player_1.release();
         temp2 = player_2.release();
-        player_1 = std::make_unique<Player>(temp2); 
-        player_2 = std::make_unique<Player>(temp1); 
+        player_1 = std::unique_ptr<Player>(temp2); 
+        player_2 = std::unique_ptr<Player>(temp1); 
         temp1 = nullptr; 
         temp2 = nullptr; 
     }
