@@ -15,20 +15,26 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
     if (mode == GameMode::PlayerVsComputer)
     {
         // se la modalità di gioco è PlayerVsComputer uno dei due giocatori sarà umano
-        player_1 = new HumanPlayer(nickname_1);
+        Player* p1 = new HumanPlayer(nickname_1);
+        player_1 = std::make_unique<Player>(p1);
+        p1 = nullptr; 
+
         // player_1 = &p;
     }
     else if (mode == GameMode::ComputerVsComputer)
     {
         // in modalità ComputerVsComputer entrambi i giocatori sono computer
-        player_1 = new RobotPlayer(nickname_1);
+        Player* p1 = new RobotPlayer(nickname_1);
+        player_1 = std::make_unique<Player>(p1);
+        p1 = nullptr; 
         // player_1 = &p;
     }
 
     // in entrambe le modalità, uno dei due giocatori è un computer
-    player_2 = new RobotPlayer(nickname_2);
+    Player* p2 = new RobotPlayer(nickname_2);
     // player_2 = &p;
-
+    player_2 = std::make_unique<Player>(p2);
+    p2 = nullptr; 
     replay = Replay(file_name);
 }
 
@@ -42,8 +48,12 @@ Game::Game(const std::string &file)
 
     // settaggio dei parametri per la partita
     // tramite i dati presenti nel file di log
-    player_1 = new HumanPlayer(replay.get_first_player_name());
-    player_2 = new HumanPlayer(replay.get_second_player_name());
+    Player* p1 = new HumanPlayer(replay.get_first_player_name());
+    Player* p2 = new HumanPlayer(replay.get_second_player_name());
+    player_1 = std::make_unique<Player>(p1);
+    player_2 = std::make_unique<Player>(p2);
+    p1 = nullptr; 
+    p2 = nullptr; 
     numberOfRounds = replay.get_number_of_rounds();
 }
 
@@ -56,8 +66,12 @@ Game::Game(const std::string &file, const std::string &output)
 
     // settaggio dei parametri per la partita
     // tramite i dati presenti nel file di log
-    player_1 = new HumanPlayer(replay.get_first_player_name());
-    player_2 = new HumanPlayer(replay.get_second_player_name());
+    Player* p1 = new HumanPlayer(replay.get_first_player_name());
+    Player* p2 = new HumanPlayer(replay.get_second_player_name());
+    player_1 = std::make_unique<Player>(p1);
+    player_2 = std::make_unique<Player>(p2);
+    p1 = nullptr; 
+    p2 = nullptr; 
     numberOfRounds = replay.get_number_of_rounds();
     // file in cui effettua la scrittura
     fw = FileWriter(output);
@@ -113,7 +127,7 @@ void Game::add()
     add_player_ships(player_2);
 }
 
-void Game::add_player_ships(Player *p)
+void Game::add_player_ships(std::unique_ptr<Player>& p)
 {
     // variabili che indicano il numero di navi da inserire per ogni tipologia
     int nIronclad = kIronclad;
@@ -312,7 +326,8 @@ void Game::add_player_ships(Player *p)
 
 void Game::first_player()
 {
-    Player *temp;
+    Player *temp1;
+    Player *temp2; 
     srand(time(NULL));
 
     int rand_starter = std::rand() % 2;
@@ -322,9 +337,12 @@ void Game::first_player()
     // invertendo dunque l'ordine di avvio della partita
     if (rand_starter == 1)
     {
-        temp = player_1;
-        player_1 = player_2;
-        player_2 = temp;
+        temp1 = player_1.release();
+        temp2 = player_2.release();
+        player_1 = std::make_unique<Player>(temp2); 
+        player_2 = std::make_unique<Player>(temp1); 
+        temp1 = nullptr; 
+        temp2 = nullptr; 
     }
 
     // altrimenti l'ordine rimane invariato
@@ -366,7 +384,7 @@ void Game::playRound()
     }
 }
 
-void Game::play_single_turn(Player *p, Player *opp)
+void Game::play_single_turn(std::unique_ptr<Player>& p, std::unique_ptr<Player>& opp)
 {
     std::string cmd_player_1;
 
@@ -502,7 +520,7 @@ bool Game::Win()
     return false;
 }
 
-bool Game::check_graphic_cmd(Player *p, const Move &m)
+bool Game::check_graphic_cmd(std::unique_ptr<Player>& p, const Move &m)
 {
     if (m.movetype() != MoveType::invalid)
     {
@@ -548,13 +566,4 @@ void Game::handleOutput(const std::string &state)
         fw.write_line(state);
     else
         std::cout << state;
-}
-
-Game::~Game()
-{
-    // elimino tutta la memoria allocata nell'heap
-    delete player_1;
-    delete player_2;
-    player_1 = nullptr;
-    player_2 = nullptr;
 }
