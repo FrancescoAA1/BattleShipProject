@@ -217,6 +217,7 @@ void Game::add_player_ships(Player *p)
 
         // aggiunta di nave di supporto
         check = p->add_ships(cmd_add, SupportShip::kSize);
+        std::cout<<check<<std::endl; 
         if (check)
         {
             nSupport--;

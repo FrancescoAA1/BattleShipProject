@@ -94,9 +94,10 @@ Position convert_to_position(const std::string &coordinate)
         std::string y_pos = coordinate.substr(1, coordinate.size() - 1);
         int y = std::stoi(y_pos) - 1;
 
-        //controllo che le cifre del numero siano uguali in numero alla lunghezza della
+        //controllo che le cifre del numero originale (cioè y+1) siano uguali in numero alla lunghezza della
         //sottostringa precedentemente prelevata
-        if (count_digits(y) != y_pos.size())
+
+        if (count_digits(y+1) != y_pos.size())
         {
             pos.make_absolute_invalid();
             return pos;
