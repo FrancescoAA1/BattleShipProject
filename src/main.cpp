@@ -1,4 +1,4 @@
-//Author: Francesco Fantin
+// Author: Francesco Fantin
 #include "../include/Game.h"
 #include "../include/AttackGrid.h"
 #include <iostream>
@@ -32,7 +32,14 @@ int main(int argc, char **argv)
                 {
                     getline(std::cin, line);
                     nRounds = std::stoi(line);
-                    done = true;
+                    if (count_digits(nRounds) == line.size())
+                    {
+                        done = true;
+                    }
+                    else
+                    {
+                        done = false;
+                    }
                 }
                 catch (std::invalid_argument &ex)
                 {
@@ -63,7 +70,14 @@ int main(int argc, char **argv)
                 {
                     getline(std::cin, line);
                     nRounds = std::stoi(line);
-                    done = true;
+                    if (count_digits(nRounds) == line.size())
+                    {
+                        done = true;
+                    }
+                    else
+                    {
+                        done = false;
+                    }
                 }
                 catch (std::invalid_argument &ex)
                 {
