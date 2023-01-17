@@ -32,7 +32,7 @@ int main(int argc, char **argv)
                 {
                     getline(std::cin, line);
                     nRounds = std::stoi(line);
-                    if (count_digits(nRounds) == line.size())
+                    if (count_digits(nRounds) == line.size() && nRounds < Game::kMaxRounds)
                     {
                         done = true;
                     }
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
                 {
                     getline(std::cin, line);
                     nRounds = std::stoi(line);
-                    if (count_digits(nRounds) == line.size())
+                    if (count_digits(nRounds) == line.size() && nRounds < Game::kMaxRounds)
                     {
                         done = true;
                     }
@@ -92,6 +92,54 @@ int main(int argc, char **argv)
             getline(std::cin, file_name);
 
             Game g{"ComputerX", "ComputerY", GameMode::ComputerVsComputer, nRounds, file_name};
+            g.play_game();
+        }
+
+
+
+        //DA CANCELLARE!!!!!!!!!!!!
+
+
+        else if (strcmp(argv[1], "pp") == 0)
+        {
+
+            std::string name;
+            std::cout << "Inserisci nome: ";
+            getline(std::cin, name);
+
+            std::cout << "Inserisci numero massimo di mosse: ";
+            int nRounds;
+            std::string line;
+
+            bool done = false;
+            while (!done)
+            {
+                try
+                {
+                    getline(std::cin, line);
+                    nRounds = std::stoi(line);
+                    if (count_digits(nRounds) == line.size() && nRounds < Game::kMaxRounds)
+                    {
+                        done = true;
+                    }
+                    else
+                    {
+                        done = false;
+                        std::cout << "Reinserisci numero massimo di mosse: ";
+                    }
+                }
+                catch (std::invalid_argument &ex)
+                {
+                    std::cout << "Reinserisci numero massimo di mosse: ";
+                }
+            }
+
+            std::string file_name;
+            std::cout << "Inserisci nome del file di log: ";
+            getline(std::cin, file_name);
+
+            Game g{name, "ComputerX", GameMode::PlayerVsComputer, nRounds, file_name, 1};
+            // inizio partita
             g.play_game();
         }
     }

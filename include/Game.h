@@ -15,6 +15,13 @@
 class Game
 {
 public:
+
+    static constexpr int kMaxRounds = 10000;
+    /// DA CANCELLARE
+
+    // costruttore che accetta i nomi dei due giocatori, la modalità di gioco e il numero di round
+    Game(const std::string &nickname_1, const std::string &nickname_2, GameMode mode, int nRounds, const std::string &file_name, bool debugConstructor);
+
     // costruttore che accetta i nomi dei due giocatori, la modalità di gioco e il numero di round
     Game(const std::string &nickname_1, const std::string &nickname_2, GameMode mode, int nRounds, const std::string &file_name);
 
@@ -73,8 +80,6 @@ private:
     static constexpr int kIronclad = 3;
     static constexpr int kSupportShip = 3;
     static constexpr int kSubmarine = 2;
-
-    static constexpr int kMaxRounds = 10000;
 
     // numero di turni
     int numberOfRounds;
