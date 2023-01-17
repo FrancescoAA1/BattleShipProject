@@ -1,6 +1,7 @@
 //Author: Mattia Galassi
 #include "../include/DefenseMap.h"
 #include <algorithm>
+#include <iostream>
 
 // contruttore di default della classe
 // che inizializza tutte le matrici come vuote
@@ -341,7 +342,7 @@ bool DefenseMap::move_ship(const Position &target_origin, const Position &target
         is_on_itself = true;
 
     // verifico che l'area di destinazione non sia accerchiata: la nave deve aver modo di poterci entrare
-    // questo solo se non si è moosa su se stessa
+    // questo solo se non si è mossa su se stessa
     if (!is_on_itself && is_sorrounded(target_destination, dimension, direction))
         return false;
 
@@ -507,8 +508,8 @@ std::vector<Position> DefenseMap::discovers_neighbors(const Position &target_ori
         {
             if (check_position(start))
             {
-                // controllo se è piena e ovviamente s enon è il target origin
-                if (defense_map_[start.Y()][start.X()].status() != DefenseStatus::empty && start != target_origin)
+                // controllo se è piena e ovviamente se non è il target origin
+                if (defense_map_[start.Y()][start.X()].status() != DefenseStatus::empty && defense_map_[start.Y()][start.X()].block_center() != target_origin)
                 {
                     // controllo se non è già presente
                     tmp = defense_map_[start.Y()][start.X()].block_center();
