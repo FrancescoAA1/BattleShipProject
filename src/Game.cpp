@@ -99,7 +99,7 @@ void Game::play_game()
     }
     if (mode != GameMode::WriteReplay)
     {
-        std::cout << "\nGame Over";
+        std::cout << "\nGame Over\n";
     }
 
     // avviene il salvataggio su file del buffer

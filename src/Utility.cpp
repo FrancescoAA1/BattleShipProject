@@ -77,7 +77,7 @@ Position convert_to_position(const std::string &coordinate)
     {
         // sottrazione del valore ASCII di 'A' al primo carattere della stringa
         // conversione da char ad int
-        int x;
+        int y;
         // se le colonne sono J o K allora non va bene e ritorno invalida
         if (coordinate[0] == 'J' || coordinate[0] == 'K')
         {
@@ -85,19 +85,19 @@ Position convert_to_position(const std::string &coordinate)
             return pos;
         }
         if (coordinate[0] > 'J') // elimino le colonne j e k
-            x = coordinate[0] - kDefaultCapitalAscii - 2;
+            y = coordinate[0] - kDefaultCapitalAscii - 2;
         else
-            x = coordinate[0] - kDefaultCapitalAscii;
+            y = coordinate[0] - kDefaultCapitalAscii;
 
         // conversione da stringa ad intero dell'ultima parte della coppia di coordinate (numero)
         // stoi lancia std::invalid_argument exception se la sottostringa non è un numero
-        std::string y_pos = coordinate.substr(1, coordinate.size() - 1);
-        int y = std::stoi(y_pos) - 1;
+        std::string x_pos = coordinate.substr(1, coordinate.size() - 1);
+        int x = std::stoi(x_pos) - 1;
 
         // controllo che le cifre del numero originale (cioè y+1) siano uguali in numero alla lunghezza della
         // sottostringa precedentemente prelevata
 
-        if (count_digits(y + 1) != y_pos.size())
+        if (count_digits(x + 1) != x_pos.size())
         {
             pos.make_absolute_invalid();
             return pos;
@@ -126,17 +126,17 @@ Position convert_to_position(const std::string &coordinate)
 
 std::string convert_to_command(const Position &position)
 {
-    if (position.X() >= 0 && position.X() <= 11 && position.Y() >= 0 && position.Y() <= 11)
+    if (position.X() >= 0 && position.X() <= DefenseMap::kWidth && position.Y() >= 0 && position.Y() <=  DefenseMap::kHeight)
     {
 
         // conversione esplicita da int ad a char (sicura) della coordinata X della posizione
         // stringa formata dal carattere a cui viene sommato il valore ASCII di "A"
-        std::string letter(1, (char)position.X() + kDefaultCapitalAscii);
+        std::string letter(1, (char)position.Y() + kDefaultCapitalAscii);
         if (letter[0] >= 'J')
             letter[0] = letter[0] + 2;
 
         // conversione da int a string della coordinata Y della posizione
-        std::string number = std::to_string(position.Y() + 1);
+        std::string number = std::to_string(position.X() + 1);
 
         // concatenazione delle due stringhe contenenti le coordinate in formato (A1)
         std::string coordinate = letter + number;

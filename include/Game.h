@@ -74,6 +74,8 @@ private:
     static constexpr int kSupportShip = 3;
     static constexpr int kSubmarine = 2;
 
+    static constexpr int kMaxRounds = 10000;
+
     // numero di turni
     int numberOfRounds;
     // modalità di gioco

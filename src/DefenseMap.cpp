@@ -1,7 +1,6 @@
 // Author: Mattia Galassi
 #include "../include/DefenseMap.h"
 #include <algorithm>
-#include <iostream>
 
 // contruttore di default della classe
 // che inizializza tutte le matrici come vuote
@@ -840,46 +839,49 @@ std::string DefenseMap::to_string() const
 {
     // per ogni cella mi devo recuperare la DefenseUnit e guaradre alle informazioni che
     // ha per determinare cosa scrivere effettitavemnte
-    std::string result = "X ";
+    std::string result = ">  ";
     char row_index = kFirstRowLetter;
     int column_index = kFirstColumnNumber;
 
-    for (int i = 0; i < kHeight; i++)
+    for (int i = 0; i < kWidth; i++)
     {
-        if (row_index >= 'J')
-        {
-            row_index = row_index + 2;
-            result.append(1, row_index);
-            row_index = row_index - 2;
-        }
-        else
-        {
-            result.append(1, row_index);
-        }
-
+        result += std::to_string(column_index);
         result += " ";
-        row_index++;
+        if (i < 9)
+        {
+            result += " ";
+        }
+        column_index++;
     }
     result += "\n";
+
 
     for (int i = 0; i < kHeight; i++)
     {
         for (int j = 0; j < kWidth; j++)
         {
-            // Scrivo la colonna indice:
+            // Scrivo la riga indice:
             if (j == 0)
             {
-                result += std::to_string(column_index);
-                column_index++;
-                if (i < 9)
+                if (row_index >= 'J')
                 {
-                    result += " ";
+                    row_index = row_index + 2;
+                    result.append(1, row_index);
+                    row_index = row_index - 2;
                 }
+                else
+                {
+                    result.append(1, row_index);
+                }
+                result += "  ";
+
+                row_index++;
             }
+
             switch (defense_map_[i][j].status())
             {
             case DefenseStatus::empty:
-                result += "  ";
+                result += "   ";
                 break;
             case DefenseStatus::hit:
                 // in base alla dimensione devo scrivere la lettera corretta
@@ -887,15 +889,15 @@ std::string DefenseMap::to_string() const
                 {
                 case kShipType1Dim:
                     result += kSubmarineUnitHit;
-                    result += " ";
+                    result += "  ";
                     break;
                 case kShipType2Dim:
                     result += kSupportShipUnitHit;
-                    result += " ";
+                    result += "  ";
                     break;
                 case kShipType3Dim:
                     result += kIroncladUnitHit;
-                    result += " ";
+                    result += "  ";
                     break;
                 }
                 break;
@@ -905,15 +907,15 @@ std::string DefenseMap::to_string() const
                 {
                 case kShipType1Dim:
                     result += kSubmarineUnit;
-                    result += " ";
+                    result += "  ";
                     break;
                 case kShipType2Dim:
                     result += kSupportShipUnit;
-                    result += " ";
+                    result += "  ";
                     break;
                 case kShipType3Dim:
                     result += kIroncladUnit;
-                    result += " ";
+                    result += "  ";
                     break;
                 }
                 break;
@@ -954,7 +956,7 @@ std::vector<DefenseStatus> DefenseMap::discover_hitted_blocks(const Position &ce
     }
     if (direction == Direction::vertical)
     {
-        Position off_y{0, size/2};
+        Position off_y{0, size / 2};
         Position init = center - off_y;
         Position end = center + off_y;
         while (init != end)

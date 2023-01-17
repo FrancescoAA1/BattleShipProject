@@ -1,4 +1,4 @@
-//Author: Mattia Galassi
+// Author: Mattia Galassi
 #include "../include/AttackGrid.h"
 #include <ostream>
 
@@ -62,7 +62,7 @@ bool AttackGrid::check_position(const Position &position) const
 // funzione che scrive in una stringa la mappa
 std::string AttackGrid::to_string() const
 {
-    std::string result = "X ";
+    std::string result = ">  ";
     // leggo tutte le celle e le scrivo nella sringa risultante
     // il loro corrispondente valore per la rappresentazione
     // aggiungendo la colonna laterale di lettere
@@ -70,21 +70,15 @@ std::string AttackGrid::to_string() const
     char row_index = kFirstRowLetter;
     int column_index = kFirstColumnNumber;
 
-    for (int i = 0; i < kHeight; i++)
+    for (int i = 0; i < kWidth; i++)
     {
-        if (row_index >= 'J')
-        {
-            row_index = row_index + 2;
-            result.append(1, row_index);
-            row_index = row_index - 2;
-        }
-        else
-        {
-            result.append(1, row_index);
-        }
-
+        result += std::to_string(column_index);
         result += " ";
-        row_index++;
+        if (i < 9)
+        {
+            result += " ";
+        }
+        column_index++;
     }
     result += "\n";
 
@@ -92,32 +86,39 @@ std::string AttackGrid::to_string() const
     {
         for (int j = 0; j < kWidth; j++)
         {
-            // Scrivo la colonna indice:
+            // Scrivo la riga indice:
             if (j == 0)
             {
-                result += std::to_string(column_index);
-                column_index++;
-                if (i < 9)
+                if (row_index >= 'J')
                 {
-                    result += " ";
+                    row_index = row_index + 2;
+                    result.append(1, row_index);
+                    row_index = row_index - 2;
                 }
+                else
+                {
+                    result.append(1, row_index);
+                }
+                result += "  ";
+
+                row_index++;
             }
             switch (attack_grid_[i][j])
             {
             case AttackUnit::unknown:
-                result += "  ";
+                result += "   ";
                 break;
             case AttackUnit::empty_and_hit:
                 result += kHitAndEmptySymbol;
-                result += " ";
+                result += "  ";
                 break;
             case AttackUnit::full_and_hit:
                 result += kHitAndFullSymbol;
-                result += " ";
+                result += "  ";
                 break;
             case AttackUnit::spotted:
                 result += kSpottedSymbol;
-                result += " ";
+                result += "  ";
                 break;
             }
         }
