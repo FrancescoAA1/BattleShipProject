@@ -56,7 +56,7 @@ void AttackGrid::clear_area()
 // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
 bool AttackGrid::check_position(const Position &position) const
 {
-    return (position.X() >= 0 && position.X() < kWidth && position.Y() >= 0 && position.X() < kHeight);
+    return (position.X() >= 0 && position.X() < kWidth && position.Y() >= 0 && position.Y() < kHeight);
 }
 
 // funzione che scrive in una stringa la mappa

@@ -1,8 +1,6 @@
 // TO DO 
 
-Passaggio a Unique Ptr
 File ReadMe
-
 
 // COSE FATTE =======================================================================================
 
@@ -124,3 +122,5 @@ Debug Sottomarino
 Sistemare colonne mappe
 Possibile modifica di check for graphic
 controlli di lettura file di testo
+
+Passaggio a Unique Ptr
