@@ -137,7 +137,7 @@ int main()
 
     // tester Game CvC
     // Game g{"Tomas", "Matteo", GameMode::ComputerVsComputer, 1, "Partita.txt"};
-    // g.play_game();
+    //g.play_game();
 
     // // //tester Game PvC
     // Game g1{"GiocatoreX", "GiocatoreY", GameMode::PlayerVsComputer, 5, "Partita"};
