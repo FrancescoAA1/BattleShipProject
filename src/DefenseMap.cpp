@@ -1,4 +1,4 @@
-//Author: Mattia Galassi
+// Author: Mattia Galassi
 #include "../include/DefenseMap.h"
 #include <algorithm>
 #include <iostream>
@@ -144,6 +144,75 @@ bool DefenseMap::place_ship(Position init, Position end, const Position &new_cen
             // scrivo l'ultima
             defense_map_[end.Y()][end.X()].set_block_center(new_center_block);
             defense_map_[end.Y()][end.X()].set_status(DefenseStatus::taken);
+            defense_map_[init.Y()][init.X()].set_full_block_dimension(block_dimension);
+        }
+        else
+            return false;
+    }
+    return true;
+}
+
+// overload della funzione precedente che accetta come parametro un vettore di posizioni che rappresentano le cella della nave
+// da impostare come hit (utile per lo spostamento)
+bool DefenseMap::place_ship(Position init, Position end, const Position &new_center_block, const Position &old_center_block, int block_dimension, Direction direction, const std::vector<DefenseStatus> &relative_hit)
+{
+    // se il vettore di stato dei blocchi ha una size diversa dalla dimensione allora ritornro false
+    if (relative_hit.size() != block_dimension)
+        return false;
+    // a parire dalla poppa (se è più piccola le inverto), nella direzione specificata, setto le unità
+    // della mappa di difesa a pieno fino alla prua
+    if (direction == Direction::horizontal)
+    {
+        // controllo se l'area che dovrebbe ricoprire è libera e se la distanza tra prua e poppa coincide con
+        // la dimensione del blocco da scrivere
+        if (check_area_for_placing(new_center_block, old_center_block, std::abs(init.X() - end.X()) + 1, direction) && (std::abs(init.X() - end.X()) + 1 == block_dimension))
+        {
+            if (init.X() > end.X())
+            {
+                int tmp = end.X();
+                end.set_x(init.X());
+                init.set_x(tmp);
+            }
+            int x = 0;
+            while (init != end)
+            {
+                defense_map_[init.Y()][init.X()].set_block_center(new_center_block);
+                defense_map_[init.Y()][init.X()].set_status(relative_hit.at(x));
+                defense_map_[init.Y()][init.X()].set_full_block_dimension(block_dimension);
+
+                init.set_x(init.X() + 1);
+                x++;
+            }
+            // scrivo l'ultima
+            defense_map_[init.Y()][init.X()].set_block_center(new_center_block);
+            defense_map_[init.Y()][init.X()].set_status(relative_hit.at(x));
+            defense_map_[init.Y()][init.X()].set_full_block_dimension(block_dimension);
+        }
+        else
+            return false;
+    }
+    else if (direction == Direction::vertical)
+    {
+        if (check_area_for_placing(new_center_block, old_center_block, std::abs(init.Y() - end.Y()) + 1, direction) && (std::abs(init.Y() - end.Y()) + 1 == block_dimension))
+        {
+            if (init.Y() > end.Y())
+            {
+                int tmp = end.Y();
+                end.set_y(init.Y());
+                init.set_y(tmp);
+            }
+            int y = 0;
+            while (init != end)
+            {
+                defense_map_[init.Y()][init.X()].set_block_center(new_center_block);
+                defense_map_[init.Y()][init.X()].set_status(relative_hit.at(y));
+                defense_map_[init.Y()][init.X()].set_full_block_dimension(block_dimension);
+                init.set_y(init.Y() + 1);
+                y++;
+            }
+            // scrivo l'ultima
+            defense_map_[init.Y()][init.X()].set_block_center(new_center_block);
+            defense_map_[init.Y()][init.X()].set_status(relative_hit.at(y));
             defense_map_[init.Y()][init.X()].set_full_block_dimension(block_dimension);
         }
         else
@@ -346,8 +415,11 @@ bool DefenseMap::move_ship(const Position &target_origin, const Position &target
     if (!is_on_itself && is_sorrounded(target_destination, dimension, direction))
         return false;
 
+    // ottengo il valore delle celle contenute nel blocco
+    std::vector<DefenseStatus> units = discover_hitted_blocks(target_origin, direction, dimension);
+
     // si occupa palce ship di verificare che l'area sia libera
-    if (place_ship(bow, stern, target_destination, target_origin, dimension, direction))
+    if (place_ship(bow, stern, target_destination, target_origin, dimension, direction, units))
     {
         // lo spostamento è andato a buon fine e la nave è stata scritta nella posizione corretta
         // allora la cancello dalla vecchia se non si è spostata in una posizion eparzialmente occupata da se stessa
@@ -778,7 +850,7 @@ std::string DefenseMap::to_string() const
         {
             row_index = row_index + 2;
             result.append(1, row_index);
-            row_index=row_index-2;
+            row_index = row_index - 2;
         }
         else
         {
@@ -857,4 +929,39 @@ std::string DefenseMap::to_string() const
 std::ostream &operator<<(std::ostream &data_stream, const DefenseMap &defense_map)
 {
     return data_stream << defense_map.to_string();
+}
+
+// ritorna un vettore di stati che rappresentano il fatto che il blocco relativo nella nave sia o meno colpito
+std::vector<DefenseStatus> DefenseMap::discover_hitted_blocks(const Position &center, Direction direction, int size)
+{
+    // se i parametri passati non sono corretti allora ritorno
+    if (!check_position(center) || defense_map_[center.Y()][center.X()].block_center() != center || defense_map_[center.Y()][center.X()].full_block_dimension() != size)
+        return std::vector<DefenseStatus>{};
+    // altrimenti mi sposto dalla prua alla poppa in base alla direzione e leggo lo stato delle units
+    std::vector<DefenseStatus> units{size}; // creo il vettore della dimensione
+
+    if (direction == Direction::horizontal)
+    {
+        Position off_x{size / 2, 0};
+        Position init = center - off_x;
+        Position end = center + off_x;
+        while (init != end)
+        {
+            units.push_back(defense_map_[init.Y()][init.X()].status());
+            init.set_x(init.X() + 1);
+        }
+        units.push_back(defense_map_[init.Y()][init.X()].status());
+    }
+    if (direction == Direction::vertical)
+    {
+        Position off_y{0, size/2};
+        Position init = center - off_y;
+        Position end = center + off_y;
+        while (init != end)
+        {
+            units.push_back(defense_map_[init.Y()][init.X()].status());
+            init.set_y(init.Y() + 1);
+        }
+        units.push_back(defense_map_[init.Y()][init.X()].status());
+    }
 }

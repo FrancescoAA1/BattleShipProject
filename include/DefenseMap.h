@@ -93,11 +93,11 @@ private:
     // true se l'operazione è correttamente eseguibile
     // init e end le passo per valore poichè verranno modificate all'interno
     bool place_ship(Position init, Position end, const Position &new_center_block, const Position &old_center_block, int block_dimension, Direction direction);
-    // overload della funzione precedente che accetta come parametro un vettore di posizioni che rappresentano le cella della nave 
+    // overload della funzione precedente che accetta come parametro un vettore di DefenseStatus che rappresentano le cella della nave 
     // da impostare come hit (utile per lo spostamento)
-    bool place_ship(Position init, Position end, const Position &new_center_block, const Position &old_center_block, int block_dimension, Direction direction);
-    // ritorna un vettore di posizioni che rappresentano le celle colpite di un blocco
-    std::vector<Position> discover_hitted_blocks(const Position& center, Direction direction, int size); 
+    bool place_ship(Position init, Position end, const Position &new_center_block, const Position &old_center_block, int block_dimension, Direction direction, const std::vector<DefenseStatus>& relative_hit);
+    // ritorna un vettore di stati che rappresentano il fatto che il blocco relativo nella nave sia o meno colpito
+    std::vector<DefenseStatus> discover_hitted_blocks(const Position& center, Direction direction, int size); 
     // verifico se la coordinata di centro specificata può essere una posizione plausibile per una nave di lunghezza
     // length specificata e orientamento orientation.
     // ritorna true se la nave ricoprirebbe una regione non vuota o non rientra nella matrice
