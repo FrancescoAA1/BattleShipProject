@@ -1,4 +1,4 @@
-//Author: Francesco Fantin
+// Author: Francesco Fantin
 #include "../include/Player.h"
 #include "../include/Utility.h"
 
@@ -93,15 +93,21 @@ bool Player::handle_response(std::vector<AttackUnit> units, const Move &m)
 {
     // la nave incaricata di compiere l'azione viene trovata
     std::shared_ptr<Ship> ship = get_ship(m.origin());
-    // il giocatore fa eseguire l'azione alla nace incaricata
+    // il giocatore fa eseguire l'azione alla nave incaricata
     bool action_done = ship->action(m.target(), units);
 
-    // DA FARE COMPIERE ALLA NAVE
-    if (action_done && (m.movetype() == MoveType::moveAndFix || m.movetype() == MoveType::moveAndDiscover))
+    //se l'azione è effettuata dalla nave di supporto è necessario
+    //riparare la corazza di tutte le navi nella zona circostante
+    if (action_done && m.movetype() == MoveType::moveAndFix)
     {
-        // dopo che lo spostamento è avvenuto con successo
-        // il centro della nave viene spostato
-        ship->set_center(m.target());
+        //vector di centri delle navi
+        std::vector<Position> last_fixed_ships = ship->get_position_ships();
+
+        for (int i = 0; i < last_fixed_ships.size(); i++)
+        {
+            //riaparazione di ogni nave
+            this->get_ship(last_fixed_ships[i])->restore();
+        }
     }
 
     return action_done;

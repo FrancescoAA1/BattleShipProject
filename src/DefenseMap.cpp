@@ -938,7 +938,7 @@ std::vector<DefenseStatus> DefenseMap::discover_hitted_blocks(const Position &ce
     if (!check_position(center) || defense_map_[center.Y()][center.X()].block_center() != center || defense_map_[center.Y()][center.X()].full_block_dimension() != size)
         return std::vector<DefenseStatus>{};
     // altrimenti mi sposto dalla prua alla poppa in base alla direzione e leggo lo stato delle units
-    std::vector<DefenseStatus> units{size}; // creo il vettore della dimensione
+    std::vector<DefenseStatus> units{}; // creo il vettore di unità
 
     if (direction == Direction::horizontal)
     {
@@ -964,4 +964,6 @@ std::vector<DefenseStatus> DefenseMap::discover_hitted_blocks(const Position &ce
         }
         units.push_back(defense_map_[init.Y()][init.X()].status());
     }
+
+    return units;
 }

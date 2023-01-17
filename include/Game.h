@@ -1,4 +1,4 @@
-//Author: Francesco Fantin
+// Author: Francesco Fantin
 #ifndef BATTLESHIPPROJECT_GAME_H_
 #define BATTLESHIPPROJECT_GAME_H_
 
@@ -31,7 +31,7 @@ public:
     void add();
 
     // funzione che aggiunge tutte le navi del singolo giocatore
-    void add_player_ships(std::unique_ptr<Player>& p);
+    void add_player_ships(std::unique_ptr<Player> &p);
 
     // funzione che stabilisce il giocatore che inizia la partita
     void first_player();
@@ -40,13 +40,13 @@ public:
     void playRound();
 
     // funzione che simula un turno di gioco
-    void play_single_turn(std::unique_ptr<Player>& p, std::unique_ptr<Player>& opp);
+    void play_single_turn(std::unique_ptr<Player> &p, std::unique_ptr<Player> &opp);
 
     // funzione che controlla se l'utente ha inserito comandi di visualizzazione mappa.
     // In caso positivo, tale comando viene eseguito. Ritorna true se il comando era di
     // tipo grafico o se la mossa è da conseidare non valida ai fini del turno, false altrimenti
-    bool check_graphic_cmd(std::unique_ptr<Player>& p, const Move &m);
-    
+    bool check_graphic_cmd(std::unique_ptr<Player> &p, const Move &m);
+
     // funzione che gestisca la stampa degli output (video/file)
     // a seconda della modalità di gioco
     void handleOutput(const std::string &str);
@@ -63,8 +63,8 @@ public:
 
 private:
     // puntatori ai due player
-    std::unique_ptr<Player> player_1; 
-    std::unique_ptr<Player> player_2; 
+    std::unique_ptr<Player> player_1;
+    std::unique_ptr<Player> player_2;
 
     Replay replay;
     FileWriter fw;

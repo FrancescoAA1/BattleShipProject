@@ -20,6 +20,9 @@ bool Submarine::action(const Position &target, const std::vector<AttackUnit> &da
     // sposto il sottomarino
     if (allowed)
     {
+        //sposto il centro della nave
+        set_center(target);
+
         int counter = 0;
 
         for (int y = -kSide / 2; y <= kSide / 2; y++)
@@ -37,6 +40,7 @@ bool Submarine::action(const Position &target, const std::vector<AttackUnit> &da
                 }
             }
         }
+
         return true;
     }
 

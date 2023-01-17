@@ -1,4 +1,4 @@
-//Author: Francesco Fantin
+// Author: Francesco Fantin
 #include "../include/Game.h"
 #include "../include/Utility.h"
 
@@ -15,22 +15,22 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
     if (mode == GameMode::PlayerVsComputer)
     {
         // se la modalità di gioco è PlayerVsComputer uno dei due giocatori sarà umano
-        Player* p1 = new HumanPlayer(nickname_1);
+        Player *p1 = new HumanPlayer(nickname_1);
         player_1 = std::unique_ptr<Player>(p1);
-        p1 = nullptr; 
+        p1 = nullptr;
     }
     else if (mode == GameMode::ComputerVsComputer)
     {
         // in modalità ComputerVsComputer entrambi i giocatori sono computer
-        Player* p1 = new RobotPlayer(nickname_1);
+        Player *p1 = new RobotPlayer(nickname_1);
         player_1 = std::unique_ptr<Player>(p1);
-        p1 = nullptr; 
+        p1 = nullptr;
     }
 
     // in entrambe le modalità, uno dei due giocatori è un computer
-    Player* p2 = new RobotPlayer(nickname_2);
+    Player *p2 = new RobotPlayer(nickname_2);
     player_2 = std::unique_ptr<Player>(p2);
-    p2 = nullptr; 
+    p2 = nullptr;
     replay = Replay(file_name);
 }
 
@@ -44,12 +44,12 @@ Game::Game(const std::string &file)
 
     // settaggio dei parametri per la partita
     // tramite i dati presenti nel file di log
-    Player* p1 = new HumanPlayer(replay.get_first_player_name());
-    Player* p2 = new HumanPlayer(replay.get_second_player_name());
+    Player *p1 = new HumanPlayer(replay.get_first_player_name());
+    Player *p2 = new HumanPlayer(replay.get_second_player_name());
     player_1 = std::unique_ptr<Player>(p1);
     player_2 = std::unique_ptr<Player>(p2);
-    p1 = nullptr; 
-    p2 = nullptr; 
+    p1 = nullptr;
+    p2 = nullptr;
     numberOfRounds = replay.get_number_of_rounds();
 }
 
@@ -62,12 +62,12 @@ Game::Game(const std::string &file, const std::string &output)
 
     // settaggio dei parametri per la partita
     // tramite i dati presenti nel file di log
-    Player* p1 = new HumanPlayer(replay.get_first_player_name());
-    Player* p2 = new HumanPlayer(replay.get_second_player_name());
+    Player *p1 = new HumanPlayer(replay.get_first_player_name());
+    Player *p2 = new HumanPlayer(replay.get_second_player_name());
     player_1 = std::unique_ptr<Player>(p1);
     player_2 = std::unique_ptr<Player>(p2);
-    p1 = nullptr; 
-    p2 = nullptr; 
+    p1 = nullptr;
+    p2 = nullptr;
 
     numberOfRounds = replay.get_number_of_rounds();
 
@@ -125,7 +125,7 @@ void Game::add()
     add_player_ships(player_2);
 }
 
-void Game::add_player_ships(std::unique_ptr<Player>& p)
+void Game::add_player_ships(std::unique_ptr<Player> &p)
 {
     // variabili che indicano il numero di navi da inserire per ogni tipologia
     int nIronclad = kIronclad;
@@ -325,7 +325,7 @@ void Game::add_player_ships(std::unique_ptr<Player>& p)
 void Game::first_player()
 {
     Player *temp1;
-    Player *temp2; 
+    Player *temp2;
     srand(time(NULL));
 
     int rand_starter = std::rand() % 2;
@@ -337,10 +337,10 @@ void Game::first_player()
     {
         temp1 = player_1.release();
         temp2 = player_2.release();
-        player_1 = std::unique_ptr<Player>(temp2); 
-        player_2 = std::unique_ptr<Player>(temp1); 
-        temp1 = nullptr; 
-        temp2 = nullptr; 
+        player_1 = std::unique_ptr<Player>(temp2);
+        player_2 = std::unique_ptr<Player>(temp1);
+        temp1 = nullptr;
+        temp2 = nullptr;
     }
 
     // altrimenti l'ordine rimane invariato
@@ -382,7 +382,7 @@ void Game::playRound()
     }
 }
 
-void Game::play_single_turn(std::unique_ptr<Player>& p, std::unique_ptr<Player>& opp)
+void Game::play_single_turn(std::unique_ptr<Player> &p, std::unique_ptr<Player> &opp)
 {
     std::string cmd_player_1;
 
@@ -518,7 +518,7 @@ bool Game::Win()
     return false;
 }
 
-bool Game::check_graphic_cmd(std::unique_ptr<Player>& p, const Move &m)
+bool Game::check_graphic_cmd(std::unique_ptr<Player> &p, const Move &m)
 {
     if (m.movetype() != MoveType::invalid)
     {
