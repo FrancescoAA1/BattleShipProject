@@ -38,12 +38,12 @@ int main(int argc, char **argv)
                     else
                     {
                         done = false;
-                        std::cout << "Reinserisci numero massimo di mosse: ";
+                        std::cout << "Errore! Formato non valido o supera il limite massimo di mosse.\nReinserisci numero massimo di mosse: ";
                     }
                 }
                 catch (std::invalid_argument &ex)
                 {
-                    std::cout << "Reinserisci numero massimo di mosse: ";
+                    std::cout << "Errore! Formato non valido o supera il limite massimo di mosse.\nReinserisci numero massimo di mosse: ";
                 }
             }
 
@@ -77,12 +77,12 @@ int main(int argc, char **argv)
                     else
                     {
                         done = false;
-                        std::cout << "Reinserisci numero massimo di mosse: ";
+                        std::cout << "Errore! Formato non valido o supera il limite massimo di mosse.\nReinserisci numero massimo di mosse: ";
                     }
                 }
                 catch (std::invalid_argument &ex)
                 {
-                    std::cout << "Reinserisci numero massimo di mosse: ";
+                    std::cout << "Errore! Formato non valido o supera il limite massimo di mosse.\nReinserisci numero massimo di mosse: ";
                 }
             }
 

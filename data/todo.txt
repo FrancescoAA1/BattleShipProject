@@ -1,7 +1,5 @@
 // TO DO 
-
-File ReadMe
-
+lista svuotata :)
 // COSE FATTE =======================================================================================
 
 Comando XX XX termina il turno e controllo comandi speciali
