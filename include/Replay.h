@@ -93,10 +93,23 @@ private:
     static constexpr int kNumRoundsPosition = 2;
     static constexpr int kStartRounds = 3;
 };
+/* 
+La presente classe ha lo scopo registrare tutte le mosse effettuate in una partita e salvarle in un file di log
+Inoltre viene progettata oltre che per scrivere lo storico di una partita anche per leggerlo e mostrare a video
+o su file il "replay" di essa.
+La classe crea il log nella sottodirecory log della corrente. La crea se non esiste
 
-// La presente classe ha lo scopo registrare tutte le mosse effettuate in una partita e salvarle in un file di log
-// Inoltre viene progettata oltre che per scrivere lo storico di una partita anche per leggerlo e mostrare a video
-// o su file il "replay" di essa
-// L aclasse crea il log nella sottodirecory log della corrente. La crea se non esiste
 
+STRUTTURA FILE DEL LOG E LOCAZIONE
+
+Il file di log è composto essenzialmente da tre parti: header, comandi di aggiunta navi, mosse dei giocatori.
+L'header comprende il nome dei giocatori (in ordine di partenza) e il numero di mosse stabilito all'inizio della
+partita. Seguono immediatamente i comandi di aggiunta delle navi (con formato identico a quello delle mossa dei giocatori)
+e, infine, le mosse effettuate ad ogni turno. 
+
+Poichè si suppone che il file non venga ispezionato dall'utente, quanto piuttosto utilizzato esclusivamente per la modalità
+replay, si è scelto di non aggiungere intestazioni o commenti all'interno del file.
+
+I file di log vengono salvati automaticamente alla fine della partita nella cartella bin del progetto. 
+*/
 #endif

@@ -32,3 +32,7 @@ int count_digits(int n);
     // costante utile per le conversioni da comando a posizione e viceversa
     static constexpr int kDefaultCapitalAscii = 65;
 #endif
+/*
+La classe Utility mette a disposizione metodi utilizzati da più classi e che non richiedono accesso a campi privati di queste ultime.
+Per maggiori informazioni sui metodi, si vedano i commenti in Utility.h
+*/
