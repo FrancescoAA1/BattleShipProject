@@ -1,7 +1,6 @@
 // Author: Mattia Galassi
 #include "../include/DefenseMap.h"
 #include <algorithm>
-#include <iostream>
 
 // contruttore di default della classe
 // che inizializza tutte le matrici come vuote
@@ -360,7 +359,6 @@ bool DefenseMap::move_ship(const Position &target_origin, const Position &target
     // Ora posizioni di origine e destinazione sono valide => inizio i test di spostamento
     // (1) dal blocco di origine (centro della nave) mi ricavo la grandezza del blocco totale
     int dimension = defense_map_[target_origin.Y()][target_origin.X()].full_block_dimension();
-    std::cout << dimension << std::endl;
     // (2) determino la direzione guardantomi a lato:
     // a) se a destra o sinistra non ho nulla allora
     // b) guardo in alto e in basso
