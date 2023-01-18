@@ -17,10 +17,6 @@ class Game
 public:
 
     static constexpr int kMaxRounds = 10000;
-    /// DA CANCELLARE
-
-    // costruttore che accetta i nomi dei due giocatori, la modalità di gioco e il numero di round
-    Game(const std::string &nickname_1, const std::string &nickname_2, GameMode mode, int nRounds, const std::string &file_name, bool debugConstructor);
 
     // costruttore che accetta i nomi dei due giocatori, la modalità di gioco e il numero di round
     Game(const std::string &nickname_1, const std::string &nickname_2, GameMode mode, int nRounds, const std::string &file_name);

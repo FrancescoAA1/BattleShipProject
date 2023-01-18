@@ -7,6 +7,7 @@ Ship::Ship(int size, Direction orientation, Position& centre_position, DefenseMa
     size_ = size;
     centre_ = centre_position;
     orientation_ = orientation;
+    position_ship = std::vector<Position>{}; 
 }
 
 bool Ship::hit()

@@ -565,22 +565,3 @@ void Game::handleOutput(const std::string &state)
     else
         std::cout << state;
 }
-
-////Da CANCELLARE
-
-Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMode mode_, int nRounds, const std::string &file_name, bool debug)
-{
-    numberOfRounds = nRounds;
-    mode = GameMode::PlayerVsComputer;
-
-    // se la modalità di gioco è PlayerVsComputer uno dei due giocatori sarà umano
-    Player *p1 = new HumanPlayer(nickname_1);
-    player_1 = std::unique_ptr<Player>(p1);
-    p1 = nullptr;
-
-    // in entrambe le modalità, uno dei due giocatori è un computer
-    Player *p2 = new HumanPlayer(nickname_2);
-    player_2 = std::unique_ptr<Player>(p2);
-    p2 = nullptr;
-    replay = Replay(file_name);
-}
