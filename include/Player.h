@@ -2,10 +2,6 @@
 #ifndef BATTLESHIPPROJECT_PLAYER_H_
 #define BATTLESHIPPROJECT_PLAYER_H_
 
-#include <string>
-#include <vector>
-#include <memory>
-#include <algorithm>
 #include "DefenseMap.h"
 #include "AttackGrid.h"
 #include "Move.h"
@@ -13,6 +9,11 @@
 #include "Ironclad.h"
 #include "SupportShip.h"
 #include "Submarine.h"
+#include "Utility.h"
+#include <string>
+#include <vector>
+#include <memory>
+#include <algorithm>
 
 class Player
 {

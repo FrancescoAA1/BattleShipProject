@@ -1,6 +1,5 @@
 //Author: Mattia Galassi
 #include "../include/Replay.h"
-#include <fstream>
 
 // costruttore che accetta come parametro il nome del file di log:
 // se la classe viene creata per leggere da file aprirà file_name in lettura

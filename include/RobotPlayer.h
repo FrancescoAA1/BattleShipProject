@@ -3,6 +3,7 @@
 #define BATTLESHIPPROJECT_ROBOTPLAYER_H_
 
 #include "Player.h"
+#include "Utility.h"
 #include <chrono>
 #include <thread>
 

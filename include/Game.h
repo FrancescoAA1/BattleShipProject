@@ -2,15 +2,19 @@
 #ifndef BATTLESHIPPROJECT_GAME_H_
 #define BATTLESHIPPROJECT_GAME_H_
 
-#include <string>
-#include <typeinfo>
-#include <memory>
 #include "GameMode.h"
 #include "Player.h"
 #include "RobotPlayer.h"
 #include "HumanPlayer.h"
 #include "FileWriter.h"
 #include "Replay.h"
+#include "Utility.h"
+#include <string>
+#include <typeinfo>
+#include <memory>
+#include <iostream>
+#include <chrono>
+#include <thread>
 
 class Game
 {

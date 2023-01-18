@@ -5,6 +5,7 @@
 #include "Move.h"
 #include "Utility.h"
 #include <vector>
+#include <fstream>
 
 class Replay
 {

@@ -1,6 +1,5 @@
 //Author: Enrico Disarò
 #include "../include/Position.h"
-#include <ostream>
 
 Position::Position()
 {

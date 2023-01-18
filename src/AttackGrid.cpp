@@ -1,6 +1,5 @@
 // Author: Mattia Galassi
 #include "../include/AttackGrid.h"
-#include <ostream>
 
 // costruttore di default che setta tutto a vuoto
 AttackGrid::AttackGrid()

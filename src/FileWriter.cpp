@@ -1,6 +1,5 @@
 //Author: Mattia Galassi
 #include "../include/FileWriter.h"
-#include <fstream>
 
 // costruttore che accetta come parametro il nome del file dove scrivere:
 FileWriter::FileWriter(std::string file_name)

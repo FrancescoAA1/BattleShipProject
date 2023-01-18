@@ -1,6 +1,5 @@
 // Author: Enrico Disarò
 #include "../include/Utility.h"
-#include <iostream>
 
 // Overload dell'operatore << che scrive nell'output stream la matrice di difesa
 std::string visual_merge_grid(const AttackGrid &attack_grid, const DefenseMap &defense_map)

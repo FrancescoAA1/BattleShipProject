@@ -1,6 +1,5 @@
 //Author: Enrico Disarò
 #include "../include/Move.h"
-#include "../include/Utility.h"
 
 Move::Move(const Position& origin, const Position& target, MoveType move)
 {

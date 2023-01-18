@@ -1,6 +1,5 @@
 // Author: Francesco Fantin
 #include "../include/Player.h"
-#include "../include/Utility.h"
 
 Player::Player(const std::string &nickname)
 {

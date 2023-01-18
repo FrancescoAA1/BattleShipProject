@@ -1,11 +1,5 @@
 // Author: Francesco Fantin
 #include "../include/Game.h"
-#include "../include/Utility.h"
-
-#include <string>
-#include <iostream>
-#include <chrono>
-#include <thread>
 
 Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMode mode_, int nRounds, const std::string &file_name)
 {

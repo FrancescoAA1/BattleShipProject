@@ -1,6 +1,5 @@
 // Author: Mattia Galassi
 #include "../include/DefenseMap.h"
-#include <algorithm>
 
 // contruttore di default della classe
 // che inizializza tutte le matrici come vuote

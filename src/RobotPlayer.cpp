@@ -1,6 +1,5 @@
 //Author: Francesco Fantin
 #include "../include/RobotPlayer.h"
-#include "../include/Utility.h"
 
 // il robot inventa la mossa per cui la stringa passata come parametro sarà vuota
 Move RobotPlayer::get_move(const std::string &move)

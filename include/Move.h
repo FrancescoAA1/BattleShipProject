@@ -4,6 +4,7 @@
 
 #include <string>
 #include "Position.h"
+#include "Utility.h"
 
 //enumeratore che indica il tipo di mossa effettuata dal giocatore
 enum MoveType{

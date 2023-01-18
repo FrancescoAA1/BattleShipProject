@@ -3,6 +3,7 @@
 #define BATTLESHIPPROJECT_FILEWRITER_H_
 
 #include <vector>
+#include <fstream>
 #include <string>
 
 class FileWriter
