@@ -413,11 +413,6 @@ bool DefenseMap::move_ship(const Position &target_origin, const Position &target
             is_on_itself = true;
     }
 
-    // verifico che l'area di destinazione non sia accerchiata: la nave deve aver modo di poterci entrare
-    // questo solo se non si è mossa su se stessa
-    if (!is_on_itself && is_sorrounded(target_destination, dimension, direction))
-        return false;
-
     // ottengo il valore delle celle contenute nel blocco
     std::vector<DefenseStatus> units = discover_hitted_blocks(target_origin, direction, dimension);
 
@@ -760,82 +755,6 @@ bool DefenseMap::add_ship(const Position &bow_position, const Position &stern_po
     Position end = stern_position;
 
     return place_ship(init, end, center_block, center_block, size, orientation);
-}
-
-// funzione che verifica se un'area è accerchiata
-bool DefenseMap::is_sorrounded(const Position &target_origin, int size, Direction orientation) const
-{
-    if (!check_position(target_origin))
-        return false;
-    // in base alla direzione controllo...
-    if (orientation == Direction::vertical)
-    {
-        Position offset{0, size / 2 + 1};
-
-        // controllo sopra e sotto all'area che ricopre
-        // se uno dei due è vuoto allora l'area non è accerchiata
-        if (check_position(target_origin - offset) && check_position(target_origin + offset))
-        {
-            if (defense_map_[(target_origin - offset).Y()][(target_origin - offset).X()].status() == DefenseStatus::empty || defense_map_[(target_origin + offset).Y()][(target_origin + offset).X()].status() == DefenseStatus::empty)
-                return false;
-        }
-        else
-            return false; // sono fuori da un muro=> accedo dal lato opposto
-
-        // ora sopra e sotto sono bloccati
-        // controllo i lati
-        offset.set_x(-1);
-        offset.set_y(size / 2);
-        Position checker = target_origin - offset;
-        for (int i = 0; i < size; i++)
-        {
-            checker.set_y(checker.Y() + i);
-            // non appena ne trovo uno vuoto ritorno
-            // devo controllare da entrambe i lati => sommo 2 alla x
-            if (check_position(checker) && check_position(checker + Position{2, 0}))
-            {
-                if (defense_map_[checker.Y()][checker.X()].status() == DefenseStatus::empty || defense_map_[checker.Y()][checker.X() + 2].status() == DefenseStatus::empty)
-                    return false;
-            }
-            else
-                return false; // sono fuori da un muro=> accedo dal lato opposto
-        }
-    }
-    else
-    {
-        Position offset{size / 2 + 1, 0};
-
-        // controllo a destra e sinistra l'area che ricopre
-        // se uno dei due è vuoto allora l'area non è accerchiata
-        if (check_position(target_origin - offset) && check_position(target_origin + offset))
-        {
-            if (defense_map_[(target_origin - offset).Y()][(target_origin - offset).X()].status() == DefenseStatus::empty || defense_map_[(target_origin + offset).Y()][(target_origin + offset).X()].status() == DefenseStatus::empty)
-                return false;
-        }
-        else
-            return false; // sono fuori da un muro=> accedo dal lato opposto
-
-        // ora sopra e sotto sono bloccati
-        // controllo i lati
-        offset.set_y(-1);
-        offset.set_x(size / 2);
-        Position checker = target_origin - offset;
-        for (int i = 0; i < size; i++)
-        {
-            checker.set_x(checker.X() + i);
-            // non appena ne trovo uno vuoto ritorno
-            // devo controllare da entrambe i lati => sommo 2 alla x
-            if (check_position(checker) && check_position(checker + Position{2, 0}))
-            {
-                if (defense_map_[checker.Y()][checker.X()].status() == DefenseStatus::empty || defense_map_[checker.Y()][checker.X() + 2].status() == DefenseStatus::empty)
-                    return false;
-            }
-            else
-                return false; // sono fuori da un muro=> accedo dal lato opposto
-        }
-    }
-
-    return true;
 }
 
 // funzione che scrive in una stringa la mappa

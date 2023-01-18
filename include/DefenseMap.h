@@ -107,8 +107,6 @@ private:
     void clear_area(const Position &center_block, int length, Direction orientation);
     // metodo che resetta tutta la matrice di difesa
     void clear_defense_map();
-    // funzione che verifica se un'area è accerchiata
-    bool is_sorrounded(const Position &target_origin, int size, Direction orientation) const;
     // funzione che ritorna se ci sono blocchi con centro uguale al target
     bool center_block_discovery(const Position &center_block) const;
 };
