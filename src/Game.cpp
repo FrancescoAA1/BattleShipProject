@@ -26,6 +26,7 @@ Game::Game(const std::string &nickname_1, const std::string &nickname_2, GameMod
     player_2 = std::unique_ptr<Player>(p2);
     p2 = nullptr;
     replay = Replay(file_name);
+    status = GameStatus::Ongoing;
 }
 
 Game::Game(const std::string &file)
@@ -45,6 +46,7 @@ Game::Game(const std::string &file)
     p1 = nullptr;
     p2 = nullptr;
     numberOfRounds = replay.get_number_of_rounds();
+    status = GameStatus::Ongoing;
 }
 
 Game::Game(const std::string &file, const std::string &output)
@@ -64,6 +66,7 @@ Game::Game(const std::string &file, const std::string &output)
     p2 = nullptr;
 
     numberOfRounds = replay.get_number_of_rounds();
+    status = GameStatus::Ongoing;
 
     // file in cui effettua la scrittura
     fw = FileWriter(output);
@@ -72,7 +75,7 @@ Game::Game(const std::string &file, const std::string &output)
 void Game::play_game()
 {
     // nel caso di lettura del file di log
-    // il primo giocatore è già stato deciso piochè la partita
+    // il primo giocatore è già stato deciso poichè la partita
     // è gia stata effettuata in precedenza
     if (mode != GameMode::PrintReplay && mode != GameMode::WriteReplay)
     {
@@ -91,6 +94,25 @@ void Game::play_game()
         // decremento del numero di round
         round_terminated();
     }
+
+    std::string winner;
+
+    if (status == GameStatus::Player1Won)
+    {
+        winner = player_1->nickname() + " ha vinto! \n";
+        handleOutput(winner);
+    }
+    else if (status == GameStatus::Player2Won)
+    {
+        winner = player_2->nickname() + " ha vinto! \n";
+        handleOutput(winner);
+    }
+    else
+    {
+        winner = "Pareggio!";
+        handleOutput(winner);
+    }
+
     if (mode != GameMode::WriteReplay)
     {
         std::cout << "\nGame Over\n";
@@ -495,17 +517,13 @@ bool Game::Win()
     // se a player1 non rimangono navi, player2 ha vinto
     if (player_1->get_ships_left() == 0)
     {
-        std::string winner = player_2->nickname() + " ha vinto!";
-        // stampa notifica vincitore
-        handleOutput(winner);
+        status = GameStatus::Player2Won;
         return true;
     }
     // se a player2 non rimangono navi, player1 ha vinto
     else if (player_2->get_ships_left() == 0)
     {
-        std::string winner = player_1->nickname() + " ha vinto!";
-        // stampa notifica vincitore
-        handleOutput(winner);
+        status = GameStatus::Player1Won;
         return true;
     }
     // nessuno ha ancora vinto

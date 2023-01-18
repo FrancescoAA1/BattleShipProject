@@ -3,6 +3,7 @@
 #define BATTLESHIPPROJECT_GAME_H_
 
 #include "GameMode.h"
+#include "GameStatus.h"
 #include "Player.h"
 #include "RobotPlayer.h"
 #include "HumanPlayer.h"
@@ -81,10 +82,13 @@ private:
     static constexpr int kSupportShip = 3;
     static constexpr int kSubmarine = 2;
 
+
     // numero di turni
     int numberOfRounds;
     // modalità di gioco
     GameMode mode;
+    //stato partita
+    GameStatus status;
 };
 
 #endif
