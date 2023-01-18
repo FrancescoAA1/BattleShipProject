@@ -274,7 +274,7 @@ bool DefenseMap::check_area_for_placing(const Position &target_destination, cons
                 }
                 else // 4) in tal caso entrambe sono piene allora devono avere lo stesso centro
                 {
-                    if (defense_map_[front.Y()][front.X()].block_center() == origin_block_center && defense_map_[front.Y()][front.X()].block_center() == origin_block_center)
+                    if (defense_map_[front.Y()][front.X()].block_center() == origin_block_center && defense_map_[back.Y()][back.X()].block_center() == origin_block_center)
                         offset.set_y(offset.Y() - 1);
                     else
                         return false; // in tal caso allora non va bene se anche quest'utlimo test non veiene superato
@@ -320,7 +320,7 @@ bool DefenseMap::check_area_for_placing(const Position &target_destination, cons
                 }
                 else // 4) in tal caso entrambe sono piene allora devono avere lo stesso centro
                 {
-                    if (defense_map_[front.Y()][front.X()].block_center() == origin_block_center && defense_map_[front.Y()][front.X()].block_center() == origin_block_center)
+                    if (defense_map_[front.Y()][front.X()].block_center() == origin_block_center && defense_map_[back.Y()][back.X()].block_center() == origin_block_center)
                         offset.set_x(offset.X() - 1);
                     else
                         return false; // in tal caso allora non va bene se anche quest'utlimo test non veiene superato
