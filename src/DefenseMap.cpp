@@ -1,6 +1,7 @@
 // Author: Mattia Galassi
 #include "../include/DefenseMap.h"
 #include <algorithm>
+#include <iostream>
 
 // contruttore di default della classe
 // che inizializza tutte le matrici come vuote
@@ -359,6 +360,7 @@ bool DefenseMap::move_ship(const Position &target_origin, const Position &target
     // Ora posizioni di origine e destinazione sono valide => inizio i test di spostamento
     // (1) dal blocco di origine (centro della nave) mi ricavo la grandezza del blocco totale
     int dimension = defense_map_[target_origin.Y()][target_origin.X()].full_block_dimension();
+    std::cout << dimension << std::endl;
     // (2) determino la direzione guardantomi a lato:
     // a) se a destra o sinistra non ho nulla allora
     // b) guardo in alto e in basso
@@ -405,9 +407,13 @@ bool DefenseMap::move_ship(const Position &target_origin, const Position &target
 
     // controllo se si è mossa su se stessa prima di scrivere la nuova nave
     bool is_on_itself = false;
-    // se la nuova prua o la nuova poppa hanno ina posizione centro uguale al target origin => è su se stessa
-    if (defense_map_[bow.Y()][bow.X()].block_center() == target_origin || defense_map_[stern.Y()][stern.X()].block_center() == target_origin)
-        is_on_itself = true;
+
+    if (check_position(bow) && check_position(stern))
+    {
+        // se la nuova prua o la nuova poppa hanno una posizione centro uguale al target origin => è su se stessa
+        if (defense_map_[bow.Y()][bow.X()].block_center() == target_origin || defense_map_[stern.Y()][stern.X()].block_center() == target_origin)
+            is_on_itself = true;
+    }
 
     // verifico che l'area di destinazione non sia accerchiata: la nave deve aver modo di poterci entrare
     // questo solo se non si è mossa su se stessa
@@ -854,7 +860,6 @@ std::string DefenseMap::to_string() const
         column_index++;
     }
     result += "\n";
-
 
     for (int i = 0; i < kHeight; i++)
     {
