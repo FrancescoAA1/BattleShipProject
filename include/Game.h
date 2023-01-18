@@ -90,5 +90,15 @@ private:
     //stato partita
     GameStatus status;
 };
+/*
+Le librerie chrono e thread si rivelano utili per rendere partite e replay fruibili dall'utente, aggiungendo pause di un secondo
+prima di una mossa del computer e prima di ogni visualizzazione della mappa.
 
+Come richiesto dalla consegna, una partita può essere giocata tra due computer oppure tra un utente e un computer.
+Inoltre, sono disponibili funzionalità di replay, rispettivamente per la lettura di un file di log precedentemente 
+creato tramite una partita (non importa di quale tipo) e per la scrittura su file di una partita (a partire da file di log). 
+Per questo motivo, si è scelto di definire quattro modalità di gioco (ComputerVsComputer, PlayerVsComputer, PrintReplay, WriteReplay),
+rappresentate all'interno dell'enumeratore GameMode. Il loro scopo è quello di evitare ripetizioni di codice, mantenendo uno "scheletro"
+comune per la partita, e andando a distinguere a seconda dell'eseguibile scelto dall'utente.
+*/
 #endif
