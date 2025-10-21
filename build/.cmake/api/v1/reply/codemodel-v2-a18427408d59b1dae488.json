@@ -1,0 +1,876 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "battaglia_navale",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-Debug-8a5fe93dbbbb17e1562a.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "AttackGrid::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-AttackGrid-Debug-23dffb199608d596dbe4.json",
+					"name" : "AttackGrid",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "DefenseMap::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-DefenseMap-Debug-81b922327c0e89683ff6.json",
+					"name" : "DefenseMap",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "DefenseUnit::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-DefenseUnit-Debug-006db885656e7b55c891.json",
+					"name" : "DefenseUnit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "FileWriter::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-FileWriter-Debug-99ef1456f3fdae0354e9.json",
+					"name" : "FileWriter",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Game::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Game-Debug-f7a1b8aa7f4fcefb705b.json",
+					"name" : "Game",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "HumanPlayer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-HumanPlayer-Debug-f5fc27e5280b8d00dc13.json",
+					"name" : "HumanPlayer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Ironclad::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Ironclad-Debug-df9314ae67bc84bf3a84.json",
+					"name" : "Ironclad",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Move::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Move-Debug-07e28589739eb4ec9867.json",
+					"name" : "Move",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Player::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Player-Debug-8d27ca1687557cb9baec.json",
+					"name" : "Player",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Position::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Position-Debug-9389b3e05fcb67d27127.json",
+					"name" : "Position",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ReplayGame::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ReplayGame-Debug-d4858ca6b09a73119258.json",
+					"name" : "ReplayGame",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "RobotPlayer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-RobotPlayer-Debug-95006958bccb975d605e.json",
+					"name" : "RobotPlayer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Ship::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Ship-Debug-1a8668a7302d2581c936.json",
+					"name" : "Ship",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Submarine::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Submarine-Debug-4d36aefc0dbd9c0d17c4.json",
+					"name" : "Submarine",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SupportShip::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SupportShip-Debug-d1a820b2cf4e11b37653.json",
+					"name" : "SupportShip",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Utility::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Utility-Debug-49e00233374b3891188a.json",
+					"name" : "Utility",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-Debug-367f3b668639c344c54c.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "battaglia_navale::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-battaglia_navale-Debug-3db4a3cb11402515d566.json",
+					"name" : "battaglia_navale",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "replay::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-replay-Debug-41d87033df4c2d229ee6.json",
+					"name" : "replay",
+					"projectIndex" : 0
+				}
+			]
+		},
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "battaglia_navale",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-Release-8a5fe93dbbbb17e1562a.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "AttackGrid::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-AttackGrid-Release-ee3113f2a8ead13ffd91.json",
+					"name" : "AttackGrid",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "DefenseMap::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-DefenseMap-Release-22282960b19739120814.json",
+					"name" : "DefenseMap",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "DefenseUnit::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-DefenseUnit-Release-3d8d11c686a22680ac6b.json",
+					"name" : "DefenseUnit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "FileWriter::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-FileWriter-Release-24d7e58ab6b480b31630.json",
+					"name" : "FileWriter",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Game::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Game-Release-44f10daf37baeefa6728.json",
+					"name" : "Game",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "HumanPlayer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-HumanPlayer-Release-8475fa799bb3e4b48068.json",
+					"name" : "HumanPlayer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Ironclad::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Ironclad-Release-851eb5e0bf5eec156115.json",
+					"name" : "Ironclad",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Move::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Move-Release-76d0074e5cd68b0ca2c1.json",
+					"name" : "Move",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Player::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Player-Release-b50438e705e49cee75c8.json",
+					"name" : "Player",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Position::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Position-Release-36e8e6f0632d76641659.json",
+					"name" : "Position",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ReplayGame::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ReplayGame-Release-52eaa15a87648438d5d4.json",
+					"name" : "ReplayGame",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "RobotPlayer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-RobotPlayer-Release-4f17e401f7ca435af43e.json",
+					"name" : "RobotPlayer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Ship::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Ship-Release-d5f657b80de67d3caf28.json",
+					"name" : "Ship",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Submarine::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Submarine-Release-66fbe5b819635437980a.json",
+					"name" : "Submarine",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SupportShip::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SupportShip-Release-8cc4a810b4685c667529.json",
+					"name" : "SupportShip",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Utility::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Utility-Release-ffcd73109f952e0941da.json",
+					"name" : "Utility",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-Release-367f3b668639c344c54c.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "battaglia_navale::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-battaglia_navale-Release-fe1e761caa6314739421.json",
+					"name" : "battaglia_navale",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "replay::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-replay-Release-4dbf4f5e0c7f4b9010f7.json",
+					"name" : "replay",
+					"projectIndex" : 0
+				}
+			]
+		},
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-MinSizeRel-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				}
+			],
+			"name" : "MinSizeRel",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "battaglia_navale",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-MinSizeRel-8a5fe93dbbbb17e1562a.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "AttackGrid::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-AttackGrid-MinSizeRel-c55d353168ce62e6924c.json",
+					"name" : "AttackGrid",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "DefenseMap::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-DefenseMap-MinSizeRel-a4969e9665f67d75c296.json",
+					"name" : "DefenseMap",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "DefenseUnit::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-DefenseUnit-MinSizeRel-3da7331a7cf6dc795165.json",
+					"name" : "DefenseUnit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "FileWriter::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-FileWriter-MinSizeRel-1e7b1a71e1f64574af02.json",
+					"name" : "FileWriter",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Game::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Game-MinSizeRel-4f3f5b9d09f013e55a09.json",
+					"name" : "Game",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "HumanPlayer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-HumanPlayer-MinSizeRel-aebd7d0dbb7c1fb6c3ce.json",
+					"name" : "HumanPlayer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Ironclad::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Ironclad-MinSizeRel-75e513875208bdbf9a3e.json",
+					"name" : "Ironclad",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Move::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Move-MinSizeRel-964c7404677496e0bdba.json",
+					"name" : "Move",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Player::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Player-MinSizeRel-8df8c4198f2fec3fe79b.json",
+					"name" : "Player",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Position::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Position-MinSizeRel-861071e00f39823e7ea8.json",
+					"name" : "Position",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ReplayGame::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ReplayGame-MinSizeRel-21d4ad2b0dd4feb9b611.json",
+					"name" : "ReplayGame",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "RobotPlayer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-RobotPlayer-MinSizeRel-fcc2b4e2686e210f3bf2.json",
+					"name" : "RobotPlayer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Ship::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Ship-MinSizeRel-8f56a5884c77e0d59aa2.json",
+					"name" : "Ship",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Submarine::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Submarine-MinSizeRel-6a0345523623f1496d35.json",
+					"name" : "Submarine",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SupportShip::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SupportShip-MinSizeRel-dccd5971b6fc04372e4a.json",
+					"name" : "SupportShip",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Utility::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Utility-MinSizeRel-226503b649aabbc12d49.json",
+					"name" : "Utility",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-MinSizeRel-367f3b668639c344c54c.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "battaglia_navale::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-battaglia_navale-MinSizeRel-ca95bfc37a8b6013cfb0.json",
+					"name" : "battaglia_navale",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "replay::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-replay-MinSizeRel-d1844cde5edd5b804809.json",
+					"name" : "replay",
+					"projectIndex" : 0
+				}
+			]
+		},
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-RelWithDebInfo-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				}
+			],
+			"name" : "RelWithDebInfo",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "battaglia_navale",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-8a5fe93dbbbb17e1562a.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "AttackGrid::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-AttackGrid-RelWithDebInfo-425363490011f943502d.json",
+					"name" : "AttackGrid",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "DefenseMap::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-DefenseMap-RelWithDebInfo-68f28a6fda16bf394103.json",
+					"name" : "DefenseMap",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "DefenseUnit::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-DefenseUnit-RelWithDebInfo-e3a527b86013f5cf190b.json",
+					"name" : "DefenseUnit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "FileWriter::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-FileWriter-RelWithDebInfo-a55918f30604399af14a.json",
+					"name" : "FileWriter",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Game::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Game-RelWithDebInfo-70e4cbe5955aba431729.json",
+					"name" : "Game",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "HumanPlayer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-HumanPlayer-RelWithDebInfo-59b5426ce56c8a2c512c.json",
+					"name" : "HumanPlayer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Ironclad::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Ironclad-RelWithDebInfo-836293d12f705cc025fc.json",
+					"name" : "Ironclad",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Move::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Move-RelWithDebInfo-40db2f823b7c42ca3ede.json",
+					"name" : "Move",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Player::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Player-RelWithDebInfo-27815a9c28786c7b29fb.json",
+					"name" : "Player",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Position::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Position-RelWithDebInfo-1dc70fbd2391c7a6e229.json",
+					"name" : "Position",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ReplayGame::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ReplayGame-RelWithDebInfo-9486b6bd5de3e64d3e5d.json",
+					"name" : "ReplayGame",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "RobotPlayer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-RobotPlayer-RelWithDebInfo-c604faca4825f7d08873.json",
+					"name" : "RobotPlayer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Ship::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Ship-RelWithDebInfo-df23e76c8f0c758ebd8d.json",
+					"name" : "Ship",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Submarine::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Submarine-RelWithDebInfo-2743d2442240b5f8dda1.json",
+					"name" : "Submarine",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SupportShip::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SupportShip-RelWithDebInfo-5bec4d23c23506053332.json",
+					"name" : "SupportShip",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Utility::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Utility-RelWithDebInfo-a741deada454103e88b3.json",
+					"name" : "Utility",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-RelWithDebInfo-367f3b668639c344c54c.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "battaglia_navale::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-battaglia_navale-RelWithDebInfo-7392a59578f46daf6cd8.json",
+					"name" : "battaglia_navale",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "replay::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-replay-RelWithDebInfo-2f37266a0d22d6959e6f.json",
+					"name" : "replay",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/franc/Desktop/Battleship/BattleShipProject/build",
+		"source" : "C:/Users/franc/Desktop/Battleship/BattleShipProject"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 8
+	}
+}
