@@ -1,4 +1,4 @@
-//Author: Mattia Galassi 
+// Author: Mattia Galassi 
 #ifndef BATTLESHIPPROJECT_FILEWRITER_H_
 #define BATTLESHIPPROJECT_FILEWRITER_H_
 
@@ -10,39 +10,38 @@ class FileWriter
 {
 
 public:
-    // costruttore che accetta come parametro il nome del file dove scrivere:
+    // Constructor that accepts the file name where to write:
     FileWriter(std::string file_name);
 
     FileWriter();
 
-    // funzione che permette di scrivere nel buffer una stringa
+    // Function that allows writing a string to the buffer
     void write_line(std::string line);
 
-    // funzione che permette di salvare su file tutto il buffer salvato
-    // ritorna true se il file è stato scritto -> il file che crea è quello che ha nome specificato
-    // nel costruttore
-    // false se il processo non è andato a buon fine
+    // Function that saves the entire buffer to the file
+    // Returns true if the file was successfully written -> the file created is the one specified
+    // in the constructor
+    // Returns false if the process failed
     bool flush_recording();
 
-    // distruttore che involca il flush se non è stato effettuato
-    // già in precedenza
+    // Destructor that invokes flush if it was not already done
     ~FileWriter();
 
 private:
-    // variabile che salva il nome del file da creare
-    // essa contiene il path completo e se non esplicitamente indicato crea il file nella direcotry corrente
-    // se il file è già presente lo elimina e ne crea uno nuovo
+    // Variable that stores the name of the file to create
+    // It contains the full path, and if not explicitly specified, it creates the file in the current directory
+    // If the file already exists, it deletes it and creates a new one
     std::string file_name_;
-    // vettore in cui salvo tutto lo sotrico per poi farne il flush su file
+    // Vector where all history is stored, then flushed to the file
     std::vector<std::string> buffer_;
 
-    // flag per il flush in distruzione
+    // Flag to track if flush has been done in the destructor
     bool recorded;
 
     static constexpr char kLineMarker = '\n';
 };
 
-// La presente classe ha lo scopo wrappare l'oggetto file e permettere la scrittura di una stringa su di esso
-// il vero processo di scrittura su file viene eseguito durante il flush oer non mantenere la risolrsa per tutta le esecuzione del programma
-// se l'oggetto viene distrutto senza mai aver invocato un flush lo effettua di default nel distruttore
+// This class is meant to wrap the file object and allow writing strings to it
+// The actual file writing happens during flush to avoid keeping the resource open for the entire program execution
+// If the object is destroyed without ever invoking flush, it performs it by default in the destructor
 #endif

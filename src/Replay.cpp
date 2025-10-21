@@ -1,12 +1,12 @@
-//Author: Mattia Galassi
+// Author: Mattia Galassi
 #include "../include/Replay.h"
 
-// costruttore che accetta come parametro il nome del file di log:
-// se la classe viene creata per leggere da file aprirà file_name in lettura
-// altrimenti rappresneta il nome del file di log in cui scrivere
+// Constructor that accepts the name of the log file as a parameter:
+// if the class is created for reading from a file, it will open file_name in read mode
+// otherwise it represents the name of the log file to write
 Replay::Replay(std::string file_name)
 {
-    // inizializzo le variabili di classe
+    // initialize class variables
     file_name_ = file_name;
     buffer_ = std::vector<std::string>();
     recorded = false;
@@ -19,11 +19,11 @@ Replay::Replay()
     recorded = false;
 }
 
-// funzione per impostare i due giocatori (scritti nell'ordine di parametro)
-// e il numero massimo di mosse che rappresentano l'header file da scrivere
+// function to set the two players (in the order of parameters)
+// and the maximum number of moves, representing the header to write
 void Replay::record_header(std::string player1, std::string player2, int num_rounds)
 {
-    // se è già pieno ne creo uno nuovo per mantenere corretto lo standard di scrittura
+    // if buffer is already full, create a new one to maintain correct writing standard
     if (!buffer_.empty())
         buffer_ = std::vector<std::string>();
 
@@ -32,44 +32,44 @@ void Replay::record_header(std::string player1, std::string player2, int num_rou
     buffer_.push_back(std::to_string(num_rounds));
 }
 
-// funzione che permette di registrare una mossa nello storico
-// player_name è il nome del giocatore che l'ha effettuata
+// function to record a move in the history
+// player_name is the name of the player who made the move
 void Replay::record_move(const Move &move)
 {
-    // se non è ancopra stato scritto l'header allora lancio eccezione
+    // if the header has not been written yet, throw exception
     if (buffer_.size() < 3)
         throw InvalidOperation();
 
     buffer_.push_back(move.to_string());
 }
 
-// overload della funzione precedente che accetta una stringa
+// overload of the previous function that accepts a string
 void Replay::record_move(std::string move)
 {
-    // se non è ancopra stato scritto l'header allora lancio eccezione
+    // if the header has not been written yet, throw exception
     if (buffer_.size() < 3)
         throw InvalidOperation();
 
     buffer_.push_back(move);
 }
 
-// funzione che permette di salvare su file tutto lo storico registrato
-// ritorna true se il log è stato scritto -> il file che crea è quello che ha nome specificato
-// nel costruttore
-// false se il processo non è andato a buon fine
+// function to save the entire recorded history to a file
+// returns true if the log was successfully written -> the file created is the one specified
+// in the constructor
+// false if the process failed
 bool Replay::flush_recording()
 {
-    // se lo storico di registrazioni è vuoto allora ritorno false
+    // if the recording history is empty, return false
     if (buffer_.empty())
         return false;
     std::ofstream file;
-    // altrimenti scrivo tutti gli elementi di recording_
+    // otherwise, write all elements of recording_
     try
     {
         file = std::ofstream(file_name_);
         for (int i = 0; i < buffer_.size(); i++)
         {
-            // se è l'ultimo non metto il \n
+            // if it's the last one, do not add \n
             if (i == buffer_.size() - 1)
                 file << buffer_[i];
             else
@@ -90,17 +90,16 @@ bool Replay::flush_recording()
     return false;
 }
 
-// funzione che carica in memoria (nel buffer_) il file di log con cui è stato
-// costruito l'oggetto
-// se il file non esiste o quaclosa va storto duranet la lettura ritorna false
+// function that loads the log file used to construct the object into memory (buffer_)
+// returns false if the file does not exist or if something goes wrong during reading
 bool Replay::open_log()
 {
-    // se lo storico di registrazioni non è vuoto ne creo uno nuovo
+    // if the recording history is not empty, create a new one
     if (!buffer_.empty())
         buffer_ = std::vector<std::string>();
 
     std::ifstream file;
-    // apro il file e leggo tutte le righe caricandole nel buffer
+    // open the file and read all lines into the buffer
     try
     {
         file = std::ifstream(file_name_);
@@ -112,7 +111,7 @@ bool Replay::open_log()
         }
 
         file.close();
-        // preparo il cursore sulle mosse
+        // prepare the cursor for moves
         currentTransaction = kStartRounds;
         return true;
     }
@@ -124,49 +123,46 @@ bool Replay::open_log()
     return false;
 }
 
-// funzione che permette di ottenere il primo giocatore se si apre un file
-// di log e lo si vuole leggere
-// lancia eccezione se il file non è ancora stato caricato
+// function to get the first player when opening a log file
+// throws exception if the file has not been loaded yet
 std::string Replay::get_first_player_name()
 {
-    // se il buffer è vuoto allora il file non è stato caricato o è invalido
+    // if buffer is empty, the file was not loaded or is invalid
     if (buffer_.size() < kFirstPlayerPosition + 1)
         throw InvalidOperation();
 
     return buffer_[kFirstPlayerPosition];
 }
 
-// funzione che permette di ottenere il secondo giocatore se si apre un file
-// di log e lo si vuole leggere
-// lancia eccezione se il file non è ancora stato caricato
+// function to get the second player when opening a log file
+// throws exception if the file has not been loaded yet
 std::string Replay::get_second_player_name()
 {
-    // se il buffer è vuoto allora il file non è stato caricato o è invalido
+    // if buffer is empty, the file was not loaded or is invalid
     if (buffer_.size() < kSecondPlayerPosition + 1)
         throw InvalidOperation();
 
     return buffer_[kSecondPlayerPosition];
 }
 
-// funzione che permette di ottenere il # di round se si apre un file
-// di log e lo si vuole leggere
-// lancia eccezione se il file non è ancora stato caricato
+// function to get the number of rounds when opening a log file
+// throws exception if the file has not been loaded yet
 int Replay::get_number_of_rounds()
 {
-    // se il buffer è vuoto allora il file non è stato caricato o è invalido
+    // if buffer is empty, the file was not loaded or is invalid
     if (buffer_.size() < kNumRoundsPosition + 1)
         throw InvalidOperation();
 
     return std::stoi(buffer_[kNumRoundsPosition]);
 }
 
-// verifica se è disponibile una mossa nel data buffer
+// check if a move is available in the data buffer
 bool Replay::has_next()
 {
     return currentTransaction < buffer_.size();
 }
 
-// funzione che ritorna il numero di mosse rimanenti nel buffer
+// function that returns the number of remaining moves in the buffer
 int Replay::get_remaining_rounds()
 {
     if (buffer_.size() >= kNumRoundsPosition + 1)
@@ -175,8 +171,8 @@ int Replay::get_remaining_rounds()
         return 0;
 }
 
-// funzione che permette di ottenere la possima mossa dello stream del data buffer
-// ritona un astringa da convertire a mossa
+// function to get the next move from the data buffer stream
+// returns a string to convert to a move
 std::string Replay::next()
 {
     if (!has_next())
@@ -185,8 +181,8 @@ std::string Replay::next()
     return buffer_[currentTransaction++];
 }
 
-// distruttore che involca il flush se non è stato effettuato
-// già in precedenza
+// destructor that invokes flush if it has not been performed
+// previously
 Replay::~Replay()
 {
     if (!recorded && !buffer_.empty())

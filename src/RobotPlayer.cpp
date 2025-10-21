@@ -1,7 +1,7 @@
-//Author: Francesco Fantin
+// Author: Francesco Fantin
 #include "../include/RobotPlayer.h"
 
-// il robot inventa la mossa per cui la stringa passata come parametro sarà vuota
+// The robot invents the move, so the string passed as a parameter will be empty
 Move RobotPlayer::get_move(const std::string &move)
 {
     Position origin{};
@@ -11,7 +11,7 @@ Move RobotPlayer::get_move(const std::string &move)
     int size_list = ship_list.size();
     std::shared_ptr<Ship> ship_cmd;
 
-    // se esiste almeno una nave nella lista, ne viene prelevata una in modo casuale
+    // if at least one ship exists in the list, one is randomly selected
     if (size_list > 0)
     {
         ship_cmd = ship_list.at(get_random(ship_list.size()));
@@ -21,18 +21,18 @@ Move RobotPlayer::get_move(const std::string &move)
         ship_cmd = nullptr;
     }
 
-    // se la nave è stata prelevata, tale nave eseguirà l'azione
+    // if a ship was selected, that ship will execute the action
     if (ship_cmd)
     {
-        // posizione di origine corrisponde al centro della nave appena ottenuta
+        // origin position corresponds to the center of the selected ship
         origin = ship_cmd->centre();
-        // viene generato una posizione target casuale
+        // generate a random target position
         target = get_random_pos();
 
         int size = ship_cmd->size();
 
-        // distinzione del tipo di mossa a seconda della taglia della nave restituita
-        // NOTA: sarebbe opportuno usare delle costanti
+        // distinguish the type of move according to the size of the selected ship
+        // NOTE: it would be appropriate to use constants
         if (size == Ironclad::kSize)
         {
             return {origin, target, MoveType::attack};
@@ -53,22 +53,20 @@ Move RobotPlayer::get_move(const std::string &move)
 }
 
 bool RobotPlayer::add_ships(std::string &cmd, int size)
-
 {
-    // vengono generate posizioni casuali di prua e poppa
+    // generate random positions for bow and stern
     Position bow = get_random_pos();
-    // la generazione della posizione di poppa è basata su quella della prua
+    // stern position generation is based on bow
     Position stern = get_random_pos(bow, size);
 
-    // si controlla se la nave può essere inserita nella mappa
+    // check if the ship can be placed on the map
     bool created = defense_map_.add_ship(bow, stern);
 
     Direction d = get_direction(bow, stern);
     Position p = (bow + stern) / 2;
 
-    // se l'inserimento è andato a buon fine, a seconda del tipo di nave,
-    // viene chiamato il relativo costruttore
-    // infine, la nave appena istanziata viene aggiunta alla lista di navi
+    // if placement succeeded, call the constructor depending on ship type
+    // finally, the newly instantiated ship is added to the ship list
     if (created)
     {
         if (size == Ironclad::kSize)
@@ -87,7 +85,7 @@ bool RobotPlayer::add_ships(std::string &cmd, int size)
             ship_list.push_back(ship);
         }
 
-        // il comando di aggiunta della nave viene inserito nella stringa passta a come parametro (out)
+        // the command to add the ship is stored in the string passed as a parameter (out)
         cmd = convert_to_command(bow) + " " + convert_to_command(stern);
 
         return true;
@@ -97,8 +95,7 @@ bool RobotPlayer::add_ships(std::string &cmd, int size)
 
 Position RobotPlayer::get_random_pos()
 {
-    //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(1));
-    // srand(time(NULL));
+    // generate a random position within the map boundaries
     int x = abs(get_random(defense_map_.kWidth));
     int y = abs(get_random(defense_map_.kHeight));
     return Position(x, y);
@@ -110,12 +107,12 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
         return origin;
 
     bool done = false;
-    // x = 0 --> restituisco posizione con stessa ascissa e ordinata maggiore
-    // x = 1 --> restituisco posizione con stessa ascissa e ordinata minore
-    // x = 2 --> restituisco posizione con stessa ordinata e ascissa maggiore
-    // x = 3 --> restituisco posizione con stessa ordinata e ascissa minore
+    // x = 0 --> return position with same X and larger Y
+    // x = 1 --> return position with same X and smaller Y
+    // x = 2 --> return position with same Y and larger X
+    // x = 3 --> return position with same Y and smaller X
 
-    // nel caso la posizione ottenuta randomicamente non vada bene ne cerco un'altra finché non è valida
+    // if the randomly obtained position is invalid, keep searching until valid
     while (!done)
     {
         int x = abs(get_random(4));
@@ -124,7 +121,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
             int y = origin.Y() + size - 1;
             if (y <= 11)
                 return Position(origin.X(), y);
-            // se l'ordinata sfora dal limite allora sottraggo size
+            // if Y exceeds the limit, subtract size
             else
                 x = 1;
         }
@@ -133,7 +130,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
             int y = origin.Y() - size + 1;
             if (y >= 0)
                 return Position(origin.X(), y);
-            // se l'ordinata sfora dal limite allora aggiungo size
+            // if Y exceeds the limit, add size
             else
                 x = 0;
         }
@@ -142,7 +139,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
             int x = origin.X() + size - 1;
             if (x <= 11)
                 return Position(x, origin.Y());
-            // se l'ascissa sfora dal limite allora sottraggo size
+            // if X exceeds the limit, subtract size
             else
                 x = 3;
         }
@@ -151,7 +148,7 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
             int x = origin.X() - size + 1;
             if (x >= 0)
                 return Position(x, origin.Y());
-            // se l'ascissa sfora dal limite allora aggiungo size
+            // if X exceeds the limit, add size
             else
                 x = 2;
         }
@@ -159,6 +156,6 @@ Position RobotPlayer::get_random_pos(const Position &origin, int size)
             done = true;
     }
 
-    // se si arriva a questo pezzo di codice c'è stato un errore quindi restituisco la cella di partenza
+    // if we reach this code, an error occurred; return the starting cell
     return origin;
 }

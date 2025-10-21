@@ -1,7 +1,7 @@
-//Author: Mattia Galassi
+// Author: Mattia Galassi
 #include "../include/FileWriter.h"
 
-// costruttore che accetta come parametro il nome del file dove scrivere:
+// Constructor that accepts the file name where data will be written
 FileWriter::FileWriter(std::string file_name)
 {
     file_name_ = file_name;
@@ -9,31 +9,30 @@ FileWriter::FileWriter(std::string file_name)
     buffer_ = std::vector<std::string>();
 }
 
+// Default constructor
 FileWriter::FileWriter()
 {
-    file_name_ = ".txt";
+    file_name_ = ".txt"; // default file name
     recorded = false;
     buffer_ = std::vector<std::string>();
 }
 
-// funzione che permette di scrivere nel buffer una stringa
+// Adds a line to the internal buffer
 void FileWriter::write_line(std::string line)
 {
     buffer_.push_back(line);
 }
 
-// funzione che permette di salvare su file tutto il buffer salvato
-// ritorna true se il file è stato scritto -> il file che crea è quello che ha nome specificato
-// nel costruttore
-// false se il processo non è andato a buon fine
+// Writes the entire buffer to the file
+// Returns true if writing was successful, false otherwise
 bool FileWriter::flush_recording()
 {
-    // se lo storico di registrazioni è vuoto allora ritorno false
+    // if buffer is empty, nothing to write
     if (buffer_.empty())
         return false;
 
     std::ofstream file;
-    // altrimenti scrivo tutti gli elementi di recording_
+
     try
     {
         file = std::ofstream(file_name_);
@@ -44,9 +43,7 @@ bool FileWriter::flush_recording()
         }
 
         file.close();
-
         recorded = true;
-
         return true;
     }
     catch (const std::exception &e)
@@ -54,11 +51,11 @@ bool FileWriter::flush_recording()
         file.close();
         return false;
     }
+
     return false;
 }
 
-// distruttore che involca il flush se non è stato effettuato
-// già in precedenza
+// Destructor ensures that any remaining buffer is written to file
 FileWriter::~FileWriter()
 {
     if (!recorded && !buffer_.empty())

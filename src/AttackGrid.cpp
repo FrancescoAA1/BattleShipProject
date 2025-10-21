@@ -1,19 +1,19 @@
 // Author: Mattia Galassi
 #include "../include/AttackGrid.h"
 
-// costruttore di default che setta tutto a vuoto
+// Default constructor that sets all cells to empty
 AttackGrid::AttackGrid()
 {
     clear_area();
 }
 
-// funzione che permette di impostare come spotted (scoperta) la posizione selezionata
-// aggiornando la mappa d'attacco
-// ritorna true se lo spot è andato a buon fine
-// lo spot fallisce se la cella non è vuota o non è valida
+// Function that sets the specified position as spotted
+// Updates the attack map
+// Returns true if spotting was successful
+// Spotting fails if the cell is invalid
 bool AttackGrid::spot_position(const Position &target_destination)
 {
-    // Se la posizione è valida aggirno la mappa di attacco come da aspettativa
+    // If the position is valid, update the attack map
     if (check_position(target_destination))
     {
         attack_grid_[target_destination.Y()][target_destination.X()] = AttackUnit::spotted;
@@ -23,13 +23,13 @@ bool AttackGrid::spot_position(const Position &target_destination)
         return false;
 }
 
-// imposta a hit la cella della mappa d'attacco di target specificato
-// aggiornando la mappa d'attacco
-// ritorna true se lo shot è andato a buon fine
-// lo spot fallisce se la cella non è vuota o non è valida
+// Sets a cell of the attack map as hit for the specified target
+// Updates the attack map
+// Returns true if the shot was successful
+// The shot fails if the cell is invalid
 bool AttackGrid::shot_position(const Position &target_destination, AttackUnit shot_status)
 {
-    // Se la posizione è valida aggirno la mappa di attacco come da aspettativa
+    // If the position is valid, update the attack map
     if (check_position(target_destination))
     {
         attack_grid_[target_destination.Y()][target_destination.X()] = shot_status;
@@ -39,10 +39,10 @@ bool AttackGrid::shot_position(const Position &target_destination, AttackUnit sh
         return false;
 }
 
-// funzione che pulisce tutte le caselle nella matrice
+// Function that clears all cells in the attack matrix
 void AttackGrid::clear_area()
 {
-    // imposto tutte le celle
+    // Set all cells to unknown
     for (int i = 0; i < kHeight; i++)
     {
         for (int j = 0; j < kWidth; j++)
@@ -52,20 +52,19 @@ void AttackGrid::clear_area()
     }
 }
 
-// verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
+// Checks if a given position is valid (within matrix bounds)
 bool AttackGrid::check_position(const Position &position) const
 {
     return (position.X() >= 0 && position.X() < kWidth && position.Y() >= 0 && position.Y() < kHeight);
 }
 
-// funzione che scrive in una stringa la mappa
+// Function that converts the attack map to a string representation
 std::string AttackGrid::to_string() const
 {
     std::string result = ">  ";
-    // leggo tutte le celle e le scrivo nella sringa risultante
-    // il loro corrispondente valore per la rappresentazione
-    // aggiungendo la colonna laterale di lettere
-    // e la riga finale di numeri per le coordinates
+    // Read all cells and write them to the resulting string
+    // Use their corresponding symbol representation
+    // Add row letters and column numbers for coordinates
     char row_index = kFirstRowLetter;
     int column_index = kFirstColumnNumber;
 
@@ -85,7 +84,7 @@ std::string AttackGrid::to_string() const
     {
         for (int j = 0; j < kWidth; j++)
         {
-            // Scrivo la riga indice:
+            // Write the row letter
             if (j == 0)
             {
                 if (row_index >= 'J')
@@ -127,16 +126,16 @@ std::string AttackGrid::to_string() const
     return result;
 }
 
-// Overload dell'operatore << che scrive nell'output stream la matrice di difesa
+// Overload of the << operator to print the attack map
 std::ostream &operator<<(std::ostream &data_stream, const AttackGrid &attack_grid)
 {
     return data_stream << attack_grid.to_string();
 }
 
-// funzione che pulisce dalla matrice tutte le caselle impostate ad X
+// Function that clears all cells marked as 'X' in the matrix
 void AttackGrid::clear_all_full_and_hit()
 {
-    // imposto tutte le celle con carettere X a empty
+    // Set all cells marked with 'X' to unknown
     for (int i = 0; i < kHeight; i++)
     {
         for (int j = 0; j < kWidth; j++)
@@ -149,10 +148,10 @@ void AttackGrid::clear_all_full_and_hit()
     }
 }
 
-// funzione che pulisce dalla matrice tutte le caselle impostate ad O
+// Function that clears all cells marked as 'O' in the matrix
 void AttackGrid::clear_all_full_and_empty()
 {
-    // imposto tutte le celle con carettere O a empty
+    // Set all cells marked with 'O' to unknown
     for (int i = 0; i < kHeight; i++)
     {
         for (int j = 0; j < kWidth; j++)
@@ -165,10 +164,10 @@ void AttackGrid::clear_all_full_and_empty()
     }
 }
 
-// funzione che pulisce dalla matrice tutte le caselle impostate ad Y
+// Function that clears all cells marked as 'Y' in the matrix
 void AttackGrid::clear_sonared()
 {
-    // imposto tutte le celle con carettere O a empty
+    // Set all cells marked with 'Y' to unknown
     for (int i = 0; i < kHeight; i++)
     {
         for (int j = 0; j < kWidth; j++)

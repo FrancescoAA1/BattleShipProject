@@ -1,35 +1,37 @@
-//Author: Enrico Disarò
+// Author: Enrico Disarò
 #ifndef BATTLESHIPPROJECT_POSITION_H_
 #define BATTLESHIPPROJECT_POSITION_H_
 
 #include <limits.h>
 #include <ostream>
+#include <string>
 
 class Position
 {
 
-    public:
-    //inizializzo alla posizione (0,0)
+public:
+    // Initialize to position (0,0)
     Position();
-    //inizializzo alla posizione inserita
+    // Initialize to the specified position
     Position(int x, int y);
 
-    //ritorno l'ascissa
+    // Return the x-coordinate
     int X() const { return x_; } 
-    //ritorno l'ordinata
+    // Return the y-coordinate
     int Y() const { return y_; } 
-    //imposto l'ascissa
+    // Set the x-coordinate
     void set_x(int value); 
-    //imposto l'ordinata
+    // Set the y-coordinate
     void set_y(int value);
-    //imposto la coordinata a invalida
+    // Set the coordinate as invalid
     void make_absolute_invalid(); 
-    //verifico se una coordinata è assolutamente invalida
+    // Check if a coordinate is absolutely invalid
     bool is_absolute_invalid();
 
+    // Convert the position to a string
     std::string to_string() const;  
 
-    private: 
+private: 
     int x_; 
     int y_;
 
@@ -37,13 +39,16 @@ class Position
     static constexpr int INVALID_Y_POSITION = INT_MIN; 
 
 };
-//operatori di cui fare l'overload
+
+// Operators to overload
 Position operator+(const Position& p1, const Position& p2); 
 Position operator-(const Position& p1, const Position& p2);
 Position operator*(const Position& p, int coeff);  
 Position operator/(const Position& p, int coeff);  
 bool operator==(const Position& p1, const Position& p2);
 bool operator!=(const Position& p1, const Position& p2);  
-//non sono necessari operatori di copia, spostamento e relativi contruttori non avendo memoria dinamica allocata
+
+// Copy and move operators and constructors are not needed as no dynamic memory is allocated
 std::ostream& operator<<(std::ostream& data_stream,  const Position& pos); 
+
 #endif

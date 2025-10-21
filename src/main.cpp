@@ -3,24 +3,23 @@
 #include "../include/AttackGrid.h"
 #include <iostream>
 #include <string.h>
-
 int main(int argc, char **argv)
 {
 
-    // Controllo del numero di parametri
-    // Se sono due si tratta invece di una partita PlayerVsComputer
-    // oppure ComputerVsComputer
+    // Check the number of parameters
+    // If there are two, it means it is a PlayerVsComputer
+    // or ComputerVsComputer match
 
     if (argc == 2)
     {
-        // partita player vs computer
+        // player vs computer match
         if (strcmp(argv[1], "pc") == 0)
         {
             std::string name;
-            std::cout << "Inserisci nome: ";
+            std::cout << "Enter your name: ";
             getline(std::cin, name);
 
-            std::cout << "Inserisci numero massimo di mosse: ";
+            std::cout << "Enter the maximum number of moves: ";
             int nRounds;
             std::string line;
 
@@ -38,28 +37,28 @@ int main(int argc, char **argv)
                     else
                     {
                         done = false;
-                        std::cout << "Errore! Formato non valido o supera il limite massimo di mosse.\nReinserisci numero massimo di mosse: ";
+                        std::cout << "Error! Invalid format or exceeds the maximum move limit.\nPlease re-enter the maximum number of moves: ";
                     }
                 }
                 catch (std::invalid_argument &ex)
                 {
-                    std::cout << "Errore! Formato non valido o supera il limite massimo di mosse.\nReinserisci numero massimo di mosse: ";
+                    std::cout << "Error! Invalid format or exceeds the maximum move limit.\nPlease re-enter the maximum number of moves: ";
                 }
             }
 
             std::string file_name;
-            std::cout << "Inserisci nome del file di log: ";
+            std::cout << "Enter the name of the log file: ";
             getline(std::cin, file_name);
 
             Game g{name, "ComputerX", GameMode::PlayerVsComputer, nRounds, file_name};
-            // inizio partita
+            // start match
             g.play_game();
         }
 
-        // partita computer vs computer
+        // computer vs computer match
         else if (strcmp(argv[1], "cc") == 0)
         {
-            std::cout << "Inserisci numero massimo di mosse: ";
+            std::cout << "Enter the maximum number of moves: ";
             int nRounds;
             std::string line;
 
@@ -77,17 +76,17 @@ int main(int argc, char **argv)
                     else
                     {
                         done = false;
-                        std::cout << "Errore! Formato non valido o supera il limite massimo di mosse.\nReinserisci numero massimo di mosse: ";
+                        std::cout << "Error! Invalid format or exceeds the maximum move limit.\nPlease re-enter the maximum number of moves: ";
                     }
                 }
                 catch (std::invalid_argument &ex)
                 {
-                    std::cout << "Errore! Formato non valido o supera il limite massimo di mosse.\nReinserisci numero massimo di mosse: ";
+                    std::cout << "Error! Invalid format or exceeds the maximum move limit.\nPlease re-enter the maximum number of moves: ";
                 }
             }
 
             std::string file_name;
-            std::cout << "Inserisci nome del file di log: ";
+            std::cout << "Enter the name of the log file: ";
             getline(std::cin, file_name);
 
             Game g{"ComputerX", "ComputerY", GameMode::ComputerVsComputer, nRounds, file_name};
@@ -96,7 +95,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        std::cout << "Lista Parametri Errata" << std::endl;
+        std::cout << "Incorrect parameter list" << std::endl;
     }
 
     return 0;

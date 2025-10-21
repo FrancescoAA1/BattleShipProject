@@ -1,26 +1,26 @@
-//Author: Enrico Disarò
+// Author: Enrico Disarò
 #include "Submarine.h"
 
-// Per eseguire la sua azione di spostamento e ispezione, il sottomarino ha bisogno dei seguenti dati:
-// La posizione obiettivo dello spostamento, anche centro dell'area ispezionata
-// Un vettore di AttackUnit, che contiene la porzione di mappa nemica che è stata ispezionata
+// To perform its movement and inspection action, the submarine needs the following data:
+// The target position of the movement, which is also the center of the inspected area
+// A vector of AttackUnit, which contains the portion of the enemy map that has been inspected
 //
-// i controlli sulla validità della mossa sono già stati effettuati, e la nave può quindi procedere con sicurezza all'azione
+// The checks on the validity of the move have already been performed, 
+// and the ship can therefore safely proceed with the action
 
 bool Submarine::action(const Position &target, const std::vector<AttackUnit> &data)
 {
     if (data.empty())
     {
-
         return false;
     }
 
     bool allowed = defense_map_.move_ship(this->centre(), target);
 
-    // sposto il sottomarino
+    // move the submarine
     if (allowed)
     {
-        //sposto il centro della nave
+        // move the center of the ship
         set_center(target);
 
         int counter = 0;
@@ -29,8 +29,8 @@ bool Submarine::action(const Position &target, const std::vector<AttackUnit> &da
         {
             for (int x = -kSide / 2; x <= kSide / 2; x++)
             {
-                // controllo se la posizione relativa nell'array rispetto al centro è valida, e se lo è procedo
-                // a controllare il contenuto del vettore, altrimenti skippo e vado avanti
+                // check if the relative position in the array with respect to the center is valid, 
+                // and if it is, proceed to check the content of the vector; otherwise skip and continue
                 Position t = Position(target.X() + x, target.Y() + y);
                 if (this->attack_grid_.check_position(t))
                 {
@@ -44,6 +44,6 @@ bool Submarine::action(const Position &target, const std::vector<AttackUnit> &da
         return true;
     }
 
-    // se arrivo qui significa che il movimento non era consentito
+    // if we get here, it means the movement was not allowed
     return false;
 }

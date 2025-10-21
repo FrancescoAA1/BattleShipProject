@@ -1,4 +1,4 @@
-//Author: Enrico Disarò
+// Author: Enrico Disarò
 #ifndef BATTLESHIPPROJECT_SUBMARINE_H_
 #define BATTLESHIPPROJECT_SUBMARINE_H_
 
@@ -7,32 +7,33 @@
 
 class Submarine : public Ship
 {
-    public:
-        //costruttore
-        //crea una nave con corazza = 1, dimensione = 1
-        //non è necessario fornire l'orientamento in quanto la lunghezza è uno e sarebbe indifferente
-        //l'orientamento verrà comunque impostato a un valore di default per completezza
-        Submarine(Position& centre_position, DefenseMap& defense_map, AttackGrid& attack_grid) : Ship(kSize, kDefaultDirection, centre_position, defense_map, attack_grid) {}
+public:
+    // Constructor
+    // Creates a ship with armor = 1, size = 1
+    // No need to provide orientation since length is 1 and it would be irrelevant
+    // Orientation will still be set to a default value for completeness
+    Submarine(Position& centre_position, DefenseMap& defense_map, AttackGrid& attack_grid) 
+        : Ship(kSize, kDefaultDirection, centre_position, defense_map, attack_grid) {}
 
-        //ricordare l'override di action
-        bool action(const Position& target, const std::vector<AttackUnit>& data) override;
+    // Remember to override action
+    bool action(const Position& target, const std::vector<AttackUnit>& data) override;
 
-        //costante che definisce la dimensione del sottomarino
-        static constexpr int kSize = 1;
+    // Constant defining the size of the submarine
+    static constexpr int kSize = 1;
 
-    private:
+private:
 
-        //costante che definisce l'orientamento di default del sottomarino
-        static constexpr Direction kDefaultDirection = Direction::horizontal;
-        //costante che definisce il lato dell'area di mappa ispezionata
-        //l'area ispezionata è un quadrato e la lunghezza del lato è dispari per permettere alla nave di essere al centro di essa
-        static constexpr int kSide = 5;
+    // Constant defining the default orientation of the submarine
+    static constexpr Direction kDefaultDirection = Direction::horizontal;
+    // Constant defining the side length of the inspected map area
+    // The inspected area is a square and the side length is odd to allow the ship to be in the center
+    static constexpr int kSide = 5;
 }; 
 
 /*
-classe Submarine: rappresenta un sottomarino;
-questa nave ha dimensione 1, e può eseguire una operazione di spostamento + ispezione della zona dove si è spostato
-in un'area di 5 caselle * 5 caselle (ispezione = segna sulla mappa di attacco del giocatore le navi nemiche con una Y)
+Class Submarine: represents a submarine;
+This ship has size 1, and can perform a move + inspection operation in the area it moves to,
+covering a 5x5 square (inspection = marks enemy ships on the player's attack map with a Y)
 */
 
 #endif

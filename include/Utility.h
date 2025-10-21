@@ -7,6 +7,7 @@
 #include <vector>
 #include <stdlib.h>
 #include <time.h>
+#include <string>
 
 // file di funzioni utilitarie da usare in più parti differenti del progetto
 

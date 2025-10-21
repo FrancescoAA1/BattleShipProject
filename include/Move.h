@@ -1,4 +1,4 @@
-//Author: Enrico Disarò
+// Author: Enrico Disarò
 #ifndef BATTLESHIPPROJECT_MOVE_H_
 #define BATTLESHIPPROJECT_MOVE_H_
 
@@ -6,56 +6,54 @@
 #include "Position.h"
 #include "Utility.h"
 
-//enumeratore che indica il tipo di mossa effettuata dal giocatore
+// Enumerator that indicates the type of move performed by the player
 enum MoveType{
     invalid,
-    attack, //attacco (corazzata)
-    moveAndFix, //spostamento e cura (nave di supporto)
-    moveAndDiscover, //spostamento ed ispezione (sottomarino)
-    showMap, //stampa delle mappe del giocatore
-    clearEmptyHit, //rimozione dei simboli 'O' dalla mappa del giocatore
-    clearFullHit, //rimozione dei simboli 'X' dalla mappa del giocatore
-    clearSonared //rimozione dei simboli 'Y' dalla mappa del giocatore
+    attack,          // attack (ironclad)
+    moveAndFix,      // move and repair (support ship)
+    moveAndDiscover, // move and inspect (submarine)
+    showMap,         // display the player's maps
+    clearEmptyHit,   // remove 'O' symbols from the player's map
+    clearFullHit,    // remove 'X' symbols from the player's map
+    clearSonared     // remove 'Y' symbols from the player's map
 };
 
 class Move
 {
-    public:
-    //costruttore valido sia per Human Player, sia per Robot Player
+public:
+    // Constructor valid for both Human and Robot Players
     Move(const Position&, const Position&, MoveType);
 
-    //costruttore che creare una mossa invalida
+    // Constructor that creates an invalid move
     Move();
 
+    // Getter methods
+    Position origin() const { return origin_; }
+    Position target() const { return target_; }
+    MoveType movetype() const { return move_; }
 
-    //metodi getter
-    Position origin() const {return origin_;}
-    Position target() const {return target_;}
-    MoveType movetype() const {return move_;}
+    // Setter methods
+    void set_movetype(MoveType m) { move_ = m; }
+    void set_origin(const Position& origin) { origin_ = origin; }
+    void set_target(const Position& target) { target_ = target; }
 
-    //metodi setter
-    void set_movetype(MoveType m){move_ = m;}
-    void set_origin(const Position& origin){origin_ = origin;}
-    void set_target(const Position& target){target_ = target;}
-
-    //rende non valida una mossa invalidandone le posizioni e cambiando il tipo di mossa
+    // Makes the move invalid by resetting its positions and changing the move type
     void makeInvalid();
 
-
-    // converte a stringa la mossa
+    // Converts the move to a string
     std::string to_string() const; 
 
-    private: 
-
-    //posizione da cui viene effettuata la mossa
+private: 
+    // Position from which the move is performed
     Position origin_;
-    //posizione su cui deve essere effettuata la mossa
+    // Position on which the move is performed
     Position target_;
-    //tipologia di mossa
+    // Type of move
     MoveType move_;
 }; 
 
 /*
-Classe Move: rappresenta una mossa effettuata da un qualsiasi giocatore.
+Move class: represents a move performed by any player.
 */
+
 #endif

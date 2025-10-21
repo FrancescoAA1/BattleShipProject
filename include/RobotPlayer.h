@@ -1,4 +1,4 @@
-//Author: Francesco fantin
+// Author: Francesco Fantin
 #ifndef BATTLESHIPPROJECT_ROBOTPLAYER_H_
 #define BATTLESHIPPROJECT_ROBOTPLAYER_H_
 
@@ -10,19 +10,20 @@
 class RobotPlayer : public Player
 {
 public:
-    // costruttore che crea giocatore con nome
+    // Constructor that creates a player with a name
     RobotPlayer(const std::string &nickname_) : Player(nickname_) {}
 
-    // funzione che dato un comando restituisce una mossa
+    // Function that, given a command, returns a move
     Move get_move(const std::string &cmd) override;
 
+    // Function to add ships to the player's fleet
     bool add_ships(std::string &cmd, int size) override;
 
 private:
-    // funzione che restituisce una posizione casuale
+    // Function that returns a random position
     Position get_random_pos();
 
-    // funzione che restituisce una posizionie casuale valida a (size) distanza su un solo asse da (origin)
+    // Function that returns a valid random position at (size) distance along a single axis from (origin)
     Position get_random_pos(const Position &origin, int size);
 };
 

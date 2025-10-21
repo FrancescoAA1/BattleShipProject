@@ -1,16 +1,16 @@
-//Author: Francesco Fantin
+// Author: Francesco Fantin
 #include "../include/HumanPlayer.h"
 
 Move HumanPlayer::get_move(const std::string &cmd)
 {
-    // creazione di due posizioni con il costruttore di default
+    // create two positions using the default constructor
     Position origin{};
     Position target{};
     Move m;
 
-    // prima di dividere la stringa nelle due coordinate
-    // si controlla che la stringa corrisponda ad un comando di stampa delle due mappe
-    // oppure ad un comando di pulizia della mappa
+    // before splitting the string into two coordinates
+    // check if the string corresponds to a command to display both maps
+    // or a command to clear the map
     if (cmd == "XX XX")
     {
         m.set_movetype(MoveType::showMap);
@@ -33,7 +33,7 @@ Move HumanPlayer::get_move(const std::string &cmd)
     }
     else
     {
-        // divisione della stringa in due parti (il delimitatore è lo spazio)
+        // split the string into two parts (delimiter is a space)
         int pos = cmd.find_first_of(' ');
 
         try
@@ -41,7 +41,7 @@ Move HumanPlayer::get_move(const std::string &cmd)
             std::string first_pair = cmd.substr(0, pos);
             std::string second_pair = cmd.substr(pos + 1);
 
-            // per ogni coppia di coordinate viene restituita una posizione
+            // convert each coordinate pair into a Position
             origin = convert_to_position(first_pair);
             target = convert_to_position(second_pair);
         }
@@ -53,17 +53,15 @@ Move HumanPlayer::get_move(const std::string &cmd)
         if (origin.is_absolute_invalid() || target.is_absolute_invalid())
             return {origin, target, MoveType::invalid};
 
-        // viene indivuata la nave che compie l'azione
+        // find the ship that will perform the action
         std::shared_ptr<Ship> ship_cmd = get_ship(origin);
 
         if (ship_cmd)
         {
-            // distinzione del tipo di mossa a seconda della taglia della nave restituita
-            // NOTA: sarebbe opportuno usare delle costanti
+            // distinguish the move type according to the ship size
+            // NOTE: using constants would be better
             int size = ship_cmd->size();
 
-            // distinzione del tipo di mossa a seconda della taglia della nave restituita
-            // NOTA: sarebbe opportuno usare delle costanti
             if (size == Ironclad::kSize)
             {
                 return {origin, target, MoveType::attack};
@@ -89,7 +87,7 @@ bool HumanPlayer::add_ships(std::string &cmd, int size)
     Position bow{};
     Position stern{};
 
-    // divisione della stringa in due parti (il delimitatore è lo spazio)
+    // split the string into two parts (delimiter is a space)
     int pos = cmd.find_first_of(' ');
 
     try
@@ -97,7 +95,7 @@ bool HumanPlayer::add_ships(std::string &cmd, int size)
         std::string first_pair = cmd.substr(0, pos);
         std::string second_pair = cmd.substr(pos + 1);
 
-        // per ogni coppia di coordinate viene restituita una posizione
+        // convert each coordinate pair into a Position
         bow = convert_to_position(first_pair);
         stern = convert_to_position(second_pair);
     }
@@ -106,22 +104,21 @@ bool HumanPlayer::add_ships(std::string &cmd, int size)
         return false;
     }
 
-    // controllo che entrambe le posizioni siano valide
+    // check that both positions are valid
     if (!(bow.is_absolute_invalid() || stern.is_absolute_invalid()))
     {
-        // controllo che la taglia della nave da inserire
-        // sia uguale a quella deducibile dalle coordinate fornite
+        // check that the size of the ship to place
+        // matches the size deducible from the coordinates provided
         int c_size = get_size(bow, stern);
         if (c_size == size)
         {
             if (defense_map_.add_ship(bow, stern))
             {
-
                 Direction d = get_direction(bow, stern);
                 Position p = (bow + stern) / 2;
 
-                // a seconda della taglia distinguo il tipo di nave
-                //  aggiunta del puntatore alla nave al vector di navi
+                // distinguish the ship type based on size
+                // add the ship pointer to the ship vector
                 if (size == Ironclad::kSize)
                 {
                     std::shared_ptr<Ironclad> ship(new Ironclad{d, p, defense_map_, attack_grid_});

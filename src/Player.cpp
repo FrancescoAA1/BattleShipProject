@@ -6,20 +6,18 @@ Player::Player(const std::string &nickname)
     nickname_ = nickname;
     attack_grid_ = AttackGrid();
     defense_map_ = DefenseMap();
-    // il vector di navi è inizialmente vuoto perchè vengono aggiunte con push_back
+    // the ship vector is initially empty because ships are added with push_back
     ship_list = std::vector<std::shared_ptr<Ship>>(0);
 }
 
 std::shared_ptr<Ship> Player::get_ship(const Position origin)
 {
-    // ricerca del puntatore alla nave avente come centro la posizione di origine
+    // search for the pointer to the ship whose center matches the origin position
     auto it = std::find_if(ship_list.begin(), ship_list.end(), [origin](std::shared_ptr<Ship> ship) -> bool
                            { return (ship->centre() == origin); });
 
-    // se l'iteratore ritornato dall'algoritmo STL punta all'ultimo elemento del vettore di navi
-    // la nave non è stata trovata e viene ritornato nullptr, altrimenti si calcola l'indice
-    // del vettore in cui trova il puntatore e lo si restituisce.
-
+    // if the iterator returned by the STL algorithm points to the end of the vector,
+    // the ship was not found and nullptr is returned, otherwise the ship pointer is returned
     if (it != ship_list.end())
     {
         return *it;
@@ -32,31 +30,30 @@ std::shared_ptr<Ship> Player::get_ship(const Position origin)
 
 std::vector<AttackUnit> Player::retrieve_unit(const Position &target)
 {
-    // il giocatore avversario restituisce un vettore di attackUnit che indicano
-    // le navi presenti nella zona 5x5 a partire dal centro passato come parametro
+    // the opposing player returns a vector of AttackUnit indicating
+    // the ships present in the 5x5 area centered on the given position
     std::vector<AttackUnit> att = defense_map_.spot_area(target, 5);
     return att;
 }
 
 AttackUnit Player::receive_attack(const Position &target)
 {
-    // la mappa del giocatore che riceva l'attacco della corazzata nemica viene aggiornata
+    // the player's map receiving the enemy attack is updated
     std::pair<Position, AttackUnit> shot_info = defense_map_.receive_shot(target);
-    // posizione da analizzare
+    // position to analyze
     Position p = shot_info.first;
 
-    // controllo che la posizione sia valida
+    // check if the position is valid
     if (!p.is_absolute_invalid())
     {
-        // controllo se è presente una nave nella posizione restituita da receive shot
+        // check if a ship is present at the position returned by receive_shot
         std::shared_ptr<Ship> ship_attacked = get_ship(p);
 
         if (ship_attacked)
         {
             bool sunk = ship_attacked->hit();
 
-            // se la nave è stata affondata, viene rimossa dalla lista delle navi e conseguentemente
-            // dalla mappa
+            // if the ship was sunk, remove it from the ship list and map
             if (sunk)
             {
                 ship_list.erase(std::remove(ship_list.begin(), ship_list.end(), ship_attacked), ship_list.end());
@@ -64,7 +61,7 @@ AttackUnit Player::receive_attack(const Position &target)
             }
         }
     }
-    // il giocatore avversario restituisce lo stato della cella appena colpita
+    // the opposing player returns the state of the just-hit cell
     return shot_info.second;
 }
 
@@ -72,39 +69,38 @@ std::vector<AttackUnit> Player::execute_move(const Position &target, const MoveT
 {
     std::vector<AttackUnit> units;
 
-    // se la mossa è effettuata da una corazzata
+    // if the move is performed by a battleship
     if (type == MoveType::attack)
     {
         units = {receive_attack(target)};
     }
-    // se la mossa è effettuata da un sonar
+    // if the move is performed by a sonar
     else if (type == MoveType::moveAndDiscover)
     {
         units = {retrieve_unit(target)};
     }
 
-    // nel caso di mossa effettuata da nave di supporto, il vettore di attackUnit
-    // è giustamente vuota, perchè la mossa non interessa il giocatore avversario
+    // in the case of a move performed by a support ship, the AttackUnit vector
+    // is correctly empty, because the move does not affect the opposing player
     return units;
 }
 
 bool Player::handle_response(std::vector<AttackUnit> units, const Move &m)
 {
-    // la nave incaricata di compiere l'azione viene trovata
+    // find the ship assigned to perform the action
     std::shared_ptr<Ship> ship = get_ship(m.origin());
-    // il giocatore fa eseguire l'azione alla nave incaricata
+    // execute the action on the assigned ship
     bool action_done = ship->action(m.target(), units);
 
-    //se l'azione è effettuata dalla nave di supporto è necessario
-    //riparare la corazza di tutte le navi nella zona circostante
+    // if the action is performed by a support ship, repair the armor of all surrounding ships
     if (action_done && m.movetype() == MoveType::moveAndFix)
     {
-        //vector di centri delle navi
+        // vector of ship centers
         std::vector<Position> last_fixed_ships = ship->get_position_ships();
 
         for (int i = 0; i < last_fixed_ships.size(); i++)
         {
-            //riaparazione di ogni nave
+            // repair each ship
             this->get_ship(last_fixed_ships[i])->restore();
         }
     }
@@ -112,10 +108,9 @@ bool Player::handle_response(std::vector<AttackUnit> units, const Move &m)
     return action_done;
 }
 
-// fornisce la direzione della nave da inserire
+// provides the direction of the ship to place
 Direction get_direction(const Position &bow, const Position &stern)
 {
-    Direction ship_dir;
     if (bow.X() == stern.X())
     {
         return Direction::vertical;
@@ -123,7 +118,7 @@ Direction get_direction(const Position &bow, const Position &stern)
     return Direction::horizontal;
 }
 
-// fornisce la taglia della nave da inserire
+// provides the size of the ship to place
 int get_size(const Position &bow, const Position &stern)
 {
     Direction placing = get_direction(bow, stern);
@@ -139,11 +134,11 @@ int get_size(const Position &bow, const Position &stern)
 Player::~Player()
 {
     std::shared_ptr<Ship> pointer;
-    // dealloco tutta la memoria adelle navi
+    // deallocate all ships
     for (int i = 0; i < ship_list.size(); i++)
     {
         pointer = ship_list[i];
-        // delete pointer;
+        // delete pointer;  // shared_ptr automatically manages memory
     }
 
     pointer = nullptr;

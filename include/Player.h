@@ -1,4 +1,4 @@
-//Author: Francesco Fantin
+// Author: Francesco Fantin
 #ifndef BATTLESHIPPROJECT_PLAYER_H_
 #define BATTLESHIPPROJECT_PLAYER_H_
 
@@ -20,37 +20,36 @@ class Player
 public:
     virtual Move get_move(const std::string &cmd) = 0;
 
-    // funzione che permette di aggiungere una nave alla lista di navi secondo
-    // le specifiche indicate dal comando e dalla taglia
-    // restituisce true se l'inserimento è andato a buon fine, false altrimenti
+    // Function that allows adding a ship to the list of ships according
+    // to the specifications given by the command and the size.
+    // Returns true if the insertion was successful, false otherwise.
     virtual bool add_ships(std::string &cmd, int size) = 0;
 
-    // Funzione che cerca nel vector di navi la nave avente come centro la
-    // posizione specificata. Se tale nave non esiste la funzione ritorna nullptr
+    // Function that searches the vector of ships for the ship whose center
+    // is at the specified position. Returns nullptr if no such ship exists.
     std::shared_ptr<Ship> get_ship(const Position origin);
 
-    // funzione che ritorna un vettore di attackUnit per l' operazione del sottomarino
-    // ciascun elemento del vector rappresente una cella dell'area sondata dal
-    // sottomarino, con indicazioni sull'esito dell'operazione (nave sondata oppure no)
+    // Function that returns a vector of AttackUnit for the submarine operation.
+    // Each element of the vector represents a cell of the area scanned by the
+    // submarine, indicating the result of the operation (whether a ship was detected or not).
     std::vector<AttackUnit> retrieve_unit(const Position &target);
 
-    // funzione che richiede l'aggiornamento della mappa di difesa del giocatore che
-    // subisce una mossa in seguito ad un attacco di una corazzata nemica.
-    // Nel caso di nave afffondata, quest'ultima viene rimossa della lista delle navi
+    // Function that updates the player's defense map after being attacked by
+    // an enemy ironclad. If a ship is sunk, it is removed from the list of ships.
     AttackUnit receive_attack(const Position &target);
 
-    // funzione che, a seconda del tipo di mossa passata come parametro, invoca i metodi del
-    // corrispondenti, richiedendo l'aggiornamento della mappa per il giocatore che riceve una
-    // data mossa. Restituisce un vettore di attackUnit che indica lo stato delle celle
-    // interessate dalla mossa appena effettuata
+    // Function that, depending on the type of move passed as a parameter,
+    // calls the corresponding methods, requesting the update of the map for the
+    // player receiving the move. Returns a vector of AttackUnit indicating the
+    // state of the cells affected by the move.
     std::vector<AttackUnit> execute_move(const Position &target, const MoveType &type);
 
-    // funzione che gestisce la ricezione di attackunits dal giocatore avversario
-    // ritorna true se l'azione della nave viene effettuata correttamente, false altrimenti
+    // Function that handles receiving attack units from the opposing player.
+    // Returns true if the ship's action was performed correctly, false otherwise.
     bool handle_response(std::vector<AttackUnit> units, const Move &m);
 
 
-    // metodi getter
+    // Getter methods
     std::string nickname() { return nickname_; }
 
     AttackGrid &attack_grid() { return attack_grid_; }
@@ -59,37 +58,37 @@ public:
 
     int get_ships_left() { return ship_list.size(); }
 
-    //distruttore
+    // Destructor
     virtual ~Player();
 
 protected:
-    // costruttore dato il nome del giocatore
+    // Constructor given the player's name
     Player(const std::string &);
 
-    // nome del giocatore
+    // Player's name
     std::string nickname_;
 
-    // mappa di attacco del giocatore
+    // Player's attack map
     AttackGrid attack_grid_;
 
-    // mappa di difesa del giocatore
+    // Player's defense map
     DefenseMap defense_map_;
 
-    // vector di puntatori ad una nave
+    // Vector of shared pointers to ships
     std::vector<std::shared_ptr<Ship>> ship_list;
 
 private:
-    // costante utile per le conversioni da comando a posizione e viceversa
+    // Constant useful for command-to-position and vice versa conversions
     static constexpr int kDefaultCapitalAscii = 65;
 
-    // costante utile per le conversioni da comando a posizione e viceversa
+    // Constant useful for command-to-position and vice versa conversions
     static constexpr int kEqualityVectorPosition = 1;
 };
 
-// fornisce la direzione della nave da inserire
+// Returns the direction of the ship to be inserted
 Direction get_direction(const Position &bow, const Position &stern);
 
-// fornisce la taglia della nave da inserire
+// Returns the size of the ship to be inserted
 int get_size(const Position &bow, const Position &stern);
 
 #endif

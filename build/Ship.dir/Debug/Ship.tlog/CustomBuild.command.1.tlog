@@ -1,0 +1,10 @@
+^C:\USERS\FRANC\DESKTOP\BATTLESHIP\BATTLESHIPPROJECT\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/franc/Desktop/Battleship/BattleShipProject -BC:/Users/franc/Desktop/Battleship/BattleShipProject/build --check-stamp-file C:/Users/franc/Desktop/Battleship/BattleShipProject/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

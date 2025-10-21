@@ -1,4 +1,4 @@
-//Author: Mattia Galassi
+// Author: Mattia Galassi
 #ifndef BATTLESHIPPROJECT_REPLAY_H_
 #define BATTLESHIPPROJECT_REPLAY_H_
 
@@ -9,83 +9,73 @@
 
 class Replay
 {
-
 public:
-    class InvalidOperation : std::exception
-    {
-    };
-    class IllegalFileLog : std::exception
-    {
-    };
-    // costruttore che accetta come parametro il nome del file di log:
-    // se la classe viene creata per leggere da file aprirà file_name in lettura
-    // altrimenti rappresneta il nome del file di log in cui scrivere
+    class InvalidOperation : std::exception {};
+    class IllegalFileLog : std::exception {};
+
+    // Constructor that accepts the name of the log file:
+    // If the class is created for reading from a file, it will open file_name for reading.
+    // Otherwise, it represents the name of the log file to write to.
     Replay(std::string file_name);
 
     Replay();
 
-    // funzione per impostare i due giocatori (scritti nell'ordine di parametro)
-    // e il numero massimo di mosse che rappresentano l'header file da scrivere
+    // Function to set the two players (in the order of parameters)
+    // and the maximum number of moves representing the header of the file to write
     void record_header(std::string player1, std::string player2, int num_rounds);
 
-    // funzione che permette di registrare una mossa nello storico
-    // player_name è il nome del giocatore che l'ha effettuata
+    // Function to record a move in the history
+    // player_name is the name of the player who made the move
     void record_move(const Move &move);
 
-    // overload della funzione precedente che accetta una stringa
+    // Overload of the previous function that accepts a string
     void record_move(std::string move);
 
-    // funzione che carica in memoria (nel buffer_) il file di log con cui è stato
-    // costruito l'oggetto
+    // Function that loads the log file into memory (buffer_) for reading
     bool open_log();
 
-    // funzione che permette di ottenere il primo giocatore se si apre un file
-    // di log e lo si vuole leggere
-    // lancia eccezione se il file non è ancora stato caricato
+    // Function to get the first player if opening a log file for reading
+    // Throws exception if the file has not been loaded yet
     std::string get_first_player_name();
 
-    // funzione che permette di ottenere il secondo giocatore se si apre un file
-    // di log e lo si vuole leggere
-    // lancia eccezione se il file non è ancora stato caricato
+    // Function to get the second player if opening a log file for reading
+    // Throws exception if the file has not been loaded yet
     std::string get_second_player_name();
 
-    // funzione che permette di ottenere il # di round se si apre un file
-    // di log e lo si vuole leggere
-    // lancia eccezione se il file non è ancora stato caricato
+    // Function to get the number of rounds if opening a log file for reading
+    // Throws exception if the file has not been loaded yet
     int get_number_of_rounds();
 
-    // funzione che ritorna il numero di mosse rimanenti nel buffer
+    // Function that returns the number of remaining moves in the buffer
     int get_remaining_rounds();
 
-    // verifica se è disponibile una mossa nel data buffer
+    // Check if a move is available in the data buffer
     bool has_next();
 
-    // funzione che permette di ottenere la possima mossa dello stream del data buffer
-    // ritona un astringa da convertire a mossa
+    // Function to get the next move from the data buffer stream
+    // Returns a string to be converted to a Move
     std::string next();
 
-    // funzione che permette di salvare su file tutto lo sotrico registrato
-    // ritorna true se il log è stato scritto -> il file che crea è quello che ha nome specificato
-    // nel costruttore
+    // Function to save all recorded history to a file
+    // Returns true if the log was successfully written (to the file specified in the constructor)
     bool flush_recording();
 
-    // distruttore che involca il flush se non è stato effettuato
-    // già in precedenza
+    // Destructor that calls flush if it has not been done already
     ~Replay();
 
 private:
-    // variabile che salva il nome del file da creare
-    // essa contiene il path completo e se non esplicitamente indicato crea il file nella direcotry corrente
-    // se il file è già presente lo elimina e ne crea uno nuovo
+    // Variable that stores the name of the file to create
+    // Contains the full path; if not explicitly specified, the file is created in the current directory
+    // If the file already exists, it is deleted and a new one is created
     std::string file_name_;
-    // vettore in cui salvo tutto lo sotrico per poi farne il flush su file
+    // Vector storing all historical data to be flushed to file
     std::vector<std::string> buffer_;
-    // prossima mossa da leggere
+    // Next move to read
     int currentTransaction;
-    // flag per il flush in distruzione
+    // Flag for flush in destructor
     bool recorded;
 
-    // AREA DELLE CONSTANTI
+    // CONSTANT AREA
     static constexpr char kMarker = ' ';
     static constexpr char kLineMarker = '\n';
     static constexpr int kFirstPlayerPosition = 0;
@@ -93,23 +83,22 @@ private:
     static constexpr int kNumRoundsPosition = 2;
     static constexpr int kStartRounds = 3;
 };
+
 /* 
-La presente classe ha lo scopo registrare tutte le mosse effettuate in una partita e salvarle in un file di log
-Inoltre viene progettata oltre che per scrivere lo storico di una partita anche per leggerlo e mostrare a video
-o su file il "replay" di essa.
-La classe crea il log nella sottodirecory log della corrente. La crea se non esiste
+This class is designed to record all moves made in a game and save them to a log file.
+It is also designed to read the log and show a "replay" either on screen or in a file.
+The class creates the log in the log subdirectory of the current directory, creating it if it does not exist.
 
+LOG FILE STRUCTURE AND LOCATION
 
-STRUTTURA FILE DEL LOG E LOCAZIONE
+The log file consists of three main parts: header, ship addition commands, and player moves.
+The header includes the names of the players (in starting order) and the number of moves set at the beginning
+of the game. This is followed by ship addition commands (with the same format as player moves),
+and finally, the moves made in each turn.
 
-Il file di log è composto essenzialmente da tre parti: header, comandi di aggiunta navi, mosse dei giocatori.
-L'header comprende il nome dei giocatori (in ordine di partenza) e il numero di mosse stabilito all'inizio della
-partita. Seguono immediatamente i comandi di aggiunta delle navi (con formato identico a quello delle mossa dei giocatori)
-e, infine, le mosse effettuate ad ogni turno. 
+Since the file is intended for replay mode rather than user inspection, no headers or comments are added inside the file.
 
-Poichè si suppone che il file non venga ispezionato dall'utente, quanto piuttosto utilizzato esclusivamente per la modalità
-replay, si è scelto di non aggiungere intestazioni o commenti all'interno del file.
-
-I file di log vengono salvati automaticamente alla fine della partita nella cartella bin del progetto. 
+Log files are automatically saved at the end of the game in the project's bin folder.
 */
+
 #endif

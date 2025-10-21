@@ -1,28 +1,27 @@
-//Author: Enrico Disarò
+// Author: Enrico Disarò
 #include "../include/Position.h"
 
 Position::Position()
 {
     x_ = 0; 
-    y_= 0; 
+    y_ = 0; 
 }
 
-//inizializzo con i valori passati 
+// initialize with the given values
 Position::Position(int x, int y)
 {
     x_ = x; 
     y_ = y; 
 }
 
-
 void Position::set_x(int value)
 {
-    x_= value;
+    x_ = value;
 }
 
 void Position::set_y(int value)
 {
-    y_= value;
+    y_ = value;
 }
 
 void Position::make_absolute_invalid()
@@ -36,18 +35,22 @@ bool Position::is_absolute_invalid()
     return x_ == INVALID_X_POSITION && y_ == INVALID_Y_POSITION; 
 }
 
+// operator overloads for Position arithmetic
 Position operator+(const Position& p1, const Position& p2)
 {
     return Position(p1.X() + p2.X(), p1.Y() + p2.Y()); 
 }
+
 Position operator-(const Position& p1, const Position& p2)
 {
     return Position(p1.X() - p2.X(), p1.Y() - p2.Y()); 
 }
+
 bool operator==(const Position& p1, const Position& p2)
 {
     return (p1.X() == p2.X() && p1.Y() == p2.Y()); 
 }
+
 bool operator!=(const Position& p1, const Position& p2)
 {
     return !(p1 == p2); 
@@ -55,12 +58,12 @@ bool operator!=(const Position& p1, const Position& p2)
 
 Position operator/(const Position& p, int coeff)
 {
-    return Position(p.X()/coeff, p.Y()/coeff); 
+    return Position(p.X() / coeff, p.Y() / coeff); 
 }
 
 Position operator*(const Position& p, int coeff)
 {
-    return Position(p.X()*coeff, p.Y()*coeff); 
+    return Position(p.X() * coeff, p.Y() * coeff); 
 }
 
 std::string Position::to_string() const 
@@ -68,7 +71,8 @@ std::string Position::to_string() const
     return "( " + std::to_string(x_) + ", " + std::to_string(y_) + " )"; 
 }
 
-std::ostream& operator<<(std::ostream& data_stream,  const Position& pos)
+// overload << operator to output Position to a stream
+std::ostream& operator<<(std::ostream& data_stream, const Position& pos)
 {
-    return data_stream<<pos.to_string(); 
+    return data_stream << pos.to_string(); 
 }

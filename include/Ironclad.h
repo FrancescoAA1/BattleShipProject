@@ -1,4 +1,4 @@
-//Author: Enrico Disarò
+// Author: Enrico Disarò
 #ifndef BATTLESHIPPROJECT_IRONCLAD_H_
 #define BATTLESHIPPROJECT_IRONCLAD_H_
 
@@ -7,22 +7,22 @@
 
 class Ironclad : public Ship 
 {
-    public:
-        //costruttore
-        //crea una nave con corazza = 5, dimensione = 5 e orientamento fornito
-        Ironclad(Direction orientation, Position& centre_position, DefenseMap& defense_map, AttackGrid& attack_grid)  : Ship(kSize, orientation, centre_position, defense_map, attack_grid) {}
+public:
+    // Constructor
+    // Creates a ship with armor = 5, size = 5, and the given orientation
+    Ironclad(Direction orientation, Position& centre_position, DefenseMap& defense_map, AttackGrid& attack_grid)  
+        : Ship(kSize, orientation, centre_position, defense_map, attack_grid) {}
 
-        //ricordare l'override di action
-        bool action(const Position& target, const std::vector<AttackUnit>& data) override;
+    // Remember to override action
+    bool action(const Position& target, const std::vector<AttackUnit>& data) override;
 
-        //costante che definisce la dimensione della nave corazzata
-        static constexpr int kSize = 5;
-}; 
+    // Constant that defines the size of the ironclad ship
+    static constexpr int kSize = 5;
+};
 
 /*
-classe Ironclad: questa classe rappresenta una nave corazzata, di dimensione 5;
-questa nave può eseguire l'operazione di attacco verso una singola cella avversaria, per ridurre di 1 la
-corazza di una evenutale nave colpita
+Ironclad class: this class represents an ironclad ship of size 5;
+this ship can perform an attack on a single enemy cell to reduce the armor of any hit ship by 1.
 */
 
 #endif

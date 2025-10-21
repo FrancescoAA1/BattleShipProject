@@ -1,18 +1,18 @@
-//Author: Mattia Galassi 
+// Author: Mattia Galassi 
 #ifndef BATTLESHIPPROJECT_ATTACKUNIT_H_
 #define BATTLESHIPPROJECT_ATTACKUNIT_H_
 
-// Rappresenta una unità marina di una mappa d'attacco
-// l'enumeratore ha lo scopo di definire se una determinata cella è stata: 
-// attaccaata e in quella posizione è presente una nave => X => full_and_hit
-// attaccata e in quella posizione non è presente una nave => O => empty_and_hit
-// la cella non è stat soggetta ad attacchi => empty 
+// Represents a naval unit in an attack map
+// The enumerator defines the status of a cell:
+// Attacked and a ship is present in that position => X => full_and_hit
+// Attacked and no ship is present in that position => O => empty_and_hit
+// The cell has not been subjected to attacks => unknown
 enum AttackUnit
 {
     unknown, 
-    empty_and_hit, //O
-    full_and_hit, //X
-    spotted //Y
+    empty_and_hit, // O
+    full_and_hit,  // X
+    spotted        // Y
 };
 
 #endif

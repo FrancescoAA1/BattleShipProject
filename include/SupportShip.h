@@ -9,25 +9,26 @@
 class SupportShip : public Ship
 {
 public:
-    // costruttore
-    // crea una nave con corazza = 3, dimensione = 3 e orientamento fornito
-    SupportShip(Direction orientation, Position &centre_position, DefenseMap &def_map, AttackGrid &att_grid) : Ship(kSize, orientation, centre_position, def_map, att_grid) {}
+    // Constructor
+    // Creates a ship with armor = 3, size = 3, and given orientation
+    SupportShip(Direction orientation, Position &centre_position, DefenseMap &def_map, AttackGrid &att_grid) 
+        : Ship(kSize, orientation, centre_position, def_map, att_grid) {}
 
-    // ricordare l'override di action
+    // Remember to override action
     bool action(const Position &target, const std::vector<AttackUnit> &data) override;
 
-    // costante che definisce la dimensione della nave di supporto
+    // Constant defining the size of the support ship
     static constexpr int kSize = 3;
 
 private:
-    // costante che definisce il lato dell'area di cura
-    // l'area di cura è un quadrato e la lunghezza del lato è dispari per permettere alla nave di essere al centro dell'area
+    // Constant defining the side length of the healing area
+    // The healing area is a square and the side length is odd to allow the ship to be at the center of the area
     static constexpr int kSide = 3;
 };
 
 /*
-classe SupportShip: questa classe rappresenta la nave di supporto, di dimensione 3;
-questa nave può eseguire l'operazione di spostamento + cura delle navi alleate in un'area 3x3
+Class SupportShip: represents the support ship of size 3;
+This ship can perform the move + heal operation for allied ships in a 3x3 area.
 */
 
 #endif

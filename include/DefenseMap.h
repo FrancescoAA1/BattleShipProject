@@ -10,70 +10,71 @@
 #include <utility>
 #include <vector>
 #include <algorithm>
+#include <string>
 
 class DefenseMap
 {
 public:
-    // le costanti delle dimesnioni possono essere pubbliche e accessibili dall'estreno
+    // The constants for dimensions can be public and accessible externally
     static constexpr int kHeight = 12;
     static constexpr int kWidth = 12;
 
-    // contruttore di default della classe
-    // che inizializza tutte le matrici come vuote
+    // Default constructor
+    // Initializes all matrices as empty
     DefenseMap();
 
-    // Funzioni per la DIFESA:
+    // DEFENSE FUNCTIONS:
 
-    // ritorna se una determinata posizione è libera nella mappa di difesa
+    // Returns whether a given position is free in the defense map
     bool is_free_defense_position(const Position &target_destination) const;
 
-    // muove una nave dalla sua posizione attuale al target specificato
-    // la posizione target origin deve rappresentare il centro della nave da spostare
-    // il secondo paramentro è il target destination
-    // Ritorna true se lo spostamento è andato a buon fine
+    // Moves a ship from its current position to the specified target
+    // The origin position must represent the center of the ship to move
+    // The second parameter is the target destination
+    // Returns true if the move was successful
     bool move_ship(const Position &target_origin, const Position &target_destination);
 
-    // sparo ad una nave della mia collezione poichè è stata colpita
-    // ritorno una poccia (posizione del centro della nave colpita, stato dell'attacco)
-    // se il tiro non è andato a segno allora ritorna O e la posizione del centro invalida
-    // Se la nave è stata affondata richiamare il metodo remove ship se si desidera rimuovere dalla mappa
+    // Shoots at a ship in my collection because it has been hit
+    // Returns a pair (center position of the hit ship, attack status)
+    // If the shot misses, it returns O and an invalid center position
+    // If the ship is sunk, call remove_ship if you want to remove it from the map
     std::pair<Position, AttackUnit> receive_shot(const Position &target_destination);
 
-    // funzione che permette di rimuovere una nave dalla mappa
+    // Function to remove a ship from the map
     bool remove_ship(const Position &target_origin);
 
-    // funzione che permette di ottenere i centri delle navi nell'area specificata di lato side centrata nel punto
-    // target_origin specificato
-    // se l'area fuoriesce dalla matrice ne fa l'intersezione. Se l'area è più vasta della matrice e
-    // la contiene => ritorna tutti i centri della matrice
+    // Function to get the centers of ships in a specified square area with side 'side' centered on
+    // the given target_origin
+    // If the area extends outside the matrix, it intersects it. If the area is larger than the matrix
+    // and contains it => returns all centers in the matrix
     std::vector<Position> discovers_neighbors(const Position &target_origin, int side) const;
 
-    // funzione che cura la nave con centro specificato in target_origin
+    // Function that repairs the ship with the center specified in target_origin
     bool fix_ship(const Position &target_origin);
 
-    // funzione che scopre tutte le navi in un'area dimxdim a partire del centro specificato come target
-    // ritona un'area che rappresenta una matrice dimxdim scritta per righe
-    // l'intero serve a specificare il lato di dimensione per l'area
-    // se l'area non rientra nella matrice ne fa l'intersezione
-    // se l'area contiene la matrice ritorna tutta la matrice
-    // se la nave ha una cella colpita ritorna X atrimenti Y
+    // Function that spots all ships in an area dim x dim starting from the center specified as target
+    // Returns an area representing a dim x dim matrix written row by row
+    // The integer specifies the side length for the area
+    // If the area does not fit in the matrix, it intersects it
+    // If the area contains the matrix, returns the whole matrix
+    // If the ship has a hit cell, returns X, otherwise Y
     std::vector<AttackUnit> spot_area(const Position &target_origin, int side) const;
 
-    // altre funzioni UTILITARIE
+    // OTHER UTILITY FUNCTIONS
 
-    // funzione che permette di aggiungere una nave.
-    // il primo parametro è la posizione della prua e il secondo è la poppa della nave
-    // ritorna true se l'operazione è andata buon fine, false se era già presente poichè non ne vogliamo aggiornare il valore.
+    // Function to add a ship
+    // The first parameter is the bow position and the second is the stern position
+    // Returns true if the operation was successful, false if it was already present
     bool add_ship(const Position &bow_position, const Position &stern_position);
 
-    // funzione che scrive in una stringa la mappa
+    // Function that writes the map to a string
     std::string to_string() const;
 
-    // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
+    // Checks if a given position is valid (must fit within matrix dimensions)
     bool check_position(const Position &position) const;
 
 private:
-    // Regione delle costanti da utilizzare nella classe
+    // Region for constants used in the class
     static constexpr char kEmptySpace = ' ';
     static constexpr char kIroncladUnitHit = 'c';
     static constexpr char kIroncladUnit = 'C';
@@ -87,32 +88,38 @@ private:
     static constexpr int kShipType2Dim = 3;
     static constexpr int kShipType3Dim = 5;
 
-    // rappresenta la mappa da usare per la difesa
+    // Represents the map used for defense
     DefenseUnit defense_map_[kHeight][kWidth];
-    // scrivo una nave nella matrice
-    // inizio e fine devono già condividere la stessa riga o la stessa colonna in accordo con la direzione
-    // true se l'operazione è correttamente eseguibile
-    // init e end le passo per valore poichè verranno modificate all'interno
+
+    // Writes a ship into the matrix
+    // Start and end must already share the same row or column according to the direction
+    // Returns true if the operation is executable correctly
+    // Init and end are passed by value because they will be modified internally
     bool place_ship(Position init, Position end, const Position &new_center_block, const Position &old_center_block, int block_dimension, Direction direction);
-    // overload della funzione precedente che accetta come parametro un vettore di DefenseStatus che rappresentano le cella della nave 
-    // da impostare come hit (utile per lo spostamento)
+
+    // Overload of the previous function that accepts a vector of DefenseStatus representing ship cells
+    // to be marked as hit (useful for moving ships)
     bool place_ship(Position init, Position end, const Position &new_center_block, const Position &old_center_block, int block_dimension, Direction direction, const std::vector<DefenseStatus>& relative_hit);
-    // ritorna un vettore di stati che rappresentano il fatto che il blocco relativo nella nave sia o meno colpito
+
+    // Returns a vector of states representing whether the relative block in the ship is hit or not
     std::vector<DefenseStatus> discover_hitted_blocks(const Position& center, Direction direction, int size); 
-    // verifico se la coordinata di centro specificata può essere una posizione plausibile per una nave di lunghezza
-    // length specificata e orientamento orientation.
-    // ritorna true se la nave ricoprirebbe una regione non vuota o non rientra nella matrice
+
+    // Checks if the specified center coordinate is a plausible position for a ship of given length and orientation
+    // Returns true if the ship would cover a non-empty area or goes out of the matrix
     bool check_area_for_placing(const Position &target_destination, const Position &origin_block_center, int length, Direction orientation) const;
-    // funzione che pulisce tutte le caselle nella regione specificata: centro, lunghezza e direzione
-    // le coordinate che andrà a pulire devono essere già testate come corrette!
+
+    // Function that clears all cells in the specified region: center, length, and direction
+    // The coordinates to clear must already be tested as correct!
     void clear_area(const Position &center_block, int length, Direction orientation);
-    // metodo che resetta tutta la matrice di difesa
+
+    // Method that resets the entire defense matrix
     void clear_defense_map();
-    // funzione che ritorna se ci sono blocchi con centro uguale al target
+
+    // Function that returns whether there are blocks with a center equal to the target
     bool center_block_discovery(const Position &center_block) const;
 };
 
-// Overload dell'operatore << che scrive nell'output stream la matrice di difesa
+// Overload of the << operator to write the defense matrix to an output stream
 std::ostream &operator<<(std::ostream &data_stream, const DefenseMap &defense_map);
 
 #endif

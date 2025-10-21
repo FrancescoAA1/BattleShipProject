@@ -1,4 +1,4 @@
-//Author: Francesco Fantin
+// Author: Francesco Fantin
 #ifndef BATTLESHIPPROJECT_HUMANPLAYER_H_
 #define BATTLESHIPPROJECT_HUMANPLAYER_H_
 
@@ -7,15 +7,15 @@
 class HumanPlayer : public Player
 {
 public:
-    // costruttore che crea giocatore con nome
+    // Constructor that creates a player with a name
     HumanPlayer(const std::string &nickname_) : Player(nickname_) {}
 
-    // funzione che dato un comando restituisce una mossa
+    // Function that returns a move given a command
     Move get_move(const std::string &cmd) override;
 
-    //funzione che permette di aggiungere una nave alla lista di navi secondo 
-    //le specifiche indicate dal comando e dalla taglia
-    //restituisce true se l'inserimento è andato a buon fine, false altrimenti
+    // Function that allows adding a ship to the list of ships according to
+    // the specifications indicated by the command and the size
+    // Returns true if the insertion was successful, false otherwise
     bool add_ships(std::string &cmd, int size) override;
 
 private:

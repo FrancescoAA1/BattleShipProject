@@ -1,63 +1,69 @@
-//Author: Enrico Disarò
+// Author: Enrico Disarò
 #ifndef BATTLESHIPPROJECT_DEFENSEUNIT_H_
 #define BATTLESHIPPROJECT_DEFENSEUNIT_H_
 
 #include "Position.h"
-// Rappresenta lo stato di una cella della mappa
-// se è empty => non c'è nessuna nave su di esso 
-// se è hit => la nave su di essa presente è stat colpita
-// se è taken => la posizione è occupata da una nave
+
+// Represents the state of a cell on the map
+// if empty => there is no ship on it
+// if hit => the ship present on it has been hit
+// if taken => the position is occupied by a ship
 enum DefenseStatus
 {
     empty,
-    hit, 
+    hit,
     taken
 }; 
 
 class DefenseUnit
 {
-
-    public: 
-    //costruttore dei default che imposta la posizione del centro di riferimento a non valida 
-    //e lo stato a vuoto 
+public: 
+    // Default constructor sets the reference center position as invalid
+    // and the status to empty
     DefenseUnit(); 
-    //contruttore con specifica parametri di costruzione
+
+    // Constructor with specified parameters
     DefenseUnit(DefenseStatus status, const Position& center_block_position); 
 
-    //ottengo lo stato della cella 
+    // Get the status of the cell
     DefenseStatus status() const { return status_; }
-    //imposto lo stato della cella a un valore indicato dal relativo enumeratore
-    void set_status(DefenseStatus status);
-    //pulisco la cella: imposto lo stato a empty e metto il centro ad una posizione invalida
-    void clear(); 
-    //ottengo il centro del blocco di riferimento
-    Position block_center() const { return center_block_position_; }
-    //imposto il centro di riferimento ad un determinato valore
-    void set_block_center(const Position& position);  
-    //ottengo la dimensione del blocco di appartenenza
-    int full_block_dimension() const { return full_block_dimension_; } 
-    //imposto il valore della dimensione del blocco di appartenenza
-    void set_full_block_dimension(int full_block_dimension); 
-    
-    private: 
 
+    // Set the cell status to a value from the enumerator
+    void set_status(DefenseStatus status);
+
+    // Clear the cell: set status to empty and center to an invalid position
+    void clear(); 
+
+    // Get the center of the reference block
+    Position block_center() const { return center_block_position_; }
+
+    // Set the reference center to a specific value
+    void set_block_center(const Position& position);  
+
+    // Get the dimension of the block to which it belongs
+    int full_block_dimension() const { return full_block_dimension_; } 
+
+    // Set the dimension value of the block to which it belongs
+    void set_full_block_dimension(int full_block_dimension); 
+
+private: 
     DefenseStatus status_; 
     Position center_block_position_;
     int full_block_dimension_; 
-    
 }; 
-//overload degli operatori di uguaglianza per la classe sopra definita
+
+// Overload equality operators for the class defined above
 bool operator==(const DefenseUnit&, const DefenseUnit&); 
 bool operator!=(const DefenseUnit&, const DefenseUnit&); 
 
 /*
-Classe Defense Unit: rappresenta una unità del campo di gioco. 
-Essa possiede uno stato che permette di verificare se quella determinata cella
-rappresenta una posizione occupata da una nave o una zona colpita di una nave.
-Ogni unità mantiene un riferimento al centro del blocco complessivo di cui fa 
-parte al fine di rendere le operazioni con la mappa più efficaci e ridurne la 
-complessità di rappresentazione. 
-Inolte una DefenseUnit possiede un intero che specifica la dimensione del blocco 
-di cui fa parte, sempre nell'ottica di facilitare le operazioni di scrittura
+Class DefenseUnit: represents a unit on the game field.
+It has a status that allows checking whether that particular cell
+represents a position occupied by a ship or a hit zone of a ship.
+Each unit maintains a reference to the center of the overall block 
+it belongs to, to make map operations more efficient and reduce 
+representation complexity. 
+Additionally, a DefenseUnit has an integer specifying the dimension 
+of the block it belongs to, again to facilitate writing operations.
 */
 #endif

@@ -1,4 +1,4 @@
-//Author: Francesco Fantin
+// Author: Francesco Fantin
 #include "../include/Game.h"
 #include "../include/AttackGrid.h"
 #include <iostream>
@@ -6,48 +6,46 @@
 
 int main(int argc, char **argv)
 {
-
-    // Controllo del numero di parametri
-    // Se sono più tre o quattro, si tratta di una funzionalità di replay
+    // Check the number of parameters
+    // If there are three or four, it relates to a replay functionality
 
     if (argc == 4 && strcmp(argv[1], "f") == 0)
     {
-
-        // scrittura su file del replay su un altro file
-        // file da leggere
+        // write the replay to another file
+        // file to read
         std::string file_name = argv[2];
-        // file su cui scrivere
+        // file to write
         std::string output = argv[3];
         try
         {
             Game g{file_name, output};
-            // inizio partita
+            // start the game
             g.play_game();
         }
         catch (...)
         {
-            std::cerr << "Errore durante la lettura del file: file di log corrotto o inesistente" << '\n';
+            std::cerr << "Error reading file: log file corrupted or does not exist" << '\n';
         }
     }
     else if (argc == 3 && strcmp(argv[1], "v") == 0)
     {
-        // stampa a video del file del replay
-        // file da leggere
+        // display the replay file on screen
+        // file to read
         std::string file_name = argv[2];
         try
         {
             Game g{file_name};
-            // inizio partita
+            // start the game
             g.play_game();
         }
         catch (...)
         {
-            std::cerr << "Errore durante la lettura del file: file di log corrotto o inesistente" << '\n';
+            std::cerr << "Error reading file: log file corrupted or does not exist" << '\n';
         }
     }
     else
     {
-        std::cout << "Lista Parametri Errata!" << std::endl;
+        std::cout << "Invalid parameter list!" << std::endl;
     }
 
     return 0;

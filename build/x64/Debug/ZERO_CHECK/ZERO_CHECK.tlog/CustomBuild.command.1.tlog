@@ -1,0 +1,10 @@
+^C:\USERS\FRANC\DESKTOP\BATTLESHIP\BATTLESHIPPROJECT\BUILD\CMAKEFILES\C3F8D9B5256D5B74F5270472D4F49E1C\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/franc/Desktop/Battleship/BattleShipProject -BC:/Users/franc/Desktop/Battleship/BattleShipProject/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/franc/Desktop/Battleship/BattleShipProject/build/battaglia_navale.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

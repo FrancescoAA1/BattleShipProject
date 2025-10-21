@@ -1,74 +1,78 @@
-//Author: Mattia Galassi 
+// Author: Mattia Galassi 
 #ifndef BATTLESHIPPROJECT_ATTACKGRID_H_
 #define BATTLESHIPPROJECT_ATTACKGRID_H_
 
-// Classe che rappresenta la mappa di attacco
-// possiede una matrice di unità d'attacco e i metodi per verificarne
-// lo stato delle posizioni richieste
+// Class representing the attack map
+// It contains a matrix of attack units and methods to check
+// the status of requested positions
 
 #include "AttackUnit.h"
 #include "Position.h"
 #include <vector>
 #include <ostream>
+#include <string>
 
 class AttackGrid
 {
 public:
-    // le costanti delle dimesnioni possono essere pubbliche e accessibili dall'estreno
+    // Dimension constants can be public and accessible from outside
     static constexpr int kHeight = 12;
     static constexpr int kWidth = 12;
 
-    // costruttore di default che setta tutto a vuoto
+    // Default constructor that sets all cells to empty
     AttackGrid();
 
-    // Funzioni per l'ATTACCO:
+    // ATTACK functions:
 
-    // funzione che permette di impostare come spotted la posizione selezionata
-    // aggiornando la mappa d'attacco
-    // ritorna true se lo spot è andato a buon fine
-    // lo spot fallisce se la cella non è vuota o non è valida
+    // Function that sets the selected position as spotted
+    // Updates the attack map
+    // Returns true if spotting was successful
+    // Spotting fails if the cell is not empty or invalid
     bool spot_position(const Position &target_destination);
 
-    // imposta al valore passato come parametro (shot_status) la cella della mappa d'attacco di target specificato
-    // ritorna true se lo shot è andato a buon fine
-    // lo spot fallisce se la cella non è vuota o non è valida
+    // Sets the specified cell of the attack map to the value passed as a parameter (shot_status)
+    // Returns true if the shot was successful
+    // Fails if the cell is not empty or invalid
     bool shot_position(const Position &target_destination, AttackUnit shot_status);
 
-    // Funzioni Utilitarie
+    // Utility functions
 
-    // funzione che pulisce tutte le caselle nella matrice
+    // Function that clears all cells in the matrix
     void clear_area();
 
-    // funzione che pulisce dalla matrice tutte le caselle impostate ad X
+    // Function that clears all cells marked as X in the matrix
     void clear_all_full_and_hit();
 
-    // funzione che pulisce dalla matrice tutte le caselle impostate ad O
+    // Function that clears all cells marked as O in the matrix
     void clear_all_full_and_empty();
 
-    // funzione che pulisce dalla matrice tutte le caselle impostate ad Y
+    // Function that clears all cells marked as Y in the matrix
     void clear_sonared();
 
-    // funzione che scrive in una stringa la mappa
+    // Function that converts the attack map to a string
     std::string to_string() const;
-    // verifica se una determinata posizione è valida o meno (deve rientrare nelle dimensioni della mtrice)
+
+    // Checks if a given position is valid (must be within the matrix bounds)
     bool check_position(const Position &position) const;
 
 private:
-    // Regione delle costanti da utilizzare nella classe
+    // Region of constants to use in the class
     static constexpr char kHitAndFullSymbol = 'X';
     static constexpr char kHitAndEmptySymbol = 'O';
     static constexpr char kSpottedSymbol = 'Y';
     static constexpr char kEmptySpace = ' ';
     static constexpr char kFirstRowLetter = 'A';
     static constexpr int kFirstColumnNumber = 1;
-    // rappresenta la mappa da usare per l'attacco
+
+    // Represents the attack map to use
     AttackUnit attack_grid_[kHeight][kWidth];
 
-    // ATTACK GRID: è una classe che rappresenta una mappa di attacco e fornisce i metodi per individuare
-    // e aggiornare lo stato delle caselle. Viene usata dalle navi per le funzioni di attacco e discover
-    // del sottomarino.
+    // ATTACK GRID: a class that represents an attack map and provides methods 
+    // to locate and update the status of cells. Used by ships for attack and 
+    // discovery functions of the submarine.
 };
 
-// Overload dell'operatore << che scrive nell'output stream la matrice di difesa
+// Overload of the << operator to print the attack map
 std::ostream &operator<<(std::ostream &data_stream, const AttackGrid &attack_grid);
+
 #endif
