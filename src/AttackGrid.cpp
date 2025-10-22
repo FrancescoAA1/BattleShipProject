@@ -1,4 +1,4 @@
-// Author: Mattia Galassi
+// Author: Francesco Fantin
 #include "../include/AttackGrid.h"
 
 // Default constructor that sets all cells to empty
